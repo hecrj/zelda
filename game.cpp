@@ -1,7 +1,6 @@
 #include "game.h"
 #include "utils.h"
 #include <GL/glut.h>
-#include <iostream>
 
 Game::Game(void)
 {
@@ -37,19 +36,14 @@ void Game::Loop()
     double newTime = CurrentTime();
     double frame_time = newTime - current_time;
 
-    std::cout << "N: " << newTime << std::endl;
-
     current_time = newTime;
     accumulator += frame_time;
 
-    while(accumulator >= dt)
-    {
+    while(accumulator >= dt) {
         Process(dt);
         accumulator -= dt;
         t += dt;
     }
-
-    std::cout << frame_time << std::endl;
 
     Render();
 }
