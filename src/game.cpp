@@ -1,23 +1,23 @@
-#include "game.h"
-#include "utils.h"
+#include "game.hpp"
+#include "utils.hpp"
 #include <GL/glut.h>
 
-Game::Game(void)
+Game::Game()
 {
-    map = new Map("demo");
     t = 0.0;
     dt = 0.01;
     current_time = CurrentTime();
     accumulator = 0.0;
 }
 
-Game::~Game(void)
+Game::~Game()
 {
 
 }
 
 bool Game::Init()
 {
+    map = new Map("demo");
 	bool res=true;
 
 	//Graphics initialization

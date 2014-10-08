@@ -5,14 +5,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
     src/game.cpp
-    src/game.h
     src/main.cpp
     src/map.cpp
-    src/map.h
-    src/utils.h
     src/utils.cpp
-    lib/TMXParser/src/TMXParser.cpp
-    lib/TSXParser/src/TSXParser.cpp
+    lib/TMXParser/src/tmx_map.cpp
+    lib/TMXParser/src/xml_utils.cpp
+    lib/TMXParser/src/tsx_tileset.cpp
 )
 
 add_executable(zelda ${SOURCE_FILES})
@@ -23,7 +21,7 @@ include_directories(
     ${OPENGL_INCLUDE_DIRS}
     ${GLUT_INCLUDE_DIRS}
     lib/TMXParser/include
-    lib/TSXParser/include
+    include
 )
 
 set(NVIDIA_LIB)

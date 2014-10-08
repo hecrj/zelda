@@ -1,16 +1,15 @@
-#include "map.h"
-#include <GL/glut.h>
-#include <sstream>
 #include <iostream>
+#include <sstream>
+#include "map.hpp"
 
-Map::Map(const std::string &s)
+Map::Map(const char* name)
 {
     std::stringstream path;
-    path << "/home/hector/projects/zelda/res/level/" << s << ".tmx";
-    parser.load(path.str().c_str());
+    map = TMX::parse("res/level/", name);
+    map->Print();
 }
 
-Map::~Map(void)
+Map::~Map()
 {
 }
 

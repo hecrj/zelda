@@ -1,6 +1,4 @@
 [submodule "lib/TMXParser"]
 	path = lib/TMXParser
 	url = https://github.com/gamerslab/TMXParser
-[submodule "lib/TSXParser"]
-	path = lib/TSXParser
-	url = https://github.com/gamerslab/TSXParser
+

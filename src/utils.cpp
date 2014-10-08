@@ -1,6 +1,6 @@
 #include <sys/time.h>
 #include <stddef.h>
-#include "utils.h"
+#include "utils.hpp"
 
 double CurrentTime() {
     timeval tv;

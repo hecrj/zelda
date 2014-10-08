@@ -1,6 +1,6 @@
 #pragma once
 
-#include "map.h"
+#include "map.hpp"
 
 #define GAME_WIDTH	640
 #define GAME_HEIGHT 480
@@ -8,8 +8,8 @@
 class Game
 {
 public:
-	Game(void);
-	virtual ~Game(void);
+	Game();
+	virtual ~Game();
 
 	bool Init();
 	void Tick();
@@ -25,7 +25,7 @@ public:
 
 private:
 	unsigned char keys[256];
-	Map *map;
+	Map* map;
 
     // Timing variables
     double t;
