@@ -26,9 +26,15 @@ include_directories(
     lib/TSXParser/include
 )
 
+set(NVIDIA_LIB)
+
+# TODO: Improve NVIDIA detection
+if(EXISTS /usr/lib/nvidia-331)
+set(NVIDIA_LIB -L/usr/lib/nvidia-331/)
+endif()
+
 target_link_libraries(zelda
     ${OPENGL_LIBRARIES}
     ${GLUT_LIBRARY}
-    # TODO: Get rid of the nvidia library?
-    -L/usr/lib/nvidia-331/
+    ${NVIDIA_LIB}
 )
