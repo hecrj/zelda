@@ -1,6 +1,6 @@
 #pragma once
 
-#include "scene.h"
+#include "map.h"
 
 #define GAME_WIDTH	640
 #define GAME_HEIGHT 480
@@ -25,7 +25,7 @@ public:
 
 private:
 	unsigned char keys[256];
-	Scene scene;
+	Map *map;
 
     // Timing variables
     double t;

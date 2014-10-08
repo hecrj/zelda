@@ -7,8 +7,8 @@ set(SOURCE_FILES
     src/game.cpp
     src/game.h
     src/main.cpp
-    src/scene.cpp
-    src/scene.h
+    src/map.cpp
+    src/map.h
     src/utils.h
     src/utils.cpp
     lib/TMXParser/src/TMXParser.cpp

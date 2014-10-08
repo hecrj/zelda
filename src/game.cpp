@@ -4,6 +4,7 @@
 
 Game::Game(void)
 {
+    map = new Map("demo");
     t = 0.0;
     dt = 0.01;
     current_time = CurrentTime();
@@ -80,9 +81,7 @@ void Game::Render()
 	glClear(GL_COLOR_BUFFER_BIT);	
 	glLoadIdentity();
 
-	//-- TODO: Draw scene
-
-	//--
+	map->Render();
 
 	glutSwapBuffers();
 }
