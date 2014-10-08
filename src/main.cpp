@@ -40,9 +40,7 @@ void AppMouse(int button, int state, int x, int y)
 
 void AppIdle()
 {
-	//-- TODO: Game loop
-	game.Loop();
-	//--
+    game.Tick();
 }
 
 int main(int argc, char** argv)

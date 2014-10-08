@@ -12,7 +12,7 @@ public:
 	virtual ~Game(void);
 
 	bool Init();
-	void Loop();
+	void Tick();
 	void Finalize();
 
 	//Input

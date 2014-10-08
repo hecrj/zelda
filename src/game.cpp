@@ -31,7 +31,7 @@ bool Game::Init()
 	return res;
 }
 
-void Game::Loop()
+void Game::Tick()
 {
     double newTime = CurrentTime();
     double frame_time = newTime - current_time;
@@ -45,7 +45,7 @@ void Game::Loop()
         t += dt;
     }
 
-    Render();
+    glutPostRedisplay();
 }
 
 void Game::Finalize()
