@@ -11,7 +11,7 @@ Map::Map(const char* name)
     map->Print();
 
     texture = SOIL_load_OGL_texture(map->tilesets[0]->image.source.c_str(),
-        SOIL_LOAD_AUTO,
+        SOIL_LOAD_RGBA,
         SOIL_CREATE_NEW_ID,
             SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_MULTIPLY_ALPHA);
 
@@ -20,8 +20,6 @@ Map::Map(const char* name)
         error << "SOIL loading error: " << SOIL_last_result() << std::cout;
         throw error.str();
     }
-
-    glEnable(GL_TEXTURE_2D);
 }
 
 Map::~Map()
