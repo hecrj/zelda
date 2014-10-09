@@ -16,6 +16,7 @@ set(SOURCE_FILES
 add_executable(zelda ${SOURCE_FILES})
 
 add_subdirectory(lib/soil)
+add_subdirectory(lib/TMXParser)
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 
@@ -23,7 +24,7 @@ include_directories(
     ${OPENGL_INCLUDE_DIRS}
     ${GLUT_INCLUDE_DIRS}
     ${SOIL_INCLUDE_DIRS}
-    lib/TMXParser/include
+    ${TMXPARSER_INCLUDE_DIRS}
     include
 )
 
@@ -39,4 +40,5 @@ target_link_libraries(zelda
     ${GLUT_LIBRARY}
     ${NVIDIA_LIB}
     SOIL
+    TMXParser
 )
