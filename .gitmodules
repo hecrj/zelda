@@ -2,3 +2,6 @@
 	path = lib/TMXParser
 	url = https://github.com/gamerslab/TMXParser
 
+[submodule "lib/soil"]
+	path = lib/soil
+	url = git@github.com:gamerslab/Simple-OpenGL-Image-Library.git

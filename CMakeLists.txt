@@ -15,11 +15,14 @@ set(SOURCE_FILES
 
 add_executable(zelda ${SOURCE_FILES})
 
+add_subdirectory(lib/soil)
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
+
 include_directories(
     ${OPENGL_INCLUDE_DIRS}
     ${GLUT_INCLUDE_DIRS}
+    ${SOIL_INCLUDE_DIRS}
     lib/TMXParser/include
     include
 )
@@ -35,4 +38,5 @@ target_link_libraries(zelda
     ${OPENGL_LIBRARIES}
     ${GLUT_LIBRARY}
     ${NVIDIA_LIB}
+    SOIL
 )
