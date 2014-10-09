@@ -4,4 +4,4 @@
 
 [submodule "lib/soil"]
 	path = lib/soil
-	url = git@github.com:gamerslab/Simple-OpenGL-Image-Library.git
+	url = https://github.com/gamerslab/Simple-OpenGL-Image-Library
