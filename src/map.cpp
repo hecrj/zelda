@@ -11,8 +11,8 @@ Map::Map(const char* name)
     map->Print();
 
     texture = SOIL_load_OGL_texture(map->tilesets[0]->image.source.c_str(),
-        SOIL_LOAD_RGBA,
-        SOIL_CREATE_NEW_ID,
+            SOIL_LOAD_RGBA,
+            SOIL_CREATE_NEW_ID,
             SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_MULTIPLY_ALPHA);
 
     if(0 == texture) {
