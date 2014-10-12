@@ -1,6 +1,6 @@
 #pragma once
 
-#include "map.hpp"
+#include "map/level.hpp"
 
 #define GAME_WIDTH	640
 #define GAME_HEIGHT 480
@@ -11,7 +11,7 @@ public:
 	Game();
 	virtual ~Game();
 
-	bool Init();
+	void Init();
 	void Tick();
 	void Finalize();
 
@@ -19,13 +19,13 @@ public:
 	void ReadKeyboard(unsigned char key, int x, int y, bool press);
 	void ReadMouse(int button, int state, int x, int y);
 	//Process
-    bool Process(double delta);
+    void Update(double delta);
 	//Output
 	void Render();
 
 private:
 	unsigned char keys[256];
-	Map* map;
+	Level* level;
 
     // Timing variables
     double t;

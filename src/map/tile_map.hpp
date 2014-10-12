@@ -3,12 +3,13 @@
 #include "tmx_map.hpp"
 #include "GL/glut.h"
 
-class Map
+class TileMap
 {
 public:
-	Map(const char* s);
-	virtual ~Map();
+	TileMap(const char* s);
+	virtual ~TileMap();
 
+    void Update(double delta);
 	void Render();
 
 private:

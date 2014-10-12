@@ -15,11 +15,8 @@ Game::~Game()
 
 }
 
-bool Game::Init()
+void Game::Init()
 {
-    map = new Map("demo");
-	bool res=true;
-
 	//Graphics initialization
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
@@ -33,7 +30,8 @@ bool Game::Init()
 
 	glMatrixMode(GL_MODELVIEW);
 
-	return res;
+    // Load demo map
+    level = new Level("demo");
 }
 
 void Game::Tick()
@@ -45,7 +43,7 @@ void Game::Tick()
     accumulator += frame_time;
 
     while(accumulator >= dt) {
-        Process(dt);
+        Update(dt);
         accumulator -= dt;
         t += dt;
     }
@@ -69,14 +67,9 @@ void Game::ReadMouse(int button, int state, int x, int y)
 }
 
 //Process
-bool Game::Process(double delta)
+void Game::Update(double delta)
 {
-	bool res=true;
-	
-	//Process Input
-	if(keys[27])	res=false;
-
-	return res;
+	level->Update(delta);
 }
 
 //Output
@@ -85,7 +78,7 @@ void Game::Render()
 	glClear(GL_COLOR_BUFFER_BIT);	
 	glLoadIdentity();
 
-	map->Render();
+	level->Render();
 
 	glutSwapBuffers();
 }

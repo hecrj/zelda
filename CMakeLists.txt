@@ -6,7 +6,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCE_FILES
     src/game.cpp
     src/main.cpp
-    src/map.cpp
+    src/map/tile_map.cpp
+    src/map/level.cpp
     src/utils.cpp
     lib/TMXParser/src/tmx_map.cpp
     lib/TMXParser/src/xml_utils.cpp
@@ -25,7 +26,6 @@ include_directories(
     ${GLUT_INCLUDE_DIRS}
     ${SOIL_INCLUDE_DIRS}
     ${TMXPARSER_INCLUDE_DIRS}
-    include
 )
 
 set(NVIDIA_LIB)
