@@ -6,12 +6,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCE_FILES
     src/game.cpp
     src/main.cpp
+    src/entity.cpp
+    src/entity/mob.cpp
+    src/entity/mob/action.cpp
+    src/entity/mob/ai.cpp
     src/map/tile_map.cpp
     src/map/level.cpp
+    src/math/dir.cpp
     src/utils.cpp
-    lib/TMXParser/src/tmx_map.cpp
-    lib/TMXParser/src/xml_utils.cpp
-    lib/TMXParser/src/tsx_tileset.cpp
 )
 
 add_executable(zelda ${SOURCE_FILES})
