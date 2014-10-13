@@ -17,6 +17,10 @@ const Dir& Dir::random() {
     return *Dir::ALL[rand() % 4];
 }
 
+const vec2f& Dir::vector() const {
+    return vector_;
+}
+
 const Dir Dir::DOWN = Dir(vec2f(0, 1), 0);
 const Dir Dir::UP = Dir(vec2f(0, -1), 1);
 const Dir Dir::RIGHT = Dir(vec2f(1, 0), 2);

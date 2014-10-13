@@ -9,8 +9,8 @@ public:
 	TileMap(const char* s);
 	virtual ~TileMap();
 
-    void Update(double delta);
-	void Render();
+    virtual void Update(double delta);
+	virtual void Render();
 
 private:
     TMX::Map* map;

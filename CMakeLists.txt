@@ -8,8 +8,11 @@ set(SOURCE_FILES
     src/main.cpp
     src/entity.cpp
     src/entity/mob.cpp
+    src/entity/mob/link.cpp
     src/entity/mob/action.cpp
+    src/entity/mob/action/move.cpp
     src/entity/mob/ai.cpp
+    src/entity/mob/ai/player.cpp
     src/map/tile_map.cpp
     src/map/level.cpp
     src/math/dir.cpp

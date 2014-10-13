@@ -1,5 +1,7 @@
 #include "game.hpp"
 #include "utils.hpp"
+#include "entity/mob/link.hpp"
+#include "entity/mob/ai/player.hpp"
 #include <GL/glut.h>
 
 Game::Game()
@@ -8,11 +10,16 @@ Game::Game()
     dt = 0.01;
     current_time = CurrentTime();
     accumulator = 0.0;
+
+    for(int i = 0; i < 256; ++i) {
+        keys[i] = false;
+    }
 }
 
 Game::~Game()
 {
-
+    if(level != NULL)
+        delete level;
 }
 
 void Game::Init()
@@ -21,17 +28,20 @@ void Game::Init()
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
 
+    glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
     glOrtho(0, GAME_WIDTH, GAME_HEIGHT, 0, 0, 1);
 
 	glMatrixMode(GL_MODELVIEW);
 
     // Load demo map
     level = new Level("demo");
+
+    Link* link = new Link(level);
+    Player* player = new Player(link, keys);
+    level->AddEntity(link);
 }
 
 void Game::Tick()

@@ -16,14 +16,14 @@ public:
         return *this;
     }
 
-    vec2 operator+(vec2& v) const {
+    vec2 operator+(const vec2& v) const {
         return vec2(x + v.x, y + v.y);
     }
-    vec2 operator-(vec2& v) const {
+    vec2 operator-(const vec2& v) const {
         return vec2(x - v.x, y - v.y);
     }
 
-    vec2& operator+=(vec2& v) {
+    vec2& operator+=(const vec2& v) {
         x += v.x;
         y += v.y;
         return *this;
@@ -34,16 +34,16 @@ public:
         return *this;
     }
 
-    vec2 operator+(double s) {
+    vec2 operator+(double s) const {
         return vec2(x + s, y + s);
     }
-    vec2 operator-(double s) {
+    vec2 operator-(double s) const {
         return vec2(x - s, y - s);
     }
-    vec2 operator*(double s) {
+    vec2 operator*(double s) const {
         return vec2(x * s, y * s);
     }
-    vec2 operator/(double s) {
+    vec2 operator/(double s) const {
         return vec2(x / s, y / s);
     }
 

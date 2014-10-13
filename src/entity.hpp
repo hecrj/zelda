@@ -13,9 +13,9 @@ public:
     vec2f top_center() const;
     vec2f center() const;
     vec2f top_left() const;
-    vec2f top_left(vec2f& pos) const;
+    vec2f top_left(const vec2f& pos) const;
     vec2f bottom_right() const;
-    vec2f bottom_right(vec2f &pos) const;
+    vec2f bottom_right(const vec2f &pos) const;
     float width() const;
     float height() const;
     bool alive() const;
@@ -25,14 +25,16 @@ public:
     void set_position(float x, float y);
     void Receive(Entity from);
     void Kill();
-    virtual void Update(float delta);
+    virtual void Update(double delta);
     virtual void Render() const;
+
+protected:
+    vec2f position_;
 
 private:
     std::string name_;
     vec2f top_left_;
     vec2f bottom_right_;
-    vec2f position_;
     float width_;
     float height_;
     bool alive_;

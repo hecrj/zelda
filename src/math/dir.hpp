@@ -12,6 +12,9 @@ public:
 
     static const Dir& fromVector(const vec2f& vector);
     static const Dir& random();
+
+    const vec2f& vector() const;
+
 private:
     vec2f vector_;
     unsigned int index_;

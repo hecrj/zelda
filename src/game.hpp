@@ -24,7 +24,7 @@ public:
 	void Render();
 
 private:
-	unsigned char keys[256];
+	bool keys[256];
 	Level* level;
 
     // Timing variables

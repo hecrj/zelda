@@ -32,18 +32,18 @@ vec2f Entity::center() const {
 }
 
 vec2f Entity::top_left() const {
-    return top_left_;
+    return top_left(position_);
 }
 
-vec2f Entity::top_left(vec2f& pos) const {
+vec2f Entity::top_left(const vec2f& pos) const {
     return top_left_ + pos;
 }
 
 vec2f Entity::bottom_right() const {
-    return bottom_right_;
+    return bottom_right(position_);
 }
 
-vec2f Entity::bottom_right(vec2f &pos) const {
+vec2f Entity::bottom_right(const vec2f &pos) const {
     return bottom_right_ + pos;
 }
 
@@ -80,7 +80,7 @@ void Entity::Kill() {
     alive_ = true;
 }
 
-void Entity::Update(float delta) {
+void Entity::Update(double delta) {
     // Do nothing
 }
 

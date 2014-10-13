@@ -1,10 +1,13 @@
+#include <iostream>
 #include "mob.hpp"
 
-Mob::Mob(const char *name, Level* level, vec2f top_left, vec2f bottom_right) :
+Mob::Mob(const char *name, Level* level, vec2f top_left, vec2f bottom_right, Action* idle_action) :
         super(name, top_left, bottom_right),
         level_(level),
-        facing(Dir::UP),
-        moving(false)
+        facing_(Dir::UP),
+        moving_(false),
+        idle_action_(idle_action),
+        current_action_(idle_action)
 {}
 
 void Mob::set_AI(AI* ai) {
@@ -19,12 +22,24 @@ void Mob::ChangeAction(Action* action)
 }
 
 bool Mob::CanMove() const {
-    return alive() && !current_action_->isBlocking();
+    return alive() && !current_action_->IsBlocking();
 }
 
-void Mob::Update(float delta) {
+void Mob::Move(Dir direction, double delta) {
+    vec2f new_position = position_ + (direction.vector() * delta * 100);
+
+    // TODO: Check level collisions
+    position_ = new_position;
+}
+
+void Mob::Update(double delta) {
     if(CanMove())
         ai_->Update(delta);
+
+    if(current_action_->IsFinished())
+        ChangeAction(idle_action_);
+
+    current_action_->Update(delta);
 
     super::Update(delta);
 }

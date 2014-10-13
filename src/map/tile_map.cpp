@@ -73,4 +73,6 @@ void TileMap::Render()
             }
         }
     }
+
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
