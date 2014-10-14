@@ -3,7 +3,7 @@
 #include "action.hpp"
 #include "../mob.hpp"
 
-Action::Action(const char* name, Mob* mob) {
+Action::Action(const char* name, Mob* mob, const std::vector<Animation*>& animations) {
     name_ = name;
     mob_ = mob;
 }

@@ -1,11 +1,13 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include "../../graphic/animation.hpp"
 
 class Mob;
 class Action {
 public:
-    Action(const char* name, Mob* mob);
+    Action(const char* name, Mob* mob, const std::vector<Animation*>& animations);
 
     virtual bool IsBlocking() const;
     virtual bool IsFinished() const;

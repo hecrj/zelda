@@ -7,6 +7,9 @@ set(SOURCE_FILES
     src/game.cpp
     src/main.cpp
     src/entity.cpp
+    src/utils.cpp
+    src/graphic/animation.cpp
+    src/graphic/spritesheet.cpp
     src/entity/mob.cpp
     src/entity/mob/link.cpp
     src/entity/mob/action.cpp
@@ -16,7 +19,6 @@ set(SOURCE_FILES
     src/map/tile_map.cpp
     src/map/level.cpp
     src/math/dir.cpp
-    src/utils.cpp
 )
 
 add_executable(zelda ${SOURCE_FILES})
