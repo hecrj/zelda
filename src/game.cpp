@@ -41,6 +41,8 @@ void Game::Init()
 
     Link* link = new Link(level);
     Player* player = new Player(link, keys);
+    link->set_AI(player);
+
     level->AddEntity(link);
 }
 

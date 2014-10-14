@@ -19,23 +19,33 @@ TileMap::TileMap(const char* name)
         error << "SOIL loading error: " << SOIL_last_result() << std::cout;
         throw error.str();
     }
+
+    above_index = (unsigned int) map->tile_layers.size();
+    unsigned int layer_index = 0;
+
+    for(const auto& layer : map->tile_layers) {
+        if(layer->property.find("above") != layer->property.end()) {
+            above_index = layer_index;
+            break;
+        }
+
+        layer_index++;
+    }
 }
 
 TileMap::~TileMap()
 {
 }
 
-void TileMap::Update(double delta) {
-
-}
-
-void TileMap::Render()
+void TileMap::RenderLayers(unsigned int from, unsigned int to) const
 {
     // Only one tileset supported
     TSX::Tileset& tileset = *map->tilesets[0];
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    for(TMX::TileLayer* layer : map->tile_layers) {
+    for(; from < to; ++from) {
+        TMX::TileLayer* layer = map->tile_layers[from];
+
         for(int i = 0; i < layer->height; ++i) {
             for(int j = 0; j < layer->width; ++j) {
                 int tile_id = layer->tiles[i][j] - 1;
@@ -75,4 +85,17 @@ void TileMap::Render()
     }
 
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void TileMap::RenderLayersBelow() const {
+    RenderLayers(0, above_index);
+}
+
+void TileMap::RenderLayersAbove() const {
+    RenderLayers(above_index, (unsigned int) map->tile_layers.size());
+}
+
+void TileMap::Render() const {
+    RenderLayersBelow();
+    RenderLayersAbove();
 }

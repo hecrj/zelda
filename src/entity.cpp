@@ -77,7 +77,7 @@ void Entity::Receive(Entity from) {
 }
 
 void Entity::Kill() {
-    alive_ = true;
+    alive_ = false;
 }
 
 void Entity::Update(double delta) {

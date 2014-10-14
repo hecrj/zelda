@@ -1,4 +1,3 @@
-#include <iostream>
 #include "mob.hpp"
 
 Mob::Mob(const char *name, Level* level, vec2f top_left, vec2f bottom_right, Action* idle_action) :

@@ -13,12 +13,13 @@ void Level::Update(double delta) {
 }
 
 void Level::Render() {
-    // TODO: Render above layers after entities
-    super::Render();
+    super::RenderLayersBelow();
 
     for(Entity* entity : entities) {
         entity->Render();
     }
+
+    super::RenderLayersAbove();
 }
 
 void Level::AddEntity(Entity* entity) {

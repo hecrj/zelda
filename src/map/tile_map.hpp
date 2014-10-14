@@ -9,10 +9,13 @@ public:
 	TileMap(const char* s);
 	virtual ~TileMap();
 
-    virtual void Update(double delta);
-	virtual void Render();
+    void RenderLayers(unsigned int from, unsigned int to) const;
+    void RenderLayersBelow() const;
+    void RenderLayersAbove() const;
+	virtual void Render() const;
 
 private:
     TMX::Map* map;
+    unsigned int above_index;
     GLuint texture;
 };
