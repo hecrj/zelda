@@ -1,10 +1,13 @@
 #include "../math/vec2.hpp"
+#include "sprite.hpp"
+#include <vector>
 
 #pragma once
 
 class Animation {
 public:
-    Animation(vec2f entity_position, int sprite_interval);
+    Animation(const std::vector<Sprite*>& sprites, int sprite_interval);
+    Animation(const std::vector<Sprite*>& sprites, int sprite_interval, vec2f position);
 
     int current_frame() const;
 
@@ -13,9 +16,9 @@ public:
     void Update(double delta);
 
 private:
-    // TODO: Sprite vector
+    std::vector<Sprite*> sprites_;
     vec2f dim_;
-    vec2f entity_position_;
+    vec2f position_;
     int sprite_interval_;
     int current_frame_;
 };

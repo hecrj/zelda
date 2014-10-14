@@ -1,10 +1,16 @@
 #include "animation.hpp"
 
-Animation::Animation(vec2f entity_position, int sprite_interval) {
-    entity_position_ = entity_position;
+Animation::Animation(const std::vector<Sprite*>& sprites, int sprite_interval, vec2f position) {
+    sprites_ = sprites;
+    position_ = position;
     sprite_interval_ = sprite_interval;
     current_frame_ = 0;
 }
+
+Animation::Animation(const std::vector<Sprite*>& sprites, int sprite_interval) :
+        Animation(sprites, sprite_interval, vec2f(0, 0))
+{}
+
 
 int Animation::current_frame() const {
     return current_frame_;

@@ -9,6 +9,7 @@ set(SOURCE_FILES
     src/entity.cpp
     src/utils.cpp
     src/graphic/animation.cpp
+    src/graphic/sprite.cpp
     src/graphic/spritesheet.cpp
     src/entity/mob.cpp
     src/entity/mob/link.cpp

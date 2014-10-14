@@ -1,11 +1,12 @@
 #include "link.hpp"
 #include "action/move.hpp"
-#include "../../graphic/spritesheet.hpp"
 
-SpriteSheet* const MOVE_SPRITE_SHEET = new SpriteSheet("charset/link_move", 21, 27);
+SpriteSheet* const Link::MOVE_SPRITE_SHEET = new SpriteSheet("charset/link_move", 21, 27);
 const std::vector<Animation*> Link::MOVE_ANIMATIONS = {
-        // TODO: Populate Link move animations
-        MOVE_SPRITE_SHEET->GetAnimation(0, 7, 50)
+        new Animation(MOVE_SPRITE_SHEET->GetSprites(0, 7), 50),
+        new Animation(MOVE_SPRITE_SHEET->GetSprites(1, 7), 50),
+        new Animation(MOVE_SPRITE_SHEET->GetSprites(2, 7), 50),
+        new Animation(MOVE_SPRITE_SHEET->GetSprites(3, 7), 50)
 };
 
 Link::Link(Level* level) :

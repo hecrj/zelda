@@ -7,15 +7,13 @@ SpriteSheet::SpriteSheet(const char* path, int sprite_width, int sprite_height) 
     sprite_height_ = sprite_height;
 }
 
-Animation* SpriteSheet::GetAnimation(int row, int sprite_count, int sprite_interval) {
-    return GetAnimation(row, sprite_count, sprite_count, vec2f(0, 0));
-}
-
-Animation* SpriteSheet::GetAnimation(int row, int sprite_count, int sprite_interval, vec2f position) {
-    Animation* animation = new Animation(position, sprite_interval);
+std::vector<Sprite*> SpriteSheet::GetSprites(int row, int sprite_count) {
+    std::vector<Sprite*> sprites;
 
     // TODO: Loop and process sprites of row
-    // animation->AddSprite(...);
+    // ...
+    // sprites.push_back(sprite);
+    // ...
 
-    return animation;
+    return sprites;
 }
