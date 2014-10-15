@@ -1,13 +1,21 @@
 #include "link.hpp"
 #include "action/move.hpp"
 
-SpriteSheet* const Link::MOVE_SPRITE_SHEET = new SpriteSheet("charset/link_move", 21, 27);
-const std::vector<Animation*> Link::MOVE_ANIMATIONS = {
-        new Animation(MOVE_SPRITE_SHEET->GetSprites(0, 7), 50),
-        new Animation(MOVE_SPRITE_SHEET->GetSprites(1, 7), 50),
-        new Animation(MOVE_SPRITE_SHEET->GetSprites(2, 7), 50),
-        new Animation(MOVE_SPRITE_SHEET->GetSprites(3, 7), 50)
-};
+SpriteSheet* Link::MOVE_SPRITE_SHEET;
+std::vector<Animation*> Link::MOVE_ANIMATIONS;
+
+void Link::Load() {
+    MOVE_SPRITE_SHEET = new SpriteSheet("charset/link/move_shield.png", 147, 108, 21, 27);
+    MOVE_ANIMATIONS = {
+            new Animation(MOVE_SPRITE_SHEET->GetSprites(0, 7), 3, 60),
+            new Animation(MOVE_SPRITE_SHEET->GetSprites(1, 7), 3, 60),
+            new Animation(MOVE_SPRITE_SHEET->GetSprites(2, 7), 3, 60),
+            new Animation(MOVE_SPRITE_SHEET->GetSprites(3, 7), 3, 60)
+    };
+
+    MOVE_ANIMATIONS[Dir::DOWN.index()]->set_ping_pong(true);
+    MOVE_ANIMATIONS[Dir::UP.index()]->set_ping_pong(true);
+}
 
 Link::Link(Level* level) :
         super(

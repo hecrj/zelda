@@ -1,19 +1,31 @@
+#include <SOIL.h>
+#include <sstream>
+#include <iostream>
 #include "spritesheet.hpp"
 
-SpriteSheet::SpriteSheet(const char* path, int sprite_width, int sprite_height) {
-    // TODO: Load path image
+SpriteSheet::SpriteSheet(const char* path, int width, int height, int sprite_width, int sprite_height) {
+    std::stringstream resource_path;
+    resource_path << "res/" << path;
 
+    texture_ = SOIL_load_OGL_texture(resource_path.str().c_str(),
+            SOIL_LOAD_RGBA,
+            SOIL_CREATE_NEW_ID,
+            SOIL_FLAG_MULTIPLY_ALPHA);
     sprite_width_ = sprite_width;
     sprite_height_ = sprite_height;
+    width_ratio_ = (float)sprite_width / width;
+    height_ratio_ = (float)sprite_height / height;
 }
 
 std::vector<Sprite*> SpriteSheet::GetSprites(int row, int sprite_count) {
     std::vector<Sprite*> sprites;
 
-    // TODO: Loop and process sprites of row
-    // ...
-    // sprites.push_back(sprite);
-    // ...
+    float y = row * height_ratio_;
+
+    for(int i = 0; i < sprite_count; ++i) {
+        sprites.push_back(new Sprite(texture_, sprite_width_, sprite_height_,
+                i * width_ratio_, y, width_ratio_, height_ratio_));
+    }
 
     return sprites;
 }

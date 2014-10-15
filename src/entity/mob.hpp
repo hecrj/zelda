@@ -13,6 +13,8 @@ public:
     Mob(const char* name, Level* level, vec2f top_left, vec2f bottom_right, Action* idle_action_);
 
     bool CanMove() const;
+    const Dir& facing() const;
+    bool moving() const;
 
     void set_AI(AI* ai);
     void ChangeAction(Action *action);
@@ -26,5 +28,6 @@ private:
     Action* idle_action_;
     Action* current_action_;
     Dir facing_;
+    int facing_candidate_;
     bool moving_;
 };

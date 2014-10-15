@@ -5,8 +5,9 @@ class Link : public Mob {
 public:
     typedef Mob super;
 
-    static SpriteSheet* const MOVE_SPRITE_SHEET;
-    static const std::vector<Animation*> MOVE_ANIMATIONS;
+    static SpriteSheet* MOVE_SPRITE_SHEET;
+    static std::vector<Animation*> MOVE_ANIMATIONS;
 
     Link(Level* level);
+    static void Load();
 };

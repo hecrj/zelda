@@ -14,6 +14,7 @@ public:
     static const Dir& random();
 
     const vec2f& vector() const;
+    int index() const;
 
 private:
     vec2f vector_;

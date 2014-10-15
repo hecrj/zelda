@@ -4,6 +4,7 @@ Mob::Mob(const char *name, Level* level, vec2f top_left, vec2f bottom_right, Act
         super(name, top_left, bottom_right),
         level_(level),
         facing_(Dir::UP),
+        facing_candidate_(-1),
         moving_(false),
         idle_action_(idle_action),
         current_action_(idle_action)
@@ -20,20 +21,40 @@ void Mob::ChangeAction(Action* action)
     current_action_->Enter();
 }
 
+const Dir& Mob::facing() const {
+    return facing_;
+}
+
+bool Mob::moving() const {
+    return moving_;
+}
+
 bool Mob::CanMove() const {
     return alive() && !current_action_->IsBlocking();
 }
 
 void Mob::Move(Dir direction, double delta) {
-    vec2f new_position = position_ + (direction.vector() * delta * 100);
+    vec2f new_position = position_ + (direction.vector() * delta * 80);
 
     // TODO: Check level collisions
+    // if(level->Collision(this, new_position))...
+
+    if(facing_.index() == direction.index() || facing_candidate_ == -1) {
+        facing_candidate_ = direction.index();
+    }
+
     position_ = new_position;
+    moving_ = true;
 }
 
 void Mob::Update(double delta) {
     if(CanMove())
         ai_->Update(delta);
+
+    if(facing_candidate_ != -1) {
+        facing_ = *Dir::ALL[facing_candidate_];
+        facing_candidate_ = -1;
+    }
 
     if(current_action_->IsFinished())
         ChangeAction(idle_action_);
@@ -41,6 +62,7 @@ void Mob::Update(double delta) {
     current_action_->Update(delta);
 
     super::Update(delta);
+    moving_ = false;
 }
 
 void Mob::Render() const {

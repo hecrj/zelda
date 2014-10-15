@@ -7,4 +7,5 @@ public:
     Move(Mob* mob, const std::vector<Animation*>& animations);
 
     bool IsBlocking() const;
+    void Update(double delta);
 };

@@ -34,6 +34,14 @@ public:
         return *this;
     }
 
+    bool operator==(const vec2& v) const {
+        return (x == v.x && y == v.y);
+    }
+
+    bool operator!=(const vec2& v) const {
+        return !(*this == v);
+    }
+
     vec2 operator+(double s) const {
         return vec2(x + s, y + s);
     }

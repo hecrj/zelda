@@ -25,6 +25,7 @@ Game::~Game()
 void Game::Init()
 {
 	//Graphics initialization
+    glDisable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_2D);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -39,6 +40,7 @@ void Game::Init()
     // Load demo map
     level = new Level("demo");
 
+    Link::Load();
     Link* link = new Link(level);
     Player* player = new Player(link, keys);
     link->set_AI(player);

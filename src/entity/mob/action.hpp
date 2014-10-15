@@ -11,6 +11,7 @@ public:
 
     virtual bool IsBlocking() const;
     virtual bool IsFinished() const;
+    Animation* CurrentAnimation() const;
 
     virtual void Enter();
     virtual void Leave();
@@ -22,4 +23,5 @@ protected:
 
 private:
     std::string name_;
+    std::vector<Animation*> animations_;
 };
