@@ -10,7 +10,7 @@
 class Mob : public Entity {
 public:
     typedef Entity super;
-    Mob(const char* name, Level* level, vec2f top_left, vec2f bottom_right, Action* idle_action_);
+    Mob(const char* name, Level* level, float x, float y, float width, float height, Action* idle_action_);
 
     bool CanMove() const;
     const Dir& facing() const;

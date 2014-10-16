@@ -1,23 +1,16 @@
 #pragma once
 
 #include "math/vec2.hpp"
+#include "math/rectangle.hpp"
 #include <string>
 
-class Entity {
+class Entity : public Rectangle {
 public:
+    typedef Rectangle super;
     Entity(const char* name, int width, int height);
-    Entity(const char* name, const vec2f& tleft, const vec2f& bright);
+    Entity(const char* name, float x, float y, float width, float height);
 
     std::string name() const;
-    vec2f position() const;
-    vec2f top_center() const;
-    vec2f center() const;
-    vec2f top_left() const;
-    vec2f top_left(const vec2f& pos) const;
-    vec2f bottom_right() const;
-    vec2f bottom_right(const vec2f &pos) const;
-    float width() const;
-    float height() const;
     bool alive() const;
     bool Collides(const Entity& entity) const;
 
@@ -28,14 +21,7 @@ public:
     virtual void Update(double delta);
     virtual void Render() const;
 
-protected:
-    vec2f position_;
-
 private:
     std::string name_;
-    vec2f top_left_;
-    vec2f bottom_right_;
-    float width_;
-    float height_;
     bool alive_;
 };

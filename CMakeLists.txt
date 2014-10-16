@@ -20,6 +20,8 @@ set(SOURCE_FILES
     src/map/tile_map.cpp
     src/map/level.cpp
     src/math/dir.cpp
+    src/math/quadtree.cpp
+    src/math/rectangle.cpp
 )
 
 add_executable(zelda ${SOURCE_FILES})

@@ -21,8 +21,7 @@ Link::Link(Level* level) :
         super(
                 "link",
                 level,
-                vec2f(4.0f, 12.0f),
-                vec2f(16.0f, 24.0f),
+                0.0f, 0.0f, 12.0f, 12.0f,
                 new ::Move(this, MOVE_ANIMATIONS)
         )
 {}

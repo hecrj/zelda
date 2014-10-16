@@ -1,7 +1,7 @@
 #include "mob.hpp"
 
-Mob::Mob(const char *name, Level* level, vec2f top_left, vec2f bottom_right, Action* idle_action) :
-        super(name, top_left, bottom_right),
+Mob::Mob(const char *name, Level* level, float x, float y, float width, float height, Action* idle_action) :
+        super(name, x, y, width, height),
         level_(level),
         facing_(Dir::UP),
         facing_candidate_(-1),

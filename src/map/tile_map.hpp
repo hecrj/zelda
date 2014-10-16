@@ -14,8 +14,10 @@ public:
     void RenderLayersAbove() const;
 	virtual void Render() const;
 
+protected:
+    TMX::Map* map_;
+
 private:
-    TMX::Map* map;
     unsigned int above_index;
     GLuint texture;
 };

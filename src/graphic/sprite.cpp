@@ -12,11 +12,6 @@ Sprite::Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, 
 
 void Sprite::Render(vec2f position) const {
     glBindTexture(GL_TEXTURE_2D, texture_);
-
-    // This avoids blurry sprites (we like retro style)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
     glBegin(GL_QUADS);
 
     glTexCoord2f(tex_x_, tex_y_);

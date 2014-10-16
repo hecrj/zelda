@@ -2,6 +2,7 @@
 
 #include "tile_map.hpp"
 #include "../entity.hpp"
+#include "../math/quadtree.hpp"
 #include <vector>
 
 class Level : public TileMap {
@@ -14,5 +15,6 @@ public:
     void Render();
 
 private:
-    std::vector<Entity*> entities;
+    std::vector<Entity*> entities_;
+    Quadtree* collidables_;
 };

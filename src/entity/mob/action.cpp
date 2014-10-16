@@ -33,5 +33,5 @@ void Action::Update(double delta) {
 }
 
 void Action::Render() const {
-    CurrentAnimation()->Render(mob_->top_left());
+    CurrentAnimation()->Render(mob_->position());
 }

@@ -11,6 +11,13 @@ SpriteSheet::SpriteSheet(const char* path, int width, int height, int sprite_wid
             SOIL_LOAD_RGBA,
             SOIL_CREATE_NEW_ID,
             SOIL_FLAG_MULTIPLY_ALPHA);
+
+    // This avoids blurry sprites (we like retro style)
+    glBindTexture(GL_TEXTURE_2D, texture_);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
     sprite_width_ = sprite_width;
     sprite_height_ = sprite_height;
     width_ratio_ = (float)sprite_width / width;
