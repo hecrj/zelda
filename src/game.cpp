@@ -3,6 +3,7 @@
 #include "entity/mob/link.hpp"
 #include "entity/mob/ai/player.hpp"
 #include <GL/glut.h>
+#include <iostream>
 
 Game::Game()
 {
@@ -38,10 +39,11 @@ void Game::Init()
 	glMatrixMode(GL_MODELVIEW);
 
     // Load demo map
-    level = new Level("demo");
+    level = new Level("bigger");
 
     Link::Load();
     Link* link = new Link(level);
+    link->set_position(17 * 16, 17 * 16);
     Player* player = new Player(link, keys);
     link->set_AI(player);
 

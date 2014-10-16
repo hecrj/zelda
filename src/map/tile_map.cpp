@@ -2,13 +2,14 @@
 #include <sstream>
 #include "tile_map.hpp"
 #include "SOIL.h"
+#include "../debug.hpp"
 
 TileMap::TileMap(const char* name)
 {
     std::stringstream path;
     path << "res/level/" << name << ".tmx";
     map_ = TMX::parse(path.str().c_str());
-
+    collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
     texture = SOIL_load_OGL_texture(map_->tilesets[0]->image.source.c_str(),
             SOIL_LOAD_RGBA,
             SOIL_CREATE_NEW_ID,
@@ -22,6 +23,7 @@ TileMap::TileMap(const char* name)
 
     above_index = (unsigned int) map_->tile_layers.size();
     unsigned int layer_index = 0;
+    std::vector<std::vector<bool>> blocked(map_->height, std::vector<bool>(map_->width, false));
 
     for(const auto& layer : map_->tile_layers) {
         if(layer->property.find("above") != layer->property.end()) {
@@ -29,12 +31,47 @@ TileMap::TileMap(const char* name)
             break;
         }
 
+        // Populate blocked tiles
+        for(int i = 0; i < layer->height; ++i) {
+            for(int j = 0; j < layer->width; ++j) {
+                if(blocked[i][j])
+                    continue;
+
+                int tile_id = layer->tiles[i][j] - 1;
+
+                std::map<std::string, std::string>::iterator property = map_->tilesets[0]->tiles[tile_id].property.find("blocked");
+
+                if(property != map_->tilesets[0]->tiles[tile_id].property.end() && (*property).second == "true") {
+                    blocked_tiles_.push_back(new Rectangle(j*map_->tile_width, i*map_->tile_height,
+                            map_->tile_width, map_->tile_height));
+                    blocked[i][j] = true;
+                }
+            }
+        }
+
         layer_index++;
+    }
+
+    for(Rectangle* blocked_tile : blocked_tiles_) {
+        collidables_->Insert(blocked_tile);
     }
 }
 
 TileMap::~TileMap()
 {
+}
+
+void TileMap::CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {
+    collidables_->Retrieve(rectangle, collidables);
+}
+
+bool TileMap::IsInbounds(Rectangle* rectangle) const {
+    return IsInbounds(rectangle->position(), rectangle->width(), rectangle->height());
+}
+
+bool TileMap::IsInbounds(const vec2f& position, float width, float height) const {
+    return position.x >= 0.0f and position.x + width < (float)map_->width_pixels and
+            position.y >= 0.0f and position.y + height < (float)map_->height_pixels;
 }
 
 void TileMap::RenderLayers(unsigned int from, unsigned int to) const
@@ -93,6 +130,13 @@ void TileMap::RenderLayersBelow() const {
 
 void TileMap::RenderLayersAbove() const {
     RenderLayers(above_index, (unsigned int) map_->tile_layers.size());
+
+    if(Debug::enabled) {
+        for(Rectangle* r : blocked_tiles_)
+            r->Render(0, 1, 0);
+
+        collidables_->Render();
+    }
 }
 
 void TileMap::Render() const {

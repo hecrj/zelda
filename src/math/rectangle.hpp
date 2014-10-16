@@ -15,6 +15,11 @@ public:
     vec2f bottom_right(const vec2f &pos) const;
     float width() const;
     float height() const;
+    virtual bool CanCollideWith(Rectangle* rectangle) const;
+    bool CollidesWith(Rectangle* rectangle) const;
+
+    void Render(float r, float g, float b) const;
+    void Print() const;
 
 protected:
     vec2f position_;

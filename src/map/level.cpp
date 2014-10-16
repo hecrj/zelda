@@ -1,15 +1,16 @@
 #include "level.hpp"
 
-Level::Level(const char *map) : super(map) {
-    collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width, map_->height));
-}
+Level::Level(const char *map) : super(map)
+{}
 
 void Level::Update(double delta) {
     // TODO: Remove dead entities
 
     for(Entity* entity : entities_) {
         entity->Update(delta);
-        collidables_->Update(entity);
+
+        if(entity->moving())
+            collidables_->Update(entity);
     }
 }
 

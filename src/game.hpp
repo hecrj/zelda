@@ -15,12 +15,9 @@ public:
 	void Tick();
 	void Finalize();
 
-	//Input
 	void ReadKeyboard(unsigned char key, int x, int y, bool press);
 	void ReadMouse(int button, int state, int x, int y);
-	//Process
     void Update(double delta);
-	//Output
 	void Render();
 
 private:

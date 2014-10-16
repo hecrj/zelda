@@ -34,16 +34,29 @@ bool Mob::CanMove() const {
 }
 
 void Mob::Move(Dir direction, double delta) {
-    vec2f new_position = position_ + (direction.vector() * delta * 80);
-
-    // TODO: Check level collisions
-    // if(level->Collision(this, new_position))...
+    vec2f new_position = position_ + direction.vector() * delta * 80;
 
     if(facing_.index() == direction.index() || facing_candidate_ == -1) {
         facing_candidate_ = direction.index();
     }
 
+    if(!level_->IsInbounds(new_position, width_, height_)) {
+        return;
+    }
+
+    vec2f old_position = position_;
     position_ = new_position;
+
+    std::vector<Rectangle*> collidables;
+    level_->CollidablesFor(this, collidables);
+
+    for(Rectangle* collidable : collidables) {
+        if(collidable != this && CanCollideWith(collidable) && CollidesWith(collidable)) {
+            position_ = old_position;
+            return;
+        }
+    }
+
     moving_ = true;
 }
 
@@ -67,4 +80,6 @@ void Mob::Update(double delta) {
 
 void Mob::Render() const {
     current_action_->Render();
+
+    super::Render();
 }

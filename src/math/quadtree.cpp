@@ -7,7 +7,12 @@ Quadtree::Quadtree(int level, Rectangle bounds) :
         level_(level),
         bounds_(bounds)
 {
-    std::cout << "Quadtree" << std::endl;
+    // Initialize children pointers to null
+    for(int i = 0; i < 4; ++i)
+        children_[i] = 0;
+
+    std::cout << "Quadtree @ (" << bounds_.x() << ", " << bounds_.y() << ") -> (" <<
+            bounds_.x() + bounds_.width() << ", " << bounds.y() + bounds_.height() << ")" << std::endl;
 }
 
 Quadtree::~Quadtree() {
@@ -47,12 +52,12 @@ int Quadtree::child_for(Rectangle *r) const {
 
     if(rposition.x < center.x &&  rposition.x + r->width() < center.x) {
         if(top_quadrant)
-            index = 0;
+            index = 1;
         else if(bottom_quadrant)
             index = 2;
     } else if(rposition.x > center.x) {
         if(top_quadrant)
-            index = 1;
+            index = 0;
         else if(bottom_quadrant)
             index = 3;
     }
@@ -131,4 +136,14 @@ void Quadtree::Retrieve(Rectangle *r, std::vector<Rectangle *> &objects) const {
 
 bool Quadtree::IsEmpty() const {
     return (!children_[0]) && objects_.size() == 0;
+}
+
+void Quadtree::Render() const {
+    bounds_.Render(0, 0, 1);
+
+    if(children_[0]) {
+        for(int i = 0; i < 4; i++) {
+            children_[i]->Render();
+        }
+    }
 }

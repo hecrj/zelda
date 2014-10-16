@@ -4,6 +4,7 @@ project(zelda)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
+    src/debug.cpp
     src/game.cpp
     src/main.cpp
     src/entity.cpp

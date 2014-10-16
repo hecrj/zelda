@@ -1,4 +1,5 @@
 #include "entity.hpp"
+#include "debug.hpp"
 
 Entity::Entity(const char *name, int width, int height) :
         super(0, 0, width, height),
@@ -18,10 +19,6 @@ std::string Entity::name() const {
 
 bool Entity::alive() const {
     return alive_;
-}
-
-bool Entity::Collides(const Entity &entity) const {
-    return true;
 }
 
 void Entity::set_position(float x, float y) {
@@ -46,5 +43,10 @@ void Entity::Update(double delta) {
 }
 
 void Entity::Render() const {
-    // Do nothing
+    if(Debug::enabled)
+        super::Render(1, 0, 0);
+}
+
+bool Entity::moving() const {
+    return false;
 }

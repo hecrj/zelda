@@ -12,7 +12,7 @@ public:
 
     std::string name() const;
     bool alive() const;
-    bool Collides(const Entity& entity) const;
+    virtual bool moving() const;
 
     void set_position(const vec2f& position);
     void set_position(float x, float y);

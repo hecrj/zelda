@@ -18,6 +18,9 @@ public:
     void Update(Rectangle *r);
     void Retrieve(Rectangle *r, std::vector<Rectangle *> &objects) const;
 
+    // Debugging purposes
+    void Render() const;
+
 
 private:
     static const int MAX_OBJECTS;
