@@ -30,5 +30,5 @@ private:
     Rectangle bounds_;
     Quadtree* children_[4];
 
-    int child_for(Rectangle* r) const;
+    int ChildFor(Rectangle* r) const;
 };

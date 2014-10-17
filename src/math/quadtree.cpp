@@ -42,20 +42,20 @@ void Quadtree::Split() {
             sub_height));
 }
 
-int Quadtree::child_for(Rectangle *r) const {
+int Quadtree::ChildFor(Rectangle* r) const {
     int index = -1;
     vec2f center = bounds_.center();
     vec2f rposition = r->position();
 
-    bool top_quadrant = (rposition.y < center.y && rposition.y + r->height() < center.y);
-    bool bottom_quadrant = (rposition.y > center.y);
+    bool top_quadrant = (rposition.y <= center.y && rposition.y + r->height() <= center.y);
+    bool bottom_quadrant = (rposition.y >= center.y);
 
-    if(rposition.x < center.x &&  rposition.x + r->width() < center.x) {
+    if(rposition.x <= center.x && rposition.x + r->width() <= center.x) {
         if(top_quadrant)
             index = 1;
         else if(bottom_quadrant)
             index = 2;
-    } else if(rposition.x > center.x) {
+    } else if(rposition.x >= center.x) {
         if(top_quadrant)
             index = 0;
         else if(bottom_quadrant)
@@ -67,7 +67,7 @@ int Quadtree::child_for(Rectangle *r) const {
 
 void Quadtree::Insert(Rectangle *r) {
     if(children_[0]) {
-        int child = child_for(r);
+        int child = ChildFor(r);
 
         if(child != -1) {
             children_[child]->Insert(r);
@@ -84,7 +84,7 @@ void Quadtree::Insert(Rectangle *r) {
 
         std::list<Rectangle*>::iterator it = objects_.begin();
         while(it != objects_.end()) {
-            int child = child_for(*it);
+            int child = ChildFor(*it);
 
             if(child != -1) {
                 children_[child]->Insert(*it);
@@ -98,7 +98,7 @@ void Quadtree::Insert(Rectangle *r) {
 
 void Quadtree::Remove(Rectangle *r) {
     if(children_[0]) {
-        int child = child_for(r);
+        int child = ChildFor(r);
 
         if(child != -1) {
             children_[child]->Remove(r);
@@ -124,9 +124,14 @@ void Quadtree::Update(Rectangle *r) {
 
 void Quadtree::Retrieve(Rectangle *r, std::vector<Rectangle *> &objects) const {
     if(children_[0]) {
-        int child = child_for(r);
+        int child = ChildFor(r);
 
-        if (child != -1) {
+        if (child == -1) {
+            children_[0]->Retrieve(r, objects);
+            children_[1]->Retrieve(r, objects);
+            children_[2]->Retrieve(r, objects);
+            children_[3]->Retrieve(r, objects);
+        } else {
             children_[child]->Retrieve(r, objects);
         }
     }

@@ -2,6 +2,7 @@
 #include "utils.hpp"
 #include "entity/mob/link.hpp"
 #include "entity/mob/ai/player.hpp"
+#include "debug.hpp"
 #include <GL/glut.h>
 #include <iostream>
 
@@ -47,7 +48,7 @@ void Game::Init()
     Player* player = new Player(link, keys);
     link->set_AI(player);
 
-    level->AddEntity(link);
+    level->set_player(link);
 }
 
 void Game::Tick()

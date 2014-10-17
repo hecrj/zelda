@@ -14,7 +14,7 @@ public:
     bool IsInbounds(const vec2f& position, float width, float height) const;
     void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
 
-    void RenderLayers(unsigned int from, unsigned int to) const;
+    void RenderLayers(const std::vector<TMX::TileLayer*>& layers) const;
     void RenderLayersBelow() const;
     void RenderLayersAbove() const;
 	virtual void Render() const;
@@ -22,9 +22,10 @@ public:
 protected:
     TMX::Map* map_;
     Quadtree* collidables_;
-    std::vector<Rectangle*> blocked_tiles_;
 
 private:
-    unsigned int above_index;
     GLuint texture;
+    std::vector<Rectangle*> blocked_tiles_;
+
+    void InitBlockedTiles();
 };
