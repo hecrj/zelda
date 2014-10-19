@@ -23,7 +23,7 @@ You need to have `OpenGL`, `glut` and `cmake` installed.
 sudo apt-get install freeglut3-dev libxmu-dev libxi-dev cmake
 ```
 
-# Compiling the game
+## Compiling the game
 Use `cmake` to generate a `Makefile` to compile the game.
 
 ```shell
@@ -31,7 +31,7 @@ cmake .
 make
 ```
 
-# Playing zelda
+## Playing zelda
 Just run the `zelda` executable you just compiled!
 
 ```shell
