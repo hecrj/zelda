@@ -42,8 +42,8 @@ include_directories(
 set(NVIDIA_LIB)
 
 # TODO: Improve NVIDIA detection
-if(EXISTS /usr/lib/nvidia-331)
-set(NVIDIA_LIB -L/usr/lib/nvidia-331/)
+if(EXISTS /usr/lib/nvidia-331-updates)
+set(NVIDIA_LIB -L/usr/lib/nvidia-331-updates/)
 endif()
 
 target_link_libraries(zelda
