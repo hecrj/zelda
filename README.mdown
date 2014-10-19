@@ -1,0 +1,41 @@
+Trying the game
+==================
+
+## Setting up the repository
+Clone this repository to any directory you want:
+
+```shell
+git clone git@github.com:gamerslab/zelda.git
+```
+
+Then, initialize and download the repository submodules (TMXParser and SOIL):
+
+```shell
+git submodule update --init
+```
+
+## Satisfying dependencies
+
+You need to have `OpenGL`, `glut` and `cmake` installed.
+
+### Debian-based
+```
+sudo apt-get install freeglut3-dev libxmu-dev libxi-dev cmake
+```
+
+# Compiling the game
+Use `cmake` to generate a `Makefile` to compile the game.
+
+```shell
+cmake .
+make
+```
+
+# Playing zelda
+Just run the `zelda` executable you just compiled!
+
+```shell
+./zelda
+```
+
+Have fun!
