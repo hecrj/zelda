@@ -46,6 +46,16 @@ float Rectangle::y() {
     return position_.y;
 }
 
+void Rectangle::set_position(float x, float y) {
+    position_.x = x;
+    position_.y = y;
+}
+
+void Rectangle::set_position(const vec2f &position) {
+    set_position(position.x, position.y);
+}
+
+
 bool Rectangle::CanCollideWith(Rectangle* rectangle) const {
     return true;
 }

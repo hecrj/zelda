@@ -7,6 +7,9 @@ class Sprite {
 public:
     Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, float tex_width, float tex_height);
 
+    float width() const;
+    float height() const;
+
     void Render(vec2f position) const;
 
 private:

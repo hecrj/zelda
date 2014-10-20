@@ -11,6 +11,9 @@ public:
 
     int current_frame() const;
     bool IsFinished() const;
+    vec2f position() const;
+    float width();
+    float height();
 
     void set_current_frame(int frame);
     void set_ping_pong(bool ping_pong);
@@ -20,7 +23,8 @@ public:
 
 private:
     std::vector<Sprite*> sprites_;
-    vec2f dim_;
+    float width_;
+    float height_;
     vec2f position_;
     int idle_index_;
     int interval_;

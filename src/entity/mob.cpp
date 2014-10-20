@@ -1,7 +1,7 @@
 #include "mob.hpp"
 
-Mob::Mob(const char *name, Level* level, float x, float y, float width, float height, Action* idle_action) :
-        super(name, x, y, width, height),
+Mob::Mob(Level* level, float x, float y, float width, float height, Action* idle_action) :
+        super(x, y, width, height),
         level_(level),
         facing_(Dir::UP),
         facing_candidate_(-1),
@@ -61,13 +61,13 @@ void Mob::Move(Dir direction, double delta) {
 }
 
 void Mob::Update(double delta) {
-    if(CanMove())
-        ai_->Update(delta);
-
     if(facing_candidate_ != -1) {
         facing_ = *Dir::ALL[facing_candidate_];
         facing_candidate_ = -1;
     }
+
+    if(CanMove())
+        ai_->Update(delta);
 
     if(current_action_->IsFinished())
         ChangeAction(idle_action_);
@@ -95,4 +95,16 @@ Action* Mob::action(std::string name) const {
 
 void Mob::RegisterAction(std::string name, Action *action) {
     actions_[name] = action;
+}
+
+void Mob::Attach(Rectangle* e) {
+    level_->AddCollidable(e);
+}
+
+void Mob::Unattach(Rectangle* e) {
+    level_->RemoveCollidable(e);
+}
+
+Hitmap* Mob::GetHitmap() const {
+    return new Hitmap();
 }

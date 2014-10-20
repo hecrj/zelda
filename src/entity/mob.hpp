@@ -12,19 +12,23 @@
 class Mob : public Entity {
 public:
     typedef Entity super;
-    Mob(const char* name, Level* level, float x, float y, float width, float height, Action* idle_action_);
+    Mob(Level* level, float x, float y, float width, float height, Action* idle_action_);
 
     bool CanMove() const;
     const Dir& facing() const;
     bool moving() const;
     Action* action(std::string name) const;
+    Hitmap *GetHitmap() const;
 
     void set_AI(AI* ai);
     void RegisterAction(std::string name, Action *action);
     void ChangeAction(Action *action);
     void Move(Dir direction, double delta);
+    void Attach(Rectangle* e);
+    void Unattach(Rectangle* e);
     void Update(double delta);
     void Render() const;
+
 
 private:
     Level* level_;

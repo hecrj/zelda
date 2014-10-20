@@ -39,6 +39,14 @@ void Level::AddEntity(Entity* entity) {
     collidables_->Insert(entity);
 }
 
+void Level::AddCollidable(Rectangle* rectangle) {
+    collidables_->Insert(rectangle);
+}
+
+void Level::RemoveCollidable(Rectangle* rectangle) {
+    collidables_->Remove(rectangle);
+}
+
 void Level::set_player(Entity* player) {
     player_ = player;
     AddEntity(player);

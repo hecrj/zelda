@@ -30,7 +30,6 @@ void Link::Load() {
 
 Link::Link(Level* level) :
         super(
-                "link",
                 level,
                 0.0f, 0.0f, 19.0f, 14.0f,
                 new ::Move(this, MOVE_ANIMATIONS)

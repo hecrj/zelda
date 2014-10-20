@@ -29,3 +29,11 @@ void Sprite::Render(vec2f position) const {
     glEnd();
     glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+float Sprite::width() const {
+    return width_;
+}
+
+float Sprite::height() const {
+    return height_;
+}

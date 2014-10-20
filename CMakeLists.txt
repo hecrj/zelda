@@ -10,6 +10,9 @@ set(SOURCE_FILES
     src/entity.cpp
     src/utils.cpp
     src/graphic/animation.cpp
+    src/graphic/hitbox.cpp
+    src/graphic/hitbox/hidden_hitbox.cpp
+    src/graphic/hitmap.cpp
     src/graphic/sprite.cpp
     src/graphic/spritesheet.cpp
     src/entity/mob.cpp

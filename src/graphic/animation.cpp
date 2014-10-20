@@ -2,16 +2,26 @@
 #include "animation.hpp"
 
 Animation::Animation(const std::vector<Sprite*>& sprites, int idle_index, int interval, vec2f position) :
-    sprites_(sprites),
-    position_(position),
-    idle_index_(idle_index),
-    interval_(interval),
-    current_frame_(idle_index),
-    accum_(0),
-    ping_pong_(false),
-    ascending_(true),
-    finished_(false)
-{}
+        sprites_(sprites),
+        position_(position),
+        idle_index_(idle_index),
+        interval_(interval),
+        current_frame_(idle_index),
+        accum_(0),
+        ping_pong_(false),
+        ascending_(true),
+        finished_(false),
+        width_(0),
+        height_(0)
+{
+    for(Sprite* sprite : sprites_) {
+        if(sprite->width() > width_)
+            width_ = sprite->width();
+
+        if(sprite->height() > height_)
+            height_ = sprite->height();
+    }
+}
 
 Animation::Animation(const std::vector<Sprite*>& sprites, int idle_index, int interval) :
         Animation(sprites, idle_index, interval, vec2f(0, 0))
@@ -64,4 +74,16 @@ void Animation::set_ping_pong(bool ping_pong) {
 
 bool Animation::IsFinished() const {
     return finished_;
+}
+
+vec2f Animation::position() const {
+    return position_;
+}
+
+float Animation::width() {
+    return width_;
+}
+
+float Animation::height() {
+    return height_;
 }

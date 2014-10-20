@@ -16,8 +16,10 @@ public:
     float width() const;
     float height() const;
     virtual bool CanCollideWith(Rectangle* rectangle) const;
-    bool CollidesWith(Rectangle* rectangle) const;
+    virtual bool CollidesWith(Rectangle* rectangle) const;
 
+    void set_position(const vec2f& position);
+    void set_position(float x, float y);
     void Render(float r, float g, float b) const;
     void Print() const;
 

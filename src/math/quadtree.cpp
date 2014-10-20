@@ -1,5 +1,6 @@
 #include <iostream>
 #include "quadtree.hpp"
+#include "../debug.hpp"
 
 const int Quadtree::MAX_OBJECTS = 10;
 
@@ -11,7 +12,8 @@ Quadtree::Quadtree(int level, Rectangle bounds) :
     for(int i = 0; i < 4; ++i)
         children_[i] = 0;
 
-    std::cout << "Quadtree @ (" << bounds_.x() << ", " << bounds_.y() << ") -> (" <<
+    if(Debug::enabled)
+        std::cout << "Quadtree @ (" << bounds_.x() << ", " << bounds_.y() << ") -> (" <<
             bounds_.x() + bounds_.width() << ", " << bounds.y() + bounds_.height() << ")" << std::endl;
 }
 
