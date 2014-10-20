@@ -7,7 +7,7 @@ Player::Player(Mob* mob, bool* keys) : super(mob) {
     keys_ = keys;
 }
 
-void Player::Update(double delta) {
+void Player::Move(double delta) {
     if(keys_[GLUT_KEY_RIGHT])
         mob_->Move(Dir::RIGHT, delta);
 
@@ -19,7 +19,9 @@ void Player::Update(double delta) {
 
     else if(keys_[GLUT_KEY_DOWN])
         mob_->Move(Dir::DOWN, delta);
+}
 
+void Player::Update(double delta) {
     Action* attack = mob_->action("attack");
 
     if(attack && keys_['z'])

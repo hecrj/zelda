@@ -21,7 +21,7 @@ void Link::Load() {
 
     ATTACK_SPRITE_SHEET = new SpriteSheet("charset/link/attack_sword.png", 324, 144, 36, 36);
     ATTACK_ANIMATIONS = {
-            new Animation(ATTACK_SPRITE_SHEET->GetSprites(0, 6), 0, 31, vec2f(0.0f, -10.0f)),
+            new Animation(ATTACK_SPRITE_SHEET->GetSprites(0, 6), 0, 31, vec2f(-2.0f, -10.0f)),
             new Animation(ATTACK_SPRITE_SHEET->GetSprites(1, 9), 0, 20, vec2f(-11.0f, -23.0f)),
             new Animation(ATTACK_SPRITE_SHEET->GetSprites(2, 9), 0, 20, vec2f(-2.0f, -12.0f)),
             new Animation(ATTACK_SPRITE_SHEET->GetSprites(3, 9), 0, 20, vec2f(-11.0f, -12.0f))
@@ -31,7 +31,7 @@ void Link::Load() {
 Link::Link(Level* level) :
         super(
                 level,
-                0.0f, 0.0f, 19.0f, 14.0f,
+                0.0f, 0.0f, 20.0f, 14.0f,
                 new ::Move(this, MOVE_ANIMATIONS)
         )
 {

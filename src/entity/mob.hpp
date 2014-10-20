@@ -26,6 +26,7 @@ public:
     void Move(Dir direction, double delta);
     void Attach(Rectangle* e);
     void Unattach(Rectangle* e);
+
     void Update(double delta);
     void Render() const;
 

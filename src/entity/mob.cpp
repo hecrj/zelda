@@ -61,21 +61,24 @@ void Mob::Move(Dir direction, double delta) {
 }
 
 void Mob::Update(double delta) {
-    if(facing_candidate_ != -1) {
-        facing_ = *Dir::ALL[facing_candidate_];
-        facing_candidate_ = -1;
-    }
-
-    if(CanMove())
-        ai_->Update(delta);
+    moving_ = false;
 
     if(current_action_->IsFinished())
         ChangeAction(idle_action_);
 
-    current_action_->Update(delta);
+    if(CanMove()) {
+        ai_->Move(delta);
 
+        if(facing_candidate_ != -1) {
+            facing_ = *Dir::ALL[facing_candidate_];
+            facing_candidate_ = -1;
+        }
+
+        ai_->Update(delta);
+    }
+
+    current_action_->Update(delta);
     super::Update(delta);
-    moving_ = false;
 }
 
 void Mob::Render() const {
