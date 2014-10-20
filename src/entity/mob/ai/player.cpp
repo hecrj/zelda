@@ -20,6 +20,11 @@ void Player::Update(double delta) {
     else if(keys_[GLUT_KEY_DOWN])
         mob_->Move(Dir::DOWN, delta);
 
+    Action* attack = mob_->action("attack");
+
+    if(attack && keys_['z'])
+        mob_->ChangeAction(attack);
+
     if(keys_['a'])
         Debug::enabled = !Debug::enabled;
 }

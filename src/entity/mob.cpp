@@ -83,3 +83,16 @@ void Mob::Render() const {
 
     super::Render();
 }
+
+Action* Mob::action(std::string name) const {
+    std::map<std::string, Action*>::const_iterator it = actions_.find(name);
+
+    if(it == actions_.end())
+        return 0;
+    else
+        return it->second;
+}
+
+void Mob::RegisterAction(std::string name, Action *action) {
+    actions_[name] = action;
+}

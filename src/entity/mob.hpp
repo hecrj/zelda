@@ -6,6 +6,8 @@
 #include "mob/ai.hpp"
 #include "../math/vec2.hpp"
 #include "../math/dir.hpp"
+#include <map>
+#include <string>
 
 class Mob : public Entity {
 public:
@@ -15,8 +17,10 @@ public:
     bool CanMove() const;
     const Dir& facing() const;
     bool moving() const;
+    Action* action(std::string name) const;
 
     void set_AI(AI* ai);
+    void RegisterAction(std::string name, Action *action);
     void ChangeAction(Action *action);
     void Move(Dir direction, double delta);
     void Update(double delta);
@@ -27,6 +31,7 @@ private:
     AI* ai_;
     Action* idle_action_;
     Action* current_action_;
+    std::map<std::string, Action*> actions_;
     Dir facing_;
     int facing_candidate_;
     bool moving_;

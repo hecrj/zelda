@@ -10,6 +10,7 @@ public:
     Animation(const std::vector<Sprite*>& sprites, int idle_index, int interval, vec2f position);
 
     int current_frame() const;
+    bool IsFinished() const;
 
     void set_current_frame(int frame);
     void set_ping_pong(bool ping_pong);
@@ -24,7 +25,8 @@ private:
     int idle_index_;
     int interval_;
     int current_frame_;
-    int accum;
+    int accum_;
     bool ping_pong_;
     bool ascending_;
+    bool finished_;
 };

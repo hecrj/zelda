@@ -16,3 +16,7 @@ void Move::Update(double delta) {
         CurrentAnimation()->Reset();
     }
 }
+
+bool Move::IsFinished() const {
+    return false;
+}

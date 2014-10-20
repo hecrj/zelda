@@ -13,7 +13,7 @@ bool Action::IsBlocking() const {
 }
 
 bool Action::IsFinished() const {
-    return false;
+    return animations_[mob_->facing().index()]->IsFinished();
 }
 
 Animation* Action::CurrentAnimation() const {
@@ -25,7 +25,7 @@ void Action::Enter() {
 }
 
 void Action::Leave() {
-
+    CurrentAnimation()->Reset();
 }
 
 void Action::Update(double delta) {

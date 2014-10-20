@@ -16,6 +16,7 @@ set(SOURCE_FILES
     src/entity/mob/link.cpp
     src/entity/mob/action.cpp
     src/entity/mob/action/move.cpp
+    src/entity/mob/action/attack.cpp
     src/entity/mob/ai.cpp
     src/entity/mob/ai/player.cpp
     src/map/tile_map.cpp
