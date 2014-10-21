@@ -1,7 +1,7 @@
 #include "attack.hpp"
 #include "../../mob.hpp"
 
-Attack::Attack(Mob* mob, const std::vector<Animation*>& animations) : super("attack", mob, animations) {
+Attack::Attack(Mob* mob, const std::vector<SpriteSet*>& animations) : super("attack", mob, animations) {
 }
 
 void Attack::Enter() {

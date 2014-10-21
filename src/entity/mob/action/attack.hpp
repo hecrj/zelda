@@ -6,7 +6,7 @@
 class Attack : public Action {
 public:
     typedef Action super;
-    Attack(Mob* mob, const std::vector<Animation*>& animations);
+    Attack(Mob* mob, const std::vector<SpriteSet*>& animations);
 
     void Enter();
     void Leave();

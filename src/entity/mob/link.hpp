@@ -8,8 +8,8 @@ public:
     static SpriteSheet* MOVE_SPRITE_SHEET;
     static SpriteSheet* ATTACK_SPRITE_SHEET;
 
-    static std::vector<Animation*> MOVE_ANIMATIONS;
-    static std::vector<Animation*> ATTACK_ANIMATIONS;
+    static std::vector<SpriteSet*> MOVE_ANIMATIONS;
+    static std::vector<SpriteSet*> ATTACK_ANIMATIONS;
 
     Link(Level* level);
     static void Load();

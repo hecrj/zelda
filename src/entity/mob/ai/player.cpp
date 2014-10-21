@@ -25,7 +25,4 @@ void Player::Move(double delta) {
 void Player::Update(double delta) {
     if(attack_ && keys_['z'])
         mob_->ChangeAction(attack_);
-
-    if(keys_['a'])
-        Debug::enabled = !Debug::enabled;
 }

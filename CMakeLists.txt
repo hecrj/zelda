@@ -15,6 +15,7 @@ set(SOURCE_FILES
     src/graphic/hitmap.cpp
     src/graphic/sprite.cpp
     src/graphic/spritesheet.cpp
+    src/graphic/sprite_set.cpp
     src/entity/mob.cpp
     src/entity/mob/link.cpp
     src/entity/mob/action.cpp

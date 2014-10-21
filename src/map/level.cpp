@@ -8,11 +8,18 @@ void Level::Update(double delta) {
     // TODO: Remove dead entities
 
     for(Entity* entity : entities_) {
+        collidables_->Remove(entity);
+
         entity->Update(delta);
 
-        if(entity->moving())
-            collidables_->Update(entity);
+        collidables_->Insert(entity);
+        temp_entities_.push_back(entity);
     }
+
+    // We need to update the set in order to keep it sorted
+    entities_.clear();
+    entities_.insert(temp_entities_.begin(), temp_entities_.end());
+    temp_entities_.clear();
 }
 
 void Level::Render() {
@@ -35,7 +42,7 @@ void Level::Render() {
 }
 
 void Level::AddEntity(Entity* entity) {
-    entities_.push_back(entity);
+    entities_.insert(entity);
     collidables_->Insert(entity);
 }
 

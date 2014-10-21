@@ -7,6 +7,6 @@ AnimationHitbox::AnimationHitbox(float x, float y, Animation* animation) :
     set_position(vec2f(x, y) + animation_->position());
 }
 
-Hitmap*AnimationHitbox::GetHitmap() const {
+Hitmap* AnimationHitbox::GetHitmap() const {
     return animation_->CurrentHitmap();
 }

@@ -99,6 +99,7 @@ void Quadtree::Insert(Rectangle *r) {
 }
 
 void Quadtree::Remove(Rectangle *r) {
+
     if(children_[0]) {
         int child = ChildFor(r);
 

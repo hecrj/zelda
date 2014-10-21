@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 	glutInit(&argc, argv);
 
 	//RGBA with double buffer
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_ALPHA | GLUT_DEPTH | GLUT_STENCIL);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_ALPHA);
 
 	//Create centered window
 	res_x = glutGet(GLUT_SCREEN_WIDTH);

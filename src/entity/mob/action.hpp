@@ -8,7 +8,7 @@
 class Mob;
 class Action {
 public:
-    Action(const char* name, Mob* mob, const std::vector<Animation*>& animations);
+    Action(const char* name, Mob* mob, const std::vector<SpriteSet*>& animations);
 
     virtual bool IsBlocking() const;
     virtual bool IsFinished() const;

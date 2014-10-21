@@ -2,11 +2,14 @@
 #include "action.hpp"
 #include "../mob.hpp"
 
-Action::Action(const char* name, Mob* mob, const std::vector<Animation*>& animations) :
+Action::Action(const char* name, Mob* mob, const std::vector<SpriteSet*>& spritesets) :
     name_(name),
-    mob_(mob),
-    animations_(animations)
-{}
+    mob_(mob)
+{
+    for(SpriteSet* spriteset : spritesets) {
+        animations_.push_back(new Animation(spriteset));
+    }
+}
 
 bool Action::IsBlocking() const {
     return true;

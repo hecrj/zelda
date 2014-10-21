@@ -1,8 +1,8 @@
+#pragma once
+
 #include <list>
 #include <vector>
 #include "../entity.hpp"
-
-#pragma once
 
 class Quadtree {
 public:

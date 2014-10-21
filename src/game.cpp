@@ -7,8 +7,8 @@
 #include <GL/glut.h>
 #include <iostream>
 
-int Game::WIDTH = 1024;
-int Game::HEIGHT = 768;
+int Game::WIDTH = 640;
+int Game::HEIGHT = 480;
 bool Game::DIRTY = true;
 GLuint Game::FRAMEBUFFER_AUX = 0;
 GLuint Game::RENDERBUFFER_AUX = 0;
@@ -17,6 +17,10 @@ GLuint Game::FramebufferAux() {
     if(FRAMEBUFFER_AUX and DIRTY) {
         glDeleteRenderbuffers(1, &RENDERBUFFER_AUX);
         glDeleteFramebuffers(1, &FRAMEBUFFER_AUX);
+
+        FRAMEBUFFER_AUX = 0;
+        RENDERBUFFER_AUX = 0;
+        DIRTY = false;
     }
 
     if(!FRAMEBUFFER_AUX) {
@@ -76,11 +80,16 @@ void Game::Init()
 
     Link::Load();
     Link* link = new Link(level);
+    Link* link2 = new Link(level);
     link->set_position(17 * 16, 17 * 16);
+    link2->set_position(17*16, 11*16);
     Player* player = new Player(link, keys);
+    Player* player2 = new Player(link2, keys);
     link->set_AI(player);
+    link2->set_AI(player2);
 
     level->set_player(link);
+    level->AddEntity(link2);
 }
 
 void Game::Tick()
@@ -108,6 +117,10 @@ void Game::Finalize()
 void Game::ReadKeyboard(unsigned char key, int x, int y, bool press)
 {
 	keys[key] = press;
+
+
+    if(key == 'a' && press)
+        Debug::enabled = !Debug::enabled;
 }
 
 void Game::ReadMouse(int button, int state, int x, int y)
