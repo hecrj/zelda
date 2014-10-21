@@ -7,12 +7,12 @@ Attack::Attack(Mob* mob, const std::vector<Animation*>& animations) : super("att
 void Attack::Enter() {
     super::Enter();
 
-    hitbox_ = new HiddenHitbox(mob_->x(), mob_->y(), CurrentAnimation());
+    hitbox_ = new AnimationHitbox(mob_->x(), mob_->y(), CurrentAnimation());
     mob_->Attach(hitbox_);
 }
 
 void Attack::Leave() {
-    mob_->Unattach(hitbox_);
+    mob_->Detach(hitbox_);
     delete hitbox_;
 
     super::Leave();

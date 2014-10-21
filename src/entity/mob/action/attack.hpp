@@ -1,7 +1,7 @@
 #include "../action.hpp"
 #include "../../../graphic/animation.hpp"
 #include "../../../math/rectangle.hpp"
-#include "../../../graphic/hitbox/hidden_hitbox.hpp"
+#include "../../../graphic/hitbox/animation_hitbox.hpp"
 
 class Attack : public Action {
 public:
@@ -12,5 +12,5 @@ public:
     void Leave();
 
 private:
-    HiddenHitbox* hitbox_;
+    AnimationHitbox * hitbox_;
 };

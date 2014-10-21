@@ -18,14 +18,14 @@ public:
     const Dir& facing() const;
     bool moving() const;
     Action* action(std::string name) const;
-    Hitmap *GetHitmap() const;
+    Hitmap* GetHitmap() const;
 
     void set_AI(AI* ai);
     void RegisterAction(std::string name, Action *action);
     void ChangeAction(Action *action);
-    void Move(Dir direction, double delta);
+    void Move(const Dir& direction, double delta);
     void Attach(Rectangle* e);
-    void Unattach(Rectangle* e);
+    void Detach(Rectangle *e);
 
     void Update(double delta);
     void Render() const;

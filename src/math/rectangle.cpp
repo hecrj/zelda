@@ -90,3 +90,7 @@ void Rectangle::Render(float r, float g, float b) const {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glColor4f(1, 1, 1, 1);
 }
+
+bool Rectangle::IsHitbox() const {
+    return false;
+}

@@ -1,5 +1,6 @@
 #include "../math/vec2.hpp"
 #include "sprite.hpp"
+#include "hitmap.hpp"
 #include <vector>
 
 #pragma once
@@ -14,6 +15,7 @@ public:
     vec2f position() const;
     float width();
     float height();
+    Hitmap* CurrentHitmap() const;
 
     void set_current_frame(int frame);
     void set_ping_pong(bool ping_pong);

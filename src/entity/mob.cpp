@@ -33,7 +33,7 @@ bool Mob::CanMove() const {
     return alive() && !current_action_->IsBlocking();
 }
 
-void Mob::Move(Dir direction, double delta) {
+void Mob::Move(const Dir& direction, double delta) {
     vec2f new_position = position_ + direction.vector() * delta * 80;
 
     if(facing_.index() == direction.index() || facing_candidate_ == -1) {
@@ -104,10 +104,10 @@ void Mob::Attach(Rectangle* e) {
     level_->AddCollidable(e);
 }
 
-void Mob::Unattach(Rectangle* e) {
+void Mob::Detach(Rectangle *e) {
     level_->RemoveCollidable(e);
 }
 
 Hitmap* Mob::GetHitmap() const {
-    return new Hitmap();
+    return current_action_->CurrentHitmap();
 }

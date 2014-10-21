@@ -20,6 +20,8 @@ void Link::Load() {
     MOVE_ANIMATIONS[Dir::UP.index()]->set_ping_pong(true);
 
     ATTACK_SPRITE_SHEET = new SpriteSheet("charset/link/attack_sword.png", 324, 144, 36, 36);
+    ATTACK_SPRITE_SHEET->set_hit_spritesheet("charset/link/attack_sword_hit.png");
+
     ATTACK_ANIMATIONS = {
             new Animation(ATTACK_SPRITE_SHEET->GetSprites(0, 6), 0, 31, vec2f(-2.0f, -10.0f)),
             new Animation(ATTACK_SPRITE_SHEET->GetSprites(1, 9), 0, 20, vec2f(-11.0f, -23.0f)),

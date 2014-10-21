@@ -35,3 +35,7 @@ void Action::Update(double delta) {
 void Action::Render() const {
     CurrentAnimation()->Render(mob_->position());
 }
+
+Hitmap *Action::CurrentHitmap() const {
+    return CurrentAnimation()->CurrentHitmap();
+}

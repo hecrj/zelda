@@ -8,6 +8,7 @@ public:
     typedef Rectangle super;
     Hitbox(float x, float y, float width, float height);
 
+    bool IsHitbox() const;
     virtual Hitmap* GetHitmap() const = 0;
 
     bool CollidesWith(Rectangle* r) const;

@@ -5,6 +5,7 @@
 
 Player::Player(Mob* mob, bool* keys) : super(mob) {
     keys_ = keys;
+    attack_ = mob_->action("attack");
 }
 
 void Player::Move(double delta) {
@@ -22,10 +23,8 @@ void Player::Move(double delta) {
 }
 
 void Player::Update(double delta) {
-    Action* attack = mob_->action("attack");
-
-    if(attack && keys_['z'])
-        mob_->ChangeAction(attack);
+    if(attack_ && keys_['z'])
+        mob_->ChangeAction(attack_);
 
     if(keys_['a'])
         Debug::enabled = !Debug::enabled;

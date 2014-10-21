@@ -87,3 +87,7 @@ float Animation::width() {
 float Animation::height() {
     return height_;
 }
+
+Hitmap* Animation::CurrentHitmap() const {
+    return sprites_[current_frame_]->hitmap();
+}

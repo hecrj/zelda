@@ -3,10 +3,10 @@
 #include "../hitbox.hpp"
 #include "../animation.hpp"
 
-class HiddenHitbox : public Hitbox {
+class AnimationHitbox : public Hitbox {
 public:
     typedef Hitbox super;
-    HiddenHitbox(float x, float y, Animation* animation);
+    AnimationHitbox(float x, float y, Animation* animation);
 
     Hitmap* GetHitmap() const;
 

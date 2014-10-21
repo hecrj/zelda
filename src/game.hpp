@@ -8,6 +8,11 @@
 class Game
 {
 public:
+    static int WIDTH;
+    static int HEIGHT;
+    static bool DIRTY;
+    static GLuint FramebufferAux();
+
 	Game();
 	virtual ~Game();
 
@@ -21,6 +26,9 @@ public:
 	void Render();
 
 private:
+    static GLuint FRAMEBUFFER_AUX;
+    static GLuint RENDERBUFFER_AUX;
+
 	bool keys[256];
 	Level* level;
 

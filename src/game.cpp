@@ -1,3 +1,4 @@
+#define GL_GLEXT_PROTOTYPES 1
 #include "game.hpp"
 #include "utils.hpp"
 #include "entity/mob/link.hpp"
@@ -5,6 +6,37 @@
 #include "debug.hpp"
 #include <GL/glut.h>
 #include <iostream>
+
+int Game::WIDTH = 640;
+int Game::HEIGHT = 480;
+bool Game::DIRTY = true;
+GLuint Game::FRAMEBUFFER_AUX = 0;
+GLuint Game::RENDERBUFFER_AUX = 0;
+
+GLuint Game::FramebufferAux() {
+    if(FRAMEBUFFER_AUX and DIRTY) {
+        glDeleteRenderbuffers(1, &RENDERBUFFER_AUX);
+        glDeleteFramebuffers(1, &FRAMEBUFFER_AUX);
+    }
+
+    if(!FRAMEBUFFER_AUX) {
+        GLuint fbo, render_buf;
+        glGenFramebuffers(1, &fbo);
+        glGenRenderbuffers(1, &render_buf);
+        glBindRenderbuffer(GL_RENDERBUFFER, render_buf);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8, WIDTH, HEIGHT);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
+        glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, render_buf);
+
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+        glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+        RENDERBUFFER_AUX = render_buf;
+        FRAMEBUFFER_AUX = fbo;
+    }
+
+    return FRAMEBUFFER_AUX;
+}
 
 Game::Game()
 {
@@ -33,9 +65,15 @@ void Game::Init()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+    // Initialize an aux framebuffer to render behind the scenes
+
+
+    // TODO: Recreate the auxiliar framebuffer when viewport changes
+
+
     glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-    glOrtho(0, GAME_WIDTH, GAME_HEIGHT, 0, 0, 1);
+    glOrtho(0, WIDTH, HEIGHT, 0, 0, 1);
 
 	glMatrixMode(GL_MODELVIEW);
 

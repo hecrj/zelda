@@ -1,4 +1,5 @@
 #include "../ai.hpp"
+#include "../action.hpp"
 
 class Player : public AI {
 public:
@@ -10,4 +11,5 @@ public:
 
 private:
     bool* keys_;
+    Action* attack_;
 };

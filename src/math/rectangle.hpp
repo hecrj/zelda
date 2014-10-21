@@ -15,6 +15,8 @@ public:
     vec2f bottom_right(const vec2f &pos) const;
     float width() const;
     float height() const;
+
+    virtual bool IsHitbox() const;
     virtual bool CanCollideWith(Rectangle* rectangle) const;
     virtual bool CollidesWith(Rectangle* rectangle) const;
 
