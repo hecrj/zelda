@@ -8,8 +8,6 @@ bool Hitbox::CollidesWith(Rectangle *r) const {
     if(!super::CollidesWith(r))
         return false;
 
-    GetHitmap()->Print();
-
     if(!r->IsHitbox())
         return true;
 

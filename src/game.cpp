@@ -7,8 +7,8 @@
 #include <GL/glut.h>
 #include <iostream>
 
-int Game::WIDTH = 640;
-int Game::HEIGHT = 480;
+int Game::WIDTH = 1024;
+int Game::HEIGHT = 768;
 bool Game::DIRTY = true;
 GLuint Game::FRAMEBUFFER_AUX = 0;
 GLuint Game::RENDERBUFFER_AUX = 0;
@@ -64,12 +64,6 @@ void Game::Init()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
-    // Initialize an aux framebuffer to render behind the scenes
-
-
-    // TODO: Recreate the auxiliar framebuffer when viewport changes
-
 
     glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

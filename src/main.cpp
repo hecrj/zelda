@@ -54,11 +54,11 @@ int main(int argc, char** argv)
 	//Create centered window
 	res_x = glutGet(GLUT_SCREEN_WIDTH);
 	res_y = glutGet(GLUT_SCREEN_HEIGHT);
-	pos_x = (res_x>>1)-(GAME_WIDTH>>1);
-	pos_y = (res_y>>1)-(GAME_HEIGHT>>1);
+	pos_x = (res_x>>1)-(Game::WIDTH>>1);
+	pos_y = (res_y>>1)-(Game::HEIGHT>>1);
 
 	glutInitWindowPosition(pos_x, pos_y);
-	glutInitWindowSize(GAME_WIDTH, GAME_HEIGHT);
+	glutInitWindowSize(Game::WIDTH, Game::HEIGHT);
 	glutCreateWindow("Zelda");
 
 	/*glutGameModeString("800x600:32");

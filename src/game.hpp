@@ -2,9 +2,6 @@
 
 #include "map/level.hpp"
 
-#define GAME_WIDTH	640
-#define GAME_HEIGHT 480
-
 class Game
 {
 public:
