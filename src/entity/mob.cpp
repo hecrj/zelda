@@ -1,3 +1,4 @@
+#include <iostream>
 #include "mob.hpp"
 
 Mob::Mob(Level* level, float x, float y, float width, float height, Action* idle_action) :
@@ -51,7 +52,7 @@ void Mob::Move(const Dir& direction, double delta) {
     level_->CollidablesFor(this, collidables);
 
     for(Rectangle* collidable : collidables) {
-        if(collidable != this && CanCollideWith(collidable) && CollidesWith(collidable)) {
+        if(CanCollideWith(collidable) && CollidesWith(collidable)) {
             position_ = old_position;
             return;
         }
@@ -96,18 +97,26 @@ Action* Mob::action(std::string name) const {
         return it->second;
 }
 
+Animation* Mob::CurrentAnimation() const {
+    return current_action_->CurrentAnimation();
+}
+
 void Mob::RegisterAction(std::string name, Action *action) {
     actions_[name] = action;
 }
 
-void Mob::Attach(Rectangle* e) {
-    level_->AddCollidable(e);
-}
+void Mob::MeleeAttack(Hitbox* hitbox) {
+    std::vector<Rectangle*> candidates;
+    level_->DynamicCollidablesFor(hitbox, candidates);
 
-void Mob::Detach(Rectangle *e) {
-    level_->RemoveCollidable(e);
-}
+    for(Rectangle* candidate : candidates) {
+        if(candidate->CanCollideWith(hitbox) && hitbox->CollidesWith(candidate)) {
+            Collision c = hitbox->CollisionType(candidate);
 
-Hitmap* Mob::GetHitmap() const {
-    return current_action_->CurrentHitmap();
+            if(c == Collision::DAMAGE) {
+                // TODO: Cause damage
+                std::cout << "Melee attack collision" << std::endl;
+            }
+        }
+    }
 }

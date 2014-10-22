@@ -6,14 +6,17 @@ Attack::Attack(Mob* mob, const std::vector<SpriteSet*>& animations) : super("att
 
 void Attack::Enter() {
     super::Enter();
+    hitbox_ = new AnimationHitbox(mob_->position(), CurrentAnimation());
+}
 
-    hitbox_ = new AnimationHitbox(mob_->x(), mob_->y(), CurrentAnimation());
-    mob_->Attach(hitbox_);
+void Attack::Update(double delta) {
+    super::Update(delta);
+
+    if(!IsFinished())
+        mob_->MeleeAttack(hitbox_);
 }
 
 void Attack::Leave() {
-    mob_->Detach(hitbox_);
     delete hitbox_;
-
     super::Leave();
 }

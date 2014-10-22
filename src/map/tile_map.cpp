@@ -9,7 +9,7 @@ TileMap::TileMap(const char* name)
     std::stringstream path;
     path << "res/level/" << name << ".tmx";
     map_ = TMX::parse(path.str().c_str());
-    collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
+    static_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
     texture = SOIL_load_OGL_texture(map_->tilesets[0]->image.source.c_str(),
             SOIL_LOAD_RGBA,
             SOIL_CREATE_NEW_ID,
@@ -49,7 +49,7 @@ void TileMap::InitBlockedTiles() {
     }
 
     for(Rectangle* blocked_tile : blocked_tiles_) {
-        collidables_->Insert(blocked_tile);
+        static_collidables_->Insert(blocked_tile);
     }
 }
 
@@ -58,7 +58,7 @@ TileMap::~TileMap()
 }
 
 void TileMap::CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {
-    collidables_->Retrieve(rectangle, collidables);
+    static_collidables_->Retrieve(rectangle, collidables);
 }
 
 bool TileMap::IsInbounds(Rectangle* rectangle) const {
@@ -129,7 +129,7 @@ void TileMap::RenderLayersAbove() const {
         for(Rectangle* r : blocked_tiles_)
             r->Render(0, 1, 0);
 
-        collidables_->Render();
+        static_collidables_->Render(0, 0, 1);
     }
 }
 

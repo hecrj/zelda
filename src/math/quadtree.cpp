@@ -146,12 +146,12 @@ bool Quadtree::IsEmpty() const {
     return (!children_[0]) && objects_.size() == 0;
 }
 
-void Quadtree::Render() const {
-    bounds_.Render(0, 0, 1);
+void Quadtree::Render(float r, float g, float b) const {
+    bounds_.Render(r, g, b);
 
     if(children_[0]) {
         for(int i = 0; i < 4; i++) {
-            children_[i]->Render();
+            children_[i]->Render(r, g, b);
         }
     }
 }

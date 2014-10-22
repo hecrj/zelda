@@ -3,6 +3,7 @@
 #include "utils.hpp"
 #include "entity/mob/link.hpp"
 #include "entity/mob/ai/player.hpp"
+#include "entity/mob/ai/wander.hpp"
 #include "debug.hpp"
 #include <GL/glut.h>
 #include <iostream>
@@ -79,14 +80,16 @@ void Game::Init()
     level = new Level("bigger");
 
     Link::Load();
+
     Link* link = new Link(level);
     Link* link2 = new Link(level);
     link->set_position(17 * 16, 17 * 16);
     link2->set_position(17*16, 11*16);
+
     Player* player = new Player(link, keys);
-    Player* player2 = new Player(link2, keys);
+    Wander* wander = new Wander(link2);
     link->set_AI(player);
-    link2->set_AI(player2);
+    link2->set_AI(wander);
 
     level->set_player(link);
     level->AddEntity(link2);

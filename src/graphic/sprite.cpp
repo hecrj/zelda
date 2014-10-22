@@ -6,9 +6,15 @@
 
 
 Sprite::Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, float tex_width, float tex_height) :
-    Sprite(texture, width, height, tex_x, tex_y, tex_width, tex_height, 0)
+        texture_(texture),
+        width_(width),
+        height_(height),
+        tex_x_(tex_x),
+        tex_y_(tex_y),
+        tex_width_(tex_width),
+        tex_height_(tex_height)
 {
-    hitmap_ = new Hitmap(width, height);
+    hitmap_ = damage_hitmap_ = new Pixelmap(width, height);
 
     // Render the sprite and read the pixels
     // The pixels that are not transparent in the sprite are considered as a hit pixel
@@ -38,17 +44,10 @@ Sprite::Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, 
 }
 
 Sprite::Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, float tex_width, float tex_height,
-        Hitmap* hitmap) :
-        texture_(texture),
-        width_(width),
-        height_(height),
-        tex_x_(tex_x),
-        tex_y_(tex_y),
-        tex_width_(tex_width),
-        tex_height_(tex_height),
-        hitmap_(hitmap)
+        Pixelmap* hitmap) :
+        Sprite(texture, width, height, tex_x, tex_y, tex_width, tex_height)
 {
-
+    hitmap_ = hitmap;
 }
 
 void Sprite::Render(const vec2f& position) const {
@@ -79,6 +78,10 @@ float Sprite::height() const {
     return height_;
 }
 
-Hitmap* Sprite::hitmap() const {
+Pixelmap* Sprite::hitmap() const {
     return hitmap_;
+}
+
+Pixelmap* Sprite::damage_hitmap() const {
+    return damage_hitmap_;
 }

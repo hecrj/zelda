@@ -6,9 +6,9 @@
 class AnimationHitbox : public Hitbox {
 public:
     typedef Hitbox super;
-    AnimationHitbox(float x, float y, Animation* animation);
-
-    Hitmap* GetHitmap() const;
+    AnimationHitbox(const vec2f& position, Animation* animation);
+    Animation* CurrentAnimation() const;
+    Collision CollisionType(Rectangle* rectangle) const;
 
 private:
     Animation* animation_;

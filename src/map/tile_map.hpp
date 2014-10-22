@@ -12,7 +12,8 @@ public:
 
     bool IsInbounds(Rectangle* rectangle) const;
     bool IsInbounds(const vec2f& position, float width, float height) const;
-    void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
+
+    virtual void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
 
     void RenderLayers(const std::vector<TMX::TileLayer*>& layers) const;
     void RenderLayersBelow() const;
@@ -21,7 +22,7 @@ public:
 
 protected:
     TMX::Map* map_;
-    Quadtree* collidables_;
+    Quadtree* static_collidables_;
 
 private:
     GLuint texture;

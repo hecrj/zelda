@@ -31,3 +31,7 @@ void Entity::Render() const {
 bool Entity::moving() const {
     return false;
 }
+
+bool Entity::IsEntity() const {
+    return true;
+}

@@ -2,18 +2,20 @@
 #include "../debug.hpp"
 
 Level::Level(const char *map) : super(map)
-{}
+{
+    dynamic_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
+}
 
 void Level::Update(double delta) {
-    // TODO: Remove dead entities
-
     for(Entity* entity : entities_) {
-        collidables_->Remove(entity);
+        dynamic_collidables_->Remove(entity);
 
         entity->Update(delta);
 
-        collidables_->Insert(entity);
-        temp_entities_.push_back(entity);
+        dynamic_collidables_->Insert(entity);
+
+        if(entity->alive())
+            temp_entities_.push_back(entity);
     }
 
     // We need to update the set in order to keep it sorted
@@ -32,9 +34,15 @@ void Level::Render() {
     super::RenderLayersAbove();
 
     if(Debug::enabled) {
+        dynamic_collidables_->Render(1, 0, 0);
+
         // Show collidable candidates
         std::vector<Rectangle*> candidates;
-        collidables_->Retrieve(player_, candidates);
+
+        for(Entity* entity : entities_) {
+            static_collidables_->Retrieve(entity, candidates);
+            dynamic_collidables_->Retrieve(entity, candidates);
+        }
 
         for(Rectangle* candidate : candidates)
             candidate->Render(1, 0.5, 0);
@@ -43,18 +51,27 @@ void Level::Render() {
 
 void Level::AddEntity(Entity* entity) {
     entities_.insert(entity);
-    collidables_->Insert(entity);
+    dynamic_collidables_->Insert(entity);
 }
 
 void Level::AddCollidable(Rectangle* rectangle) {
-    collidables_->Insert(rectangle);
+    dynamic_collidables_->Insert(rectangle);
 }
 
 void Level::RemoveCollidable(Rectangle* rectangle) {
-    collidables_->Remove(rectangle);
+    dynamic_collidables_->Remove(rectangle);
 }
 
 void Level::set_player(Entity* player) {
     player_ = player;
     AddEntity(player);
+}
+
+void Level::CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {
+    super::CollidablesFor(rectangle, collidables);
+    dynamic_collidables_->Retrieve(rectangle, collidables);
+}
+
+void Level::DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {
+    dynamic_collidables_->Retrieve(rectangle, collidables);
 }

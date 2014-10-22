@@ -1,4 +1,5 @@
 #include "vec2.hpp"
+#include "../graphic/collision.hpp"
 
 #pragma once
 
@@ -17,8 +18,10 @@ public:
     float height() const;
 
     virtual bool IsHitbox() const;
+    virtual bool IsEntity() const;
     virtual bool CanCollideWith(Rectangle* rectangle) const;
     virtual bool CollidesWith(Rectangle* rectangle) const;
+    virtual Collision CollisionType(Rectangle* rectangle) const;
 
     void set_position(const vec2f& position);
     void set_position(float x, float y);

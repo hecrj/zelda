@@ -1,11 +1,11 @@
 #include <iostream>
 #include "hitmap.hpp"
 
-Hitmap::Hitmap(int width, int height) {
+Pixelmap::Pixelmap(int width, int height) {
     map_ = std::vector<std::vector<bool>>(height, std::vector<bool>(width, false));
 }
 
-void Hitmap::Print() const {
+void Pixelmap::Print() const {
     for(int i = 0; i < map_.size(); ++i) {
         for(int j = 0; j < map_[0].size(); ++j) {
             std::cout << map_[i][j] ? '1' : '0';

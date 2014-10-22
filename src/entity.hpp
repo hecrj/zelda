@@ -13,6 +13,7 @@ public:
 
     bool alive() const;
     virtual bool moving() const;
+    bool IsEntity() const;
 
     void Kill();
     virtual void Update(double delta);

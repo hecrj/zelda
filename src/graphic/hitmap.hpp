@@ -2,10 +2,10 @@
 
 #include <vector>
 
-struct Hitmap {
+struct Pixelmap {
     std::vector<std::vector<bool>> map_;
 
-    Hitmap(int width, int height);
+    Pixelmap(int width, int height);
 
     void Print() const;
 };

@@ -57,7 +57,7 @@ void Rectangle::set_position(const vec2f &position) {
 
 
 bool Rectangle::CanCollideWith(Rectangle* rectangle) const {
-    return true;
+    return rectangle != this;
 }
 
 bool Rectangle::CollidesWith(Rectangle* rectangle) const {
@@ -93,4 +93,12 @@ void Rectangle::Render(float r, float g, float b) const {
 
 bool Rectangle::IsHitbox() const {
     return false;
+}
+
+bool Rectangle::IsEntity() const {
+    return false;
+}
+
+Collision Rectangle::CollisionType(Rectangle* rectangle) const {
+    return Collision::BLOCK;
 }

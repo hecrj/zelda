@@ -19,7 +19,7 @@ public:
     void Retrieve(Rectangle *r, std::vector<Rectangle *> &objects) const;
 
     // Debugging purposes
-    void Render() const;
+    void Render(float r, float g, float b) const;
 
 
 private:

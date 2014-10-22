@@ -9,6 +9,7 @@ public:
     Attack(Mob* mob, const std::vector<SpriteSet*>& animations);
 
     void Enter();
+    void Update(double delta);
     void Leave();
 
 private:

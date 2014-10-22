@@ -13,7 +13,8 @@ public:
     virtual bool IsBlocking() const;
     virtual bool IsFinished() const;
     Animation* CurrentAnimation() const;
-    Hitmap* CurrentHitmap() const;
+    Pixelmap* CurrentHitmap() const;
+    Pixelmap* CurrentDamageHitmap() const;
 
     virtual void Enter();
     virtual void Leave();

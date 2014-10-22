@@ -12,6 +12,8 @@ public:
     void AddEntity(Entity* entity);
     void AddCollidable(Rectangle* rectangle);
     void RemoveCollidable(Rectangle* rectangle);
+    void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
+    void DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void set_player(Entity* player);
 
     void Update(double delta);
@@ -26,5 +28,6 @@ private:
 
     std::set<Entity*, YCoordinateCompare> entities_;
     std::vector<Entity*> temp_entities_;
+    Quadtree* dynamic_collidables_;
     Entity* player_;
 };

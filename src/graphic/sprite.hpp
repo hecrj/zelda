@@ -8,11 +8,12 @@ class Sprite {
 public:
     Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, float tex_width, float tex_height);
     Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, float tex_width, float tex_height,
-            Hitmap* hitmap);
+            Pixelmap* hitmap);
 
     float width() const;
     float height() const;
-    Hitmap* hitmap() const;
+    Pixelmap* hitmap() const;
+    Pixelmap* damage_hitmap() const;
 
     void Render(const vec2f& position) const;
 
@@ -24,5 +25,6 @@ private:
     float tex_y_;
     float tex_width_;
     float tex_height_;
-    Hitmap* hitmap_;
+    Pixelmap* hitmap_;
+    Pixelmap* damage_hitmap_;
 };

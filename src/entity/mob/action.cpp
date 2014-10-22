@@ -39,6 +39,10 @@ void Action::Render() const {
     CurrentAnimation()->Render(mob_->position());
 }
 
-Hitmap *Action::CurrentHitmap() const {
-    return CurrentAnimation()->CurrentHitmap();
+Pixelmap*Action::CurrentHitmap() const {
+    return CurrentAnimation()->HitMap();
+}
+
+Pixelmap* Action::CurrentDamageHitmap() const {
+    return CurrentAnimation()->DamageMap();
 }

@@ -23,6 +23,7 @@ set(SOURCE_FILES
     src/entity/mob/action/attack.cpp
     src/entity/mob/ai.cpp
     src/entity/mob/ai/player.cpp
+    src/entity/mob/ai/wander.cpp
     src/map/tile_map.cpp
     src/map/level.cpp
     src/math/dir.cpp

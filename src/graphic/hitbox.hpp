@@ -1,5 +1,6 @@
 #include "../math/rectangle.hpp"
 #include "../graphic/hitmap.hpp"
+#include "animation.hpp"
 
 #pragma once
 
@@ -9,7 +10,5 @@ public:
     Hitbox(float x, float y, float width, float height);
 
     bool IsHitbox() const;
-    virtual Hitmap* GetHitmap() const = 0;
-
-    bool CollidesWith(Rectangle* r) const;
+    virtual Animation* CurrentAnimation() const = 0;
 };
