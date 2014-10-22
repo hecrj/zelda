@@ -7,10 +7,13 @@
 class Mob;
 class Action {
 public:
-    Action(const char* name, Mob* mob, const std::vector<SpriteSet*>& animations);
+    Action(Mob* mob, const std::vector<SpriteSet*>& spritesets);
+    Action(Mob* mob, const std::vector<Animation*>& animations);
 
+    const std::vector<Animation*>& animations() const;
     virtual bool IsBlocking() const;
     virtual bool IsFinished() const;
+    virtual bool IsTemporary() const;
     Animation* CurrentAnimation() const;
 
     virtual void Enter();
@@ -22,6 +25,5 @@ protected:
     Mob* mob_;
 
 private:
-    std::string name_;
     std::vector<Animation*> animations_;
 };

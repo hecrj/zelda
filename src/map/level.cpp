@@ -15,7 +15,7 @@ void Level::Update(double delta) {
         if(entity->IsAlive()) {
             dynamic_collidables_->Insert(entity);
             temp_entities_.push_back(entity);
-        } else {
+        } else if(entity != player_) {
             delete entity;
         }
     }
@@ -54,14 +54,6 @@ void Level::Render() {
 void Level::AddEntity(Entity* entity) {
     entities_.insert(entity);
     dynamic_collidables_->Insert(entity);
-}
-
-void Level::AddCollidable(Rectangle* rectangle) {
-    dynamic_collidables_->Insert(rectangle);
-}
-
-void Level::RemoveCollidable(Rectangle* rectangle) {
-    dynamic_collidables_->Remove(rectangle);
 }
 
 void Level::set_player(Entity* player) {

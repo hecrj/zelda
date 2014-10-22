@@ -121,7 +121,6 @@ void Game::ReadKeyboard(unsigned char key, int x, int y, bool press)
 {
 	keys[key] = press;
 
-
     if(key == 'a' && press)
         Debug::enabled = !Debug::enabled;
 }

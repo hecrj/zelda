@@ -46,7 +46,6 @@ Collision AnimationHitbox::CollisionType(Rectangle* rectangle) const {
     const Pixelmap& h1 = *CurrentAnimation()->HitMap();
     const Pixelmap& h2 = *a->DamageMap();
 
-
     if(Debug::enabled) {
         h1.Print();
         h2.Print();

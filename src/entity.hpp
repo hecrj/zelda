@@ -17,7 +17,7 @@ public:
     bool IsEntity() const;
 
     void Kill();
-    void Damage(int damage);
+    virtual void Damage(Entity* from, int damage);
     virtual void Update(double delta);
     virtual void Render() const;
 

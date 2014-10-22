@@ -21,6 +21,7 @@ set(SOURCE_FILES
     src/entity/mob/action.cpp
     src/entity/mob/action/move.cpp
     src/entity/mob/action/attack.cpp
+    src/entity/mob/action/push.cpp
     src/entity/mob/ai.cpp
     src/entity/mob/ai/player.cpp
     src/entity/mob/ai/wander.cpp

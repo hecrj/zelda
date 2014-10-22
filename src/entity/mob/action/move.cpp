@@ -1,7 +1,7 @@
 #include "move.hpp"
 #include "../../mob.hpp"
 
-Move::Move(Mob* mob, const std::vector<SpriteSet*>& animations) : super("move", mob, animations) {
+Move::Move(Mob* mob, const std::vector<SpriteSet*>& animations) : super(mob, animations) {
 
 }
 

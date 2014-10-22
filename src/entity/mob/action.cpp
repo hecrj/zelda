@@ -2,13 +2,21 @@
 #include "action.hpp"
 #include "../mob.hpp"
 
-Action::Action(const char* name, Mob* mob, const std::vector<SpriteSet*>& spritesets) :
-    name_(name),
+Action::Action(Mob* mob, const std::vector<SpriteSet*>& spritesets) :
     mob_(mob)
 {
     for(SpriteSet* spriteset : spritesets) {
         animations_.push_back(new Animation(spriteset));
     }
+}
+
+Action::Action(Mob* mob, const std::vector<Animation*>& animations) :
+        mob_(mob),
+        animations_(animations)
+{}
+
+bool Action::IsTemporary() const {
+    return false;
 }
 
 bool Action::IsBlocking() const {
@@ -37,4 +45,8 @@ void Action::Update(double delta) {
 
 void Action::Render() const {
     CurrentAnimation()->Render(mob_->position());
+}
+
+const std::vector<Animation*>& Action::animations() const {
+    return animations_;
 }

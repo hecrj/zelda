@@ -25,11 +25,12 @@ public:
     void RegisterAction(std::string name, Action *action);
     void ChangeAction(Action *action);
     void Move(const Dir& direction, double delta);
+    void Slide(const vec2f direction, int intensity, double delta);
     void MeleeAttack(Hitbox* hitbox);
+    void Damage(Entity* from, int damage);
 
     void Update(double delta);
     void Render() const;
-
 
 private:
     Level* level_;
@@ -40,4 +41,6 @@ private:
     Dir facing_;
     int facing_candidate_;
     bool moving_;
+
+    void _Move(const vec2f& direction, int intensity, double delta);
 };

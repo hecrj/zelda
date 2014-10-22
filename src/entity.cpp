@@ -40,6 +40,6 @@ int Entity::health() const {
     return health_;
 }
 
-void Entity::Damage(int damage) {
+void Entity::Damage(Entity* from, int damage) {
     health_ -= damage;
 }

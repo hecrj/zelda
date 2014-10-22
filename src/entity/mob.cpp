@@ -1,5 +1,6 @@
 #include <iostream>
 #include "mob.hpp"
+#include "mob/action/push.hpp"
 
 Mob::Mob(Level* level, float x, float y, float width, float height, Action* idle_action) :
         super(x, y, width, height),
@@ -27,6 +28,10 @@ void Mob::set_AI(AI* ai) {
 void Mob::ChangeAction(Action* action)
 {
     current_action_->Leave();
+
+    if(current_action_->IsTemporary())
+        delete current_action_;
+
     current_action_ = action;
     current_action_->Enter();
 }
@@ -44,11 +49,20 @@ bool Mob::CanMove() const {
 }
 
 void Mob::Move(const Dir& direction, double delta) {
-    vec2f new_position = position_ + direction.vector() * delta * 80;
-
     if(facing_.index() == direction.index() || facing_candidate_ == -1) {
         facing_candidate_ = direction.index();
     }
+
+    _Move(direction.vector(), 1, delta);
+}
+
+void Mob::Slide(const vec2f direction, int intensity, double delta) {
+    _Move(vec2f(direction.x, 0), intensity, delta);
+    _Move(vec2f(0, direction.y), intensity, delta);
+}
+
+void Mob::_Move(const vec2f& direction, int intensity, double delta) {
+    vec2f new_position = position_ + direction * intensity * delta * 80;
 
     if(!level_->IsInbounds(new_position, width_, height_)) {
         return;
@@ -125,7 +139,7 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
             if(c == Collision::DAMAGE) {
                 // TODO: Make dynamic collidables a Quadtree of entities
                 if(candidate->IsEntity()) {
-                    ((Entity*)candidate)->Damage(5);
+                    ((Entity*)candidate)->Damage(this, 5);
                 }
                 std::cout << "Melee attack collision" << std::endl;
             }
@@ -133,3 +147,13 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
     }
 }
 
+void Mob::Damage(Entity* from, int damage) {
+    super::Damage(from, damage);
+
+    if(!current_action_->IsTemporary()) {
+        vec2f dir = center() - from->center();
+        dir.normalize();
+
+        ChangeAction(new Push(this, idle_action_, dir, damage, 0.1f));
+    }
+}

@@ -55,7 +55,6 @@ void Rectangle::set_position(const vec2f &position) {
     set_position(position.x, position.y);
 }
 
-
 bool Rectangle::CanCollideWith(Rectangle* rectangle) const {
     return rectangle != this;
 }

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../action.hpp"
 #include "../../../graphic/animation.hpp"
 

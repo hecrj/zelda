@@ -7,8 +7,6 @@ Wander::Wander(Mob* mob) :
         dir(Dir::random())
 {}
 
-
-
 void Wander::Move(double delta) {
     mob_->Move(dir, delta);
     accum += delta;
@@ -18,7 +16,6 @@ void Wander::Move(double delta) {
         accum = 0;
     }
 }
-
 
 void Wander::Update(double delta) {
 
