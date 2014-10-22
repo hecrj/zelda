@@ -12,10 +12,12 @@ void Level::Update(double delta) {
 
         entity->Update(delta);
 
-        dynamic_collidables_->Insert(entity);
-
-        if(entity->alive())
+        if(entity->IsAlive()) {
+            dynamic_collidables_->Insert(entity);
             temp_entities_.push_back(entity);
+        } else {
+            delete entity;
+        }
     }
 
     // We need to update the set in order to keep it sorted

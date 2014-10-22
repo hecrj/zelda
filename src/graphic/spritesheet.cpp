@@ -44,7 +44,7 @@ std::vector<Sprite*> SpriteSheet::GetSprites(int row, int sprite_count) {
 
         for(int i = 0; i < sprite_count; ++i) {
             sprites.push_back(new Sprite(texture_, sprite_width_, sprite_height_,
-                    i * width_ratio_, y, width_ratio_, height_ratio_, hit_sprites[i]->hitmap()));
+                    i * width_ratio_, y, width_ratio_, height_ratio_, hit_sprites[i]->hit_map()));
         }
     } else {
         for(int i = 0; i < sprite_count; ++i) {

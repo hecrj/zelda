@@ -38,11 +38,3 @@ void Action::Update(double delta) {
 void Action::Render() const {
     CurrentAnimation()->Render(mob_->position());
 }
-
-Pixelmap*Action::CurrentHitmap() const {
-    return CurrentAnimation()->HitMap();
-}
-
-Pixelmap* Action::CurrentDamageHitmap() const {
-    return CurrentAnimation()->DamageMap();
-}

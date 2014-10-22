@@ -1,6 +1,6 @@
 #include <GL/gl.h>
 #include "../math/vec2.hpp"
-#include "hitmap.hpp"
+#include "pixelmap.hpp"
 
 #pragma once
 
@@ -12,8 +12,8 @@ public:
 
     float width() const;
     float height() const;
-    Pixelmap* hitmap() const;
-    Pixelmap* damage_hitmap() const;
+    Pixelmap* hit_map() const;
+    Pixelmap* damage_map() const;
 
     void Render(const vec2f& position) const;
 
@@ -25,6 +25,6 @@ private:
     float tex_y_;
     float tex_width_;
     float tex_height_;
-    Pixelmap* hitmap_;
-    Pixelmap* damage_hitmap_;
+    Pixelmap* hit_map_;
+    Pixelmap* damage_map_;
 };

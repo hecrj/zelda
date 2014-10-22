@@ -12,7 +12,7 @@ set(SOURCE_FILES
     src/graphic/animation.cpp
     src/graphic/hitbox.cpp
     src/graphic/hitbox/animation_hitbox.cpp
-    src/graphic/hitmap.cpp
+    src/graphic/pixelmap.cpp
     src/graphic/sprite.cpp
     src/graphic/spritesheet.cpp
     src/graphic/sprite_set.cpp

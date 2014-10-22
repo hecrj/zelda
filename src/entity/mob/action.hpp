@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include "../../graphic/animation.hpp"
-#include "../../graphic/hitmap.hpp"
 
 class Mob;
 class Action {
@@ -13,8 +12,6 @@ public:
     virtual bool IsBlocking() const;
     virtual bool IsFinished() const;
     Animation* CurrentAnimation() const;
-    Pixelmap* CurrentHitmap() const;
-    Pixelmap* CurrentDamageHitmap() const;
 
     virtual void Enter();
     virtual void Leave();

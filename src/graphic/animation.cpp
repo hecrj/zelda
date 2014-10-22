@@ -68,9 +68,9 @@ float Animation::height() {
 }
 
 Pixelmap* Animation::HitMap() const {
-    return spriteset_->sprites[current_frame_]->hitmap();
+    return spriteset_->sprites[current_frame_]->hit_map();
 }
 
 Pixelmap* Animation::DamageMap() const {
-    return spriteset_->sprites[current_frame_]->damage_hitmap();
+    return spriteset_->sprites[current_frame_]->damage_map();
 }

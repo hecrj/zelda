@@ -3,20 +3,20 @@
 
 Entity::Entity(float width, float height) :
         super(0, 0, width, height),
-        alive_(true)
+        health_(100)
 {}
 
 Entity::Entity(float x, float y, float width, float height) :
         super(x, y, width, height),
-        alive_(true)
+        health_(100)
 {}
 
-bool Entity::alive() const {
-    return alive_;
+bool Entity::IsAlive() const {
+    return health_ > 0;
 }
 
 void Entity::Kill() {
-    alive_ = false;
+    health_ = 0;
 }
 
 void Entity::Update(double delta) {
@@ -34,4 +34,12 @@ bool Entity::moving() const {
 
 bool Entity::IsEntity() const {
     return true;
+}
+
+int Entity::health() const {
+    return health_;
+}
+
+void Entity::Damage(int damage) {
+    health_ -= damage;
 }

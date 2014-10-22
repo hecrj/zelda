@@ -11,14 +11,16 @@ public:
     Entity(float width, float height);
     Entity(float x, float y, float width, float height);
 
-    bool alive() const;
+    int health() const;
+    bool IsAlive() const;
     virtual bool moving() const;
     bool IsEntity() const;
 
     void Kill();
+    void Damage(int damage);
     virtual void Update(double delta);
     virtual void Render() const;
 
 private:
-    bool alive_;
+    int health_;
 };

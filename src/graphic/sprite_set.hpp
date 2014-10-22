@@ -1,6 +1,5 @@
 #include "../math/vec2.hpp"
 #include "sprite.hpp"
-#include "hitmap.hpp"
 #include <vector>
 
 #pragma once

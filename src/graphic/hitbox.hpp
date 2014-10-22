@@ -1,5 +1,4 @@
 #include "../math/rectangle.hpp"
-#include "../graphic/hitmap.hpp"
 #include "animation.hpp"
 
 #pragma once

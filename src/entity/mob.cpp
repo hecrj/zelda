@@ -11,6 +11,15 @@ Mob::Mob(Level* level, float x, float y, float width, float height, Action* idle
         current_action_(idle_action)
 {}
 
+Mob::~Mob() {
+    delete ai_;
+    delete idle_action_;
+
+    for(auto& action : actions_) {
+        delete action.second;
+    }
+}
+
 void Mob::set_AI(AI* ai) {
     ai_ = ai;
 }
@@ -31,7 +40,7 @@ bool Mob::moving() const {
 }
 
 bool Mob::CanMove() const {
-    return alive() && !current_action_->IsBlocking();
+    return IsAlive() && !current_action_->IsBlocking();
 }
 
 void Mob::Move(const Dir& direction, double delta) {
@@ -114,9 +123,13 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
             Collision c = hitbox->CollisionType(candidate);
 
             if(c == Collision::DAMAGE) {
-                // TODO: Cause damage
+                // TODO: Make dynamic collidables a Quadtree of entities
+                if(candidate->IsEntity()) {
+                    ((Entity*)candidate)->Damage(5);
+                }
                 std::cout << "Melee attack collision" << std::endl;
             }
         }
     }
 }
+

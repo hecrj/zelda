@@ -1,5 +1,5 @@
 #include <iostream>
-#include "hitmap.hpp"
+#include "pixelmap.hpp"
 
 Pixelmap::Pixelmap(int width, int height) {
     map_ = std::vector<std::vector<bool>>(height, std::vector<bool>(width, false));
