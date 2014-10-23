@@ -1,7 +1,8 @@
+#define GL_GLEXT_PROTOTYPES 1
 #include <iostream>
 #include <sstream>
+#include <GL/glut.h>
 #include "tile_map.hpp"
-#include "SOIL.h"
 #include "../debug.hpp"
 #include "../game.hpp"
 
@@ -17,6 +18,8 @@ TileMap::TileMap(const char* name)
     std::vector<std::vector<bool>> blocked(map_->height, std::vector<bool>(map_->width, false));
     InitBlockedTiles(map_->tile_layers_below, blocked);
     InitBlockedTiles(map_->tile_layers_above, blocked);
+
+    InitTextures();
 }
 
 void TileMap::InitBlockedTiles(const std::vector<TMX::TileLayer*>& layers, std::vector<std::vector<bool>>& blocked) {
@@ -64,15 +67,15 @@ bool TileMap::IsInbounds(const vec2f& position, float width, float height) const
 void TileMap::RenderLayers(const std::vector<TMX::TileLayer*>& layers) const
 {
     for(TMX::TileLayer* layer : layers)
-        tileset_->RenderTiles(layer->width, layer->height, layer->tiles, Game::WIDTH, Game::HEIGHT);
+        tileset_->RenderTiles(layer->width, layer->height, layer->tiles);
 }
 
 void TileMap::RenderLayersBelow() const {
-    RenderLayers(map_->tile_layers_below);
+    RenderTexture(texture_below_);
 }
 
 void TileMap::RenderLayersAbove() const {
-    RenderLayers(map_->tile_layers_above);
+    RenderTexture(texture_above_);
 
     if(Debug::enabled) {
         for(Rectangle* r : blocked_tiles_)
@@ -85,4 +88,81 @@ void TileMap::RenderLayersAbove() const {
 void TileMap::Render() const {
     RenderLayersBelow();
     RenderLayersAbove();
+}
+
+void TileMap::InitTextures() {
+    // Prepare the viewport to render the map texture
+    glViewport(0, 0, map_->width_pixels, map_->height_pixels);
+
+    // Prepare the projection matrix
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, map_->width_pixels, map_->height_pixels, 0, 0, 1);
+    glMatrixMode(GL_MODELVIEW);
+
+    // Create and bind framebuffer
+    GLuint fb = 0;
+    glGenFramebuffers(1, &fb);
+    glBindFramebuffer(GL_FRAMEBUFFER, fb);
+
+    // Generate the texture below entities
+    glGenTextures(1, &texture_below_);
+    glBindTexture(GL_TEXTURE_2D, texture_below_);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, map_->width_pixels, map_->height_pixels, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture_below_, 0);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    RenderLayers(map_->tile_layers_below);
+
+    // Generate the texture above entities
+    glGenTextures(1, &texture_above_);
+    glBindTexture(GL_TEXTURE_2D, texture_above_);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, map_->width_pixels, map_->height_pixels, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture_above_, 0);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    RenderLayers(map_->tile_layers_above);
+
+    // Unbind and delete framebuffer
+    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, 0, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glDeleteFramebuffers(1, &fb);
+
+    glViewport(0, 0, Game::WIDTH, Game::HEIGHT);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, Game::WIDTH, Game::HEIGHT, 0, 0, 1);
+    glMatrixMode(GL_MODELVIEW);
+}
+
+void TileMap::RenderTexture(GLuint texture) const {
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glBegin(GL_QUADS);
+
+    glTexCoord2f(0, 1);
+    glVertex2f(0, 0);
+
+    glTexCoord2f(1, 1);
+    glVertex2f(map_->width_pixels, 0);
+
+    glTexCoord2f(1, 0);
+    glVertex2f(map_->width_pixels, map_->height_pixels);
+
+    glTexCoord2f(0, 0);
+    glVertex2f(0, map_->height_pixels);
+
+    glEnd();
+    glBindTexture(GL_TEXTURE_2D, 0);
 }

@@ -24,10 +24,14 @@ protected:
     TMX::Map* map_;
     Quadtree* static_collidables_;
     Tileset* tileset_;
+    GLuint texture_below_;
+    GLuint texture_above_;
 
 private:
     std::vector<Rectangle*> blocked_tiles_;
 
     void InitBlockedTiles(const std::vector<TMX::TileLayer*>& layers, std::vector<std::vector<bool>>& blocked);
+    void InitTextures();
     void RenderLayers(const std::vector<TMX::TileLayer*>& layers) const;
+    void RenderTexture(GLuint texture) const;
 };

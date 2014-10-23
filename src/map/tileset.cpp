@@ -17,12 +17,8 @@ Tileset::Tileset(TSX::Tileset *tileset) :
     }
 }
 
-void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<int>>& tiles,
-        int screen_width, int screen_height) const {
+void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<int>>& tiles) const {
     const TSX::Tileset& tileset = *info_;
-
-    width = std::min(width, screen_width);
-    height = std::min(height, screen_height);
 
     glBindTexture(GL_TEXTURE_2D, texture_);
     glBegin(GL_QUADS);
