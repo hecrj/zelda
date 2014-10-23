@@ -16,7 +16,6 @@ public:
 
     virtual void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
 
-    void RenderLayers(const std::vector<TMX::TileLayer*>& layers) const;
     void RenderLayersBelow() const;
     void RenderLayersAbove() const;
 	virtual void Render() const;
@@ -29,5 +28,6 @@ protected:
 private:
     std::vector<Rectangle*> blocked_tiles_;
 
-    void InitBlockedTiles();
+    void InitBlockedTiles(const std::vector<TMX::TileLayer*>& layers, std::vector<std::vector<bool>>& blocked);
+    void RenderLayers(const std::vector<TMX::TileLayer*>& layers) const;
 };

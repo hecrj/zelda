@@ -106,7 +106,8 @@ void Quadtree::Remove(Rectangle *r) {
         if(child != -1) {
             children_[child]->Remove(r);
 
-            if(children_[0]->IsEmpty() &&
+            if(objects_.size() == 0 &&
+                    children_[0]->IsEmpty() &&
                     children_[1]->IsEmpty() &&
                     children_[2]->IsEmpty() &&
                     children_[3]->IsEmpty()) {

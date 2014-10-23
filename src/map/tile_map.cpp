@@ -12,16 +12,16 @@ TileMap::TileMap(const char* name)
     static_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
     tileset_ = new Tileset(map_->tilesets[0]);
 
-    InitBlockedTiles();
-}
-
-void TileMap::InitBlockedTiles() {
-    TSX::Tileset* tileset = map_->tilesets[0];
-
     // Avoid adding the same rectangle twice
     std::vector<std::vector<bool>> blocked(map_->height, std::vector<bool>(map_->width, false));
+    InitBlockedTiles(map_->tile_layers_below, blocked);
+    InitBlockedTiles(map_->tile_layers_above, blocked);
+}
 
-    for(const auto& layer : map_->tile_layers_below) {
+void TileMap::InitBlockedTiles(const std::vector<TMX::TileLayer*>& layers, std::vector<std::vector<bool>>& blocked) {
+    TSX::Tileset* tileset = map_->tilesets[0];
+
+    for(const auto& layer : layers) {
         // Populate blocked tiles
         for(int i = 0; i < layer->height; ++i) {
             for(int j = 0; j < layer->width; ++j) {
@@ -31,16 +31,15 @@ void TileMap::InitBlockedTiles() {
                 int tile_id = layer->tiles[i][j] - 1;
 
                 if(tileset->tiles[tile_id].Property("blocked") == "true") {
-                    blocked_tiles_.push_back(new Rectangle(j*map_->tile_width, i*map_->tile_height,
-                            map_->tile_width, map_->tile_height));
+                    Rectangle* blocked_tile = new Rectangle(j*map_->tile_width, i*map_->tile_height,
+                            map_->tile_width, map_->tile_height);
+
+                    blocked_tiles_.push_back(blocked_tile);
+                    static_collidables_->Insert(blocked_tile);
                     blocked[i][j] = true;
                 }
             }
         }
-    }
-
-    for(Rectangle* blocked_tile : blocked_tiles_) {
-        static_collidables_->Insert(blocked_tile);
     }
 }
 
@@ -63,14 +62,8 @@ bool TileMap::IsInbounds(const vec2f& position, float width, float height) const
 
 void TileMap::RenderLayers(const std::vector<TMX::TileLayer*>& layers) const
 {
-    // Only one tileset supported
-    const Tileset& tileset = *tileset_;
-    tileset_->bind();
-
     for(TMX::TileLayer* layer : layers)
-        tileset.RenderTiles(layer->width, layer->height, layer->tiles);
-
-    glBindTexture(GL_TEXTURE_2D, 0);
+        tileset_->RenderTiles(layer->width, layer->height, layer->tiles);
 }
 
 void TileMap::RenderLayersBelow() const {

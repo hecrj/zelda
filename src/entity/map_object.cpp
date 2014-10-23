@@ -1,21 +1,18 @@
 #include "map_object.hpp"
 
-MapObject::MapObject(Tileset *tileset, int gid, float x, float y, float width, float height) :
-        super(x, y, width, height, 1),
-        tileset_(tileset),
-        gid_(gid-1)
+MapObject::MapObject(Sprite* sprite, float x, float y) :
+        super(x, y, sprite->width(), sprite->height(), 1),
+        sprite_(sprite)
 {}
 
 void MapObject::Render() const {
-    tileset_->bind();
-    tileset_->RenderTile(position_.x, position_.y, gid_);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    sprite_->Render(position_);
 }
 
 Sprite *MapObject::CurrentSprite(vec2f &sprite_position) const {
-    return nullptr;
+    return sprite_;
 }
 
 Sprite *MapObject::CurrentSprite() const {
-    return nullptr;
+    return sprite_;
 }

@@ -10,7 +10,7 @@ Level::Level(const char *map) : super(map)
         const TMX::ObjectGroup& object_group = k.second;
 
         for(const TMX::Object& object : object_group.object) {
-            MapObject* map_object = new MapObject(tileset_, object.gid, object.x, object.y - 16, object.width, object.height);
+            MapObject* map_object = new MapObject(tileset_->sprite(object.gid - 1), object.x, object.y - 16);
             AddEntity(map_object);
         }
     }
@@ -68,7 +68,7 @@ void Level::Render() {
         }
 
         for(Rectangle* candidate : candidates)
-            candidate->Render(1, 0.5, 0);
+            candidate->Render(1, 0, 1);
     }
 }
 

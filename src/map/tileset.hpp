@@ -1,5 +1,6 @@
 #include <tsx_tileset.hpp>
 #include <GL/gl.h>
+#include "../graphic/sprite.hpp"
 
 #pragma once
 
@@ -7,12 +8,12 @@ class Tileset {
 public:
     Tileset(TSX::Tileset* tileset);
 
-    GLuint bind() const;
+    Sprite* sprite(int tile_id);
 
-    void RenderTile(float x, float y, int tile_id) const;
     void RenderTiles(int width, int height, const std::vector<std::vector<int>>& tiles) const;
 
 private:
     TSX::Tileset* info_;
     GLuint texture_;
+    std::map<int, Sprite*> sprites_;
 };

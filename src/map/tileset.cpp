@@ -17,73 +17,41 @@ Tileset::Tileset(TSX::Tileset *tileset) :
     }
 }
 
-GLuint Tileset::bind() const {
-    glBindTexture(GL_TEXTURE_2D, texture_);
-}
-
-void Tileset::RenderTile(float x, float y, int tile_id) const {
-    const TSX::Tileset& tileset = *info_;
-
-    glBegin(GL_QUADS);
-
-    glTexCoord2f(
-            tileset.horizontal_ratio * (tile_id % tileset.width),
-            tileset.vertical_ratio * (tile_id / tileset.width)
-    );
-    glVertex2d(x, y);
-
-    glTexCoord2f(
-            tileset.horizontal_ratio * ((tile_id % tileset.width) + 1),
-            tileset.vertical_ratio * (tile_id / tileset.width)
-    );
-    glVertex2f(x + tileset.tile_width, y);
-
-    glTexCoord2f(
-            tileset.horizontal_ratio * ((tile_id % tileset.width) + 1),
-            tileset.vertical_ratio * ((tile_id / tileset.width) + 1)
-    );
-    glVertex2f(x + tileset.tile_width, y + tileset.tile_height);
-
-    glTexCoord2f(
-            tileset.horizontal_ratio * (tile_id % tileset.width),
-            tileset.vertical_ratio * ((tile_id / tileset.width) + 1)
-    );
-    glVertex2f(x, y + tileset.tile_height);
-
-    glEnd();
-}
-
 void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<int>>& tiles) const {
     const TSX::Tileset& tileset = *info_;
+
+    glBindTexture(GL_TEXTURE_2D, texture_);
 
     for(int i = 0; i < height; ++i) {
         for(int j = 0; j < width; ++j) {
             int tile_id = tiles[i][j] - 1;
+            int col = tile_id % tileset.width;
+            int row = tile_id / tileset.width;
 
             if(tile_id != -1) {
                 glBegin(GL_QUADS);
 
                 glTexCoord2f(
-                        tileset.horizontal_ratio * (tile_id % tileset.width),
-                        tileset.vertical_ratio * (tile_id / tileset.width)
+                        tileset.horizontal_ratio * col,
+                        tileset.vertical_ratio * row
                 );
                 glVertex2d(float(j * tileset.tile_width), float(i * tileset.tile_height));
 
                 glTexCoord2f(
-                        tileset.horizontal_ratio * ((tile_id % tileset.width) + 1),
-                        tileset.vertical_ratio * (tile_id / tileset.width)
+                        tileset.horizontal_ratio * (col + 1),
+                        tileset.vertical_ratio * row
                 );
                 glVertex2f(float((j + 1) * tileset.tile_width), float(i * tileset.tile_height));
 
                 glTexCoord2f(
-                        tileset.horizontal_ratio * ((tile_id % tileset.width) + 1),
-                        tileset.vertical_ratio * ((tile_id / tileset.width) + 1)
+                        tileset.horizontal_ratio * (col + 1),
+                        tileset.vertical_ratio * (row + 1)
                 );
                 glVertex2f(float((j + 1) * tileset.tile_width), float((i + 1) * tileset.tile_height));
 
                 glTexCoord2f(
-                        tileset.horizontal_ratio * (tile_id % tileset.width),
-                        tileset.vertical_ratio * ((tile_id / tileset.width) + 1)
+                        tileset.horizontal_ratio * col,
+                        tileset.vertical_ratio * (row + 1)
                 );
                 glVertex2f(float(j * tileset.tile_width), float((i + 1) * tileset.tile_height));
 
@@ -91,4 +59,24 @@ void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<i
             }
         }
     }
+
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+Sprite* Tileset::sprite(int tile_id) {
+    std::map<int, Sprite*>::iterator it = sprites_.find(tile_id);
+
+    if(it != sprites_.end())
+        return it->second;
+
+    const TSX::Tileset& tileset = *info_;
+    Sprite* sprite = new Sprite(texture_, tileset.tile_width, tileset.tile_height,
+            tileset.horizontal_ratio * (tile_id % tileset.width),
+            tileset.vertical_ratio * (tile_id / tileset.width),
+            tileset.horizontal_ratio,
+            tileset.vertical_ratio
+    );
+
+    sprites_[tile_id] = sprite;
+    return sprite;
 }

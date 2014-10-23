@@ -6,7 +6,7 @@
 class MapObject : public Entity {
 public:
     typedef Entity super;
-    MapObject(Tileset* tileset, int gid, float x, float y, float width, float height);
+    MapObject(Sprite* sprite, float x, float y);
 
     Sprite* CurrentSprite(vec2f& sprite_position) const;
     Sprite* CurrentSprite() const;
@@ -14,6 +14,5 @@ public:
     void Render() const;
 
 private:
-    Tileset* tileset_;
-    int gid_;
+    Sprite* sprite_;
 };
