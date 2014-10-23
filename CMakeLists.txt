@@ -16,6 +16,7 @@ set(SOURCE_FILES
     src/graphic/sprite.cpp
     src/graphic/spritesheet.cpp
     src/graphic/sprite_set.cpp
+    src/entity/map_object.cpp
     src/entity/mob.cpp
     src/entity/mob/link.cpp
     src/entity/mob/action.cpp
@@ -26,6 +27,7 @@ set(SOURCE_FILES
     src/entity/mob/ai/player.cpp
     src/entity/mob/ai/wander.cpp
     src/map/tile_map.cpp
+    src/map/tileset.cpp
     src/map/level.cpp
     src/math/dir.cpp
     src/math/quadtree.cpp

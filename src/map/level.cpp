@@ -1,22 +1,41 @@
 #include "level.hpp"
 #include "../debug.hpp"
+#include "../entity/map_object.hpp"
 
 Level::Level(const char *map) : super(map)
 {
     dynamic_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
+
+    for(const auto& k : map_->object_groups) {
+        const TMX::ObjectGroup& object_group = k.second;
+
+        for(const TMX::Object& object : object_group.object) {
+            MapObject* map_object = new MapObject(tileset_, object.gid, object.x, object.y - 16, object.width, object.height);
+            AddEntity(map_object);
+        }
+    }
 }
 
 void Level::Update(double delta) {
     for(Entity* entity : entities_) {
-        dynamic_collidables_->Remove(entity);
+        if(entity->IsMob()) {
+            dynamic_collidables_->Remove(entity);
 
-        entity->Update(delta);
+            entity->Update(delta);
 
-        if(entity->IsAlive()) {
-            dynamic_collidables_->Insert(entity);
-            temp_entities_.push_back(entity);
-        } else if(entity != player_) {
-            delete entity;
+            if (entity->IsAlive()) {
+                dynamic_collidables_->Insert(entity);
+                temp_entities_.push_back(entity);
+            } else if (entity != player_) {
+                delete entity;
+            }
+        } else {
+            if(entity->IsAlive()) {
+                temp_entities_.push_back(entity);
+            } else {
+                dynamic_collidables_->Remove(entity);
+                delete entity;
+            }
         }
     }
 
@@ -42,8 +61,10 @@ void Level::Render() {
         std::vector<Rectangle*> candidates;
 
         for(Entity* entity : entities_) {
-            static_collidables_->Retrieve(entity, candidates);
-            dynamic_collidables_->Retrieve(entity, candidates);
+            if(entity->IsMob()) {
+                static_collidables_->Retrieve(entity, candidates);
+                dynamic_collidables_->Retrieve(entity, candidates);
+            }
         }
 
         for(Rectangle* candidate : candidates)
@@ -54,6 +75,11 @@ void Level::Render() {
 void Level::AddEntity(Entity* entity) {
     entities_.insert(entity);
     dynamic_collidables_->Insert(entity);
+}
+
+void Level::AddMob(Mob* mob) {
+    entities_.insert(mob);
+    dynamic_collidables_->Insert(mob);
 }
 
 void Level::set_player(Entity* player) {

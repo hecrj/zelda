@@ -6,9 +6,9 @@ Entity::Entity(float width, float height) :
         health_(100)
 {}
 
-Entity::Entity(float x, float y, float width, float height) :
+Entity::Entity(float x, float y, float width, float height, int health) :
         super(x, y, width, height),
-        health_(100)
+        health_(health)
 {}
 
 bool Entity::IsAlive() const {
@@ -24,8 +24,6 @@ void Entity::Update(double delta) {
 }
 
 void Entity::Render() const {
-    if(Debug::enabled)
-        super::Render(1, 0, 0);
 }
 
 bool Entity::moving() const {
@@ -42,4 +40,8 @@ int Entity::health() const {
 
 void Entity::Damage(Entity* from, int damage) {
     health_ -= damage;
+}
+
+bool Entity::IsMob() const {
+    return false;
 }

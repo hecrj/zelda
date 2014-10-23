@@ -10,8 +10,7 @@ public:
     vec2f position() const;
     float width();
     float height();
-    Pixelmap* HitMap() const;
-    Pixelmap* DamageMap() const;
+    Sprite* CurrentSprite() const;
 
     void set_current_frame(int frame);
     void Reset();

@@ -10,16 +10,7 @@ TileMap::TileMap(const char* name)
     path << "res/level/" << name << ".tmx";
     map_ = TMX::parse(path.str().c_str());
     static_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
-    texture = SOIL_load_OGL_texture(map_->tilesets[0]->image.source.c_str(),
-            SOIL_LOAD_RGBA,
-            SOIL_CREATE_NEW_ID,
-            SOIL_FLAG_MULTIPLY_ALPHA);
-
-    if(0 == texture) {
-        std::stringstream error;
-        error << "SOIL loading error: " << SOIL_last_result() << std::cout;
-        throw error.str();
-    }
+    tileset_ = new Tileset(map_->tilesets[0]);
 
     InitBlockedTiles();
 }
@@ -73,47 +64,11 @@ bool TileMap::IsInbounds(const vec2f& position, float width, float height) const
 void TileMap::RenderLayers(const std::vector<TMX::TileLayer*>& layers) const
 {
     // Only one tileset supported
-    TSX::Tileset& tileset = *map_->tilesets[0];
-    glBindTexture(GL_TEXTURE_2D, texture);
+    const Tileset& tileset = *tileset_;
+    tileset_->bind();
 
-    for(TMX::TileLayer* layer : layers) {
-        for(int i = 0; i < layer->height; ++i) {
-            for(int j = 0; j < layer->width; ++j) {
-                int tile_id = layer->tiles[i][j] - 1;
-
-                if(tile_id == -1)
-                    continue;
-
-                glBegin(GL_QUADS);
-
-                glTexCoord2f(
-                        tileset.horizontal_ratio * (tile_id % tileset.width),
-                        tileset.vertical_ratio * (tile_id / tileset.width)
-                );
-                glVertex2d(float(j * map_->tile_width), float(i * map_->tile_height));
-
-                glTexCoord2f(
-                        tileset.horizontal_ratio * ((tile_id % tileset.width) + 1),
-                        tileset.vertical_ratio * (tile_id / tileset.width)
-                );
-                glVertex2f(float((j+1) * map_->tile_width), float(i * map_->tile_height));
-
-                glTexCoord2f(
-                        tileset.horizontal_ratio * ((tile_id % tileset.width) + 1),
-                        tileset.vertical_ratio * ((tile_id / tileset.width) + 1)
-                );
-                glVertex2f(float((j+1) * map_->tile_width), float((i+1) * map_->tile_height));
-
-                glTexCoord2f(
-                        tileset.horizontal_ratio * (tile_id % tileset.width),
-                        tileset.vertical_ratio * ((tile_id / tileset.width) + 1)
-                );
-                glVertex2f(float(j * map_->tile_width), float((i+1) * map_->tile_height));
-
-                glEnd();
-            }
-        }
-    }
+    for(TMX::TileLayer* layer : layers)
+        tileset.RenderTiles(layer->width, layer->height, layer->tiles);
 
     glBindTexture(GL_TEXTURE_2D, 0);
 }

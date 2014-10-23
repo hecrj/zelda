@@ -2,6 +2,7 @@
 
 #include "tile_map.hpp"
 #include "../entity.hpp"
+#include "../entity/mob.hpp"
 #include <set>
 
 class Level : public TileMap {
@@ -10,6 +11,7 @@ public:
     Level(const char* map);
 
     void AddEntity(Entity* entity);
+    void AddMob(Mob* mob);
     void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void set_player(Entity* player);
@@ -20,7 +22,10 @@ public:
 private:
     struct YCoordinateCompare {
         bool operator() (Entity* e1, Entity* e2) const {
-            return e1->y() < e2->y();
+            if(e1->y() != e2->y())
+                return e1->y() < e2->y();
+            else
+                return e1->x() < e2->x();
         }
     };
 

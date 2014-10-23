@@ -92,7 +92,7 @@ void Game::Init()
     link2->set_AI(wander);
 
     level->set_player(link);
-    level->AddEntity(link2);
+    level->AddMob(link2);
 }
 
 void Game::Tick()

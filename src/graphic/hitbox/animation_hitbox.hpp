@@ -7,7 +7,9 @@ class AnimationHitbox : public Hitbox {
 public:
     typedef Hitbox super;
     AnimationHitbox(const vec2f& position, Animation* animation);
-    Animation* CurrentAnimation() const;
+
+    Sprite* CurrentSprite(vec2f& sprite_position) const;
+    Sprite* CurrentSprite() const;
     Collision CollisionType(Rectangle* rectangle) const;
 
 private:

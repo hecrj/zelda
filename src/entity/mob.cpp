@@ -1,9 +1,10 @@
 #include <iostream>
 #include "mob.hpp"
 #include "mob/action/push.hpp"
+#include "../map/level.hpp"
 
 Mob::Mob(Level* level, float x, float y, float width, float height, Action* idle_action) :
-        super(x, y, width, height),
+        super(x, y, width, height, 100),
         level_(level),
         facing_(Dir::UP),
         facing_candidate_(-1),
@@ -120,10 +121,6 @@ Action* Mob::action(std::string name) const {
         return it->second;
 }
 
-Animation* Mob::CurrentAnimation() const {
-    return current_action_->CurrentAnimation();
-}
-
 void Mob::RegisterAction(std::string name, Action *action) {
     actions_[name] = action;
 }
@@ -156,4 +153,19 @@ void Mob::Damage(Entity* from, int damage) {
 
         ChangeAction(new Push(this, idle_action_, dir, damage, 0.1f));
     }
+}
+
+bool Mob::IsMob() const {
+    return true;
+}
+
+Sprite *Mob::CurrentSprite(vec2f &position) const {
+    Animation* animation =  current_action_->CurrentAnimation();
+    position = animation->position();
+
+    return animation->CurrentSprite();
+}
+
+Sprite *Mob::CurrentSprite() const {
+    return current_action_->CurrentAnimation()->CurrentSprite();
 }

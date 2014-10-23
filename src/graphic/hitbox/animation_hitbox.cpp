@@ -10,21 +10,19 @@ AnimationHitbox::AnimationHitbox(const vec2f& position, Animation* animation) :
     position_ = position + animation_->position();
 }
 
-Animation* AnimationHitbox::CurrentAnimation() const {
-    return animation_;
-}
-
 Collision AnimationHitbox::CollisionType(Rectangle* rectangle) const {
     if(!rectangle->IsHitbox())
-        return BLOCK;
+        return DAMAGE;
 
     Hitbox* h = (Hitbox*) rectangle;
-    Animation* a = h->CurrentAnimation();
+
+    vec2f sprite_position;
+    Sprite* a = h->CurrentSprite(sprite_position);
 
     // Calculate rectangle intersection between h and a
     // This is necessary because the animation rectangle could be smaller than h
     const vec2f& hpos = h->position();
-    const vec2f& apos = hpos + a->position();
+    const vec2f& apos = hpos + sprite_position;
 
     float x1f = std::max(hpos.x, apos.x);
     float y1f = std::max(hpos.y, apos.y);
@@ -43,8 +41,8 @@ Collision AnimationHitbox::CollisionType(Rectangle* rectangle) const {
     int x_offset = (int)(position_.x - apos.x);
     int y_offset = (int)(position_.y - apos.y);
 
-    const Pixelmap& h1 = *CurrentAnimation()->HitMap();
-    const Pixelmap& h2 = *a->DamageMap();
+    const Pixelmap& h1 = *CurrentSprite()->hit_map();
+    const Pixelmap& h2 = *a->damage_map();
 
     if(Debug::enabled) {
         h1.Print();
@@ -74,4 +72,13 @@ Collision AnimationHitbox::CollisionType(Rectangle* rectangle) const {
     }
 
     return NONE;
+}
+
+Sprite *AnimationHitbox::CurrentSprite(vec2f &sprite_position) const {
+    sprite_position = animation_->position();
+    return animation_->CurrentSprite();
+}
+
+Sprite *AnimationHitbox::CurrentSprite() const {
+    return animation_->CurrentSprite();
 }

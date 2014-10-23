@@ -893,11 +893,13 @@
  </tile>
  <tile id="992">
   <properties>
+   <property name="above" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
  <tile id="993">
   <properties>
+   <property name="above" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>

@@ -67,10 +67,6 @@ float Animation::height() {
     return spriteset_->height;
 }
 
-Pixelmap* Animation::HitMap() const {
-    return spriteset_->sprites[current_frame_]->hit_map();
-}
-
-Pixelmap* Animation::DamageMap() const {
-    return spriteset_->sprites[current_frame_]->damage_map();
+Sprite *Animation::CurrentSprite() const {
+    return spriteset_->sprites[current_frame_];
 }

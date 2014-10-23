@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../entity.hpp"
-#include "../map/level.hpp"
 #include "mob/action.hpp"
 #include "mob/ai.hpp"
 #include "../math/vec2.hpp"
@@ -9,6 +8,7 @@
 #include <map>
 #include <string>
 
+class Level;
 class Mob : public Entity {
 public:
     typedef Entity super;
@@ -18,8 +18,10 @@ public:
     bool CanMove() const;
     const Dir& facing() const;
     bool moving() const;
+    bool IsMob() const;
     Action* action(std::string name) const;
-    Animation* CurrentAnimation() const;
+    Sprite* CurrentSprite(vec2f& position) const;
+    Sprite* CurrentSprite() const;
 
     void set_AI(AI* ai);
     void RegisterAction(std::string name, Action *action);

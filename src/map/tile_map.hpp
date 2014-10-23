@@ -3,6 +3,7 @@
 #include "tmx_map.hpp"
 #include "GL/glut.h"
 #include "../math/quadtree.hpp"
+#include "tileset.hpp"
 
 class TileMap
 {
@@ -23,9 +24,9 @@ public:
 protected:
     TMX::Map* map_;
     Quadtree* static_collidables_;
+    Tileset* tileset_;
 
 private:
-    GLuint texture;
     std::vector<Rectangle*> blocked_tiles_;
 
     void InitBlockedTiles();
