@@ -11,7 +11,6 @@ public:
     Level(const char* map);
 
     void AddEntity(Entity* entity);
-    void AddMob(Mob* mob);
     void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void set_player(Entity* player);

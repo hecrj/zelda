@@ -76,6 +76,9 @@ void Game::Init()
 
 	glMatrixMode(GL_MODELVIEW);
 
+    // Set seed
+    srand((unsigned) time(NULL));
+
     // Load demo map
     level = new Level("bigger");
 
@@ -84,7 +87,7 @@ void Game::Init()
     Link* link = new Link(level);
     Link* link2 = new Link(level);
     link->set_position(17 * 16, 17 * 16);
-    link2->set_position(17*16, 11*16);
+    link2->set_position(17 * 16, 11 * 16);
 
     Player* player = new Player(link, keys);
     Wander* wander = new Wander(link2);
@@ -92,7 +95,7 @@ void Game::Init()
     link2->set_AI(wander);
 
     level->set_player(link);
-    level->AddMob(link2);
+    level->AddEntity(link2);
 }
 
 void Game::Tick()

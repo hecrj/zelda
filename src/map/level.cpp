@@ -77,11 +77,6 @@ void Level::AddEntity(Entity* entity) {
     dynamic_collidables_->Insert(entity);
 }
 
-void Level::AddMob(Mob* mob) {
-    entities_.insert(mob);
-    dynamic_collidables_->Insert(mob);
-}
-
 void Level::set_player(Entity* player) {
     player_ = player;
     AddEntity(player);

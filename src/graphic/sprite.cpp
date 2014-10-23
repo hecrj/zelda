@@ -3,6 +3,7 @@
 #include <iostream>
 #include "sprite.hpp"
 #include "../game.hpp"
+#include "../debug.hpp"
 
 
 Sprite::Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, float tex_width, float tex_height) :
@@ -37,10 +38,12 @@ Sprite::Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, 
         }
     }
 
-    hit_map_->Print();
-
     glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+
+    if(Debug::enabled) {
+        damage_map_->Print();
+    }
 }
 
 Sprite::Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, float tex_width, float tex_height,
