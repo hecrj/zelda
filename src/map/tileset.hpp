@@ -10,7 +10,8 @@ public:
 
     Sprite* sprite(int tile_id);
 
-    void RenderTiles(int width, int height, const std::vector<std::vector<int>>& tiles) const;
+    void RenderTiles(int width, int height, const std::vector<std::vector<int>>& tiles,
+            int screen_width, int screen_height) const;
 
 private:
     TSX::Tileset* info_;

@@ -17,10 +17,15 @@ Tileset::Tileset(TSX::Tileset *tileset) :
     }
 }
 
-void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<int>>& tiles) const {
+void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<int>>& tiles,
+        int screen_width, int screen_height) const {
     const TSX::Tileset& tileset = *info_;
 
+    width = std::min(width, screen_width);
+    height = std::min(height, screen_height);
+
     glBindTexture(GL_TEXTURE_2D, texture_);
+    glBegin(GL_QUADS);
 
     for(int i = 0; i < height; ++i) {
         for(int j = 0; j < width; ++j) {
@@ -29,8 +34,6 @@ void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<i
             int row = tile_id / tileset.width;
 
             if(tile_id != -1) {
-                glBegin(GL_QUADS);
-
                 glTexCoord2f(
                         tileset.horizontal_ratio * col,
                         tileset.vertical_ratio * row
@@ -54,12 +57,11 @@ void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<i
                         tileset.vertical_ratio * (row + 1)
                 );
                 glVertex2f(float(j * tileset.tile_width), float((i + 1) * tileset.tile_height));
-
-                glEnd();
             }
         }
     }
 
+    glEnd();
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 

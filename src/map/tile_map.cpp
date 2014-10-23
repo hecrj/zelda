@@ -3,6 +3,7 @@
 #include "tile_map.hpp"
 #include "SOIL.h"
 #include "../debug.hpp"
+#include "../game.hpp"
 
 TileMap::TileMap(const char* name)
 {
@@ -63,7 +64,7 @@ bool TileMap::IsInbounds(const vec2f& position, float width, float height) const
 void TileMap::RenderLayers(const std::vector<TMX::TileLayer*>& layers) const
 {
     for(TMX::TileLayer* layer : layers)
-        tileset_->RenderTiles(layer->width, layer->height, layer->tiles);
+        tileset_->RenderTiles(layer->width, layer->height, layer->tiles, Game::WIDTH, Game::HEIGHT);
 }
 
 void TileMap::RenderLayersBelow() const {
