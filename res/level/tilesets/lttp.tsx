@@ -76,6 +76,21 @@
    <property name="blocked" value="true"/>
   </properties>
  </tile>
+ <tile id="122">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="123">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="124">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
  <tile id="145">
   <properties>
    <property name="blocked" value="true"/>
@@ -91,7 +106,42 @@
    <property name="blocked" value="true"/>
   </properties>
  </tile>
+ <tile id="158">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="159">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="160">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
  <tile id="182">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="194">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="195">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="196">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="201">
   <properties>
    <property name="blocked" value="true"/>
   </properties>
@@ -102,6 +152,26 @@
   </properties>
  </tile>
  <tile id="221">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="230">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="231">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="232">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="237">
   <properties>
    <property name="blocked" value="true"/>
   </properties>
@@ -1001,6 +1071,36 @@
  <tile id="1126">
   <properties>
    <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1141">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1142">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1143">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1177">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1178">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="1179">
+  <properties>
+   <property name="above" value="true"/>
   </properties>
  </tile>
  <tile id="1210">
