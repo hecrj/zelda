@@ -1,8 +1,13 @@
+#include <iostream>
+#include <cursesp.h>
 #include "level.hpp"
 #include "../debug.hpp"
 #include "../entity/map_object.hpp"
+#include "../game.hpp"
 
-Level::Level(const char *map) : super(map)
+const int Level::FOLLOW_MARGIN = 200;
+
+Level::Level(const char *map) : super(map), position_(vec2f(0, 0))
 {
     dynamic_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
 
@@ -46,6 +51,26 @@ void Level::Update(double delta) {
 }
 
 void Level::Render() {
+    // Recalculate scrolling
+    const vec2f& player_position = player_->position();
+    float bottom = position_.y + Game::HEIGHT - FOLLOW_MARGIN;
+    float right = position_.x + Game::WIDTH - FOLLOW_MARGIN;
+
+    if(right + FOLLOW_MARGIN < map_->width_pixels && player_position.x > right)
+        position_.x += player_position.x - right;
+
+    else if(position_.x > 0 && player_position.x < position_.x + FOLLOW_MARGIN)
+        position_.x -= position_.x + FOLLOW_MARGIN - player_position.x;
+
+    if(bottom + FOLLOW_MARGIN < map_->height_pixels && player_position.y > bottom)
+        position_.y += player_position.y - bottom;
+
+    else if(position_.y > 0 && player_position.y < position_.y + FOLLOW_MARGIN)
+        position_.y -= position_.y + FOLLOW_MARGIN - player_position.y;
+
+    glTranslatef(-position_.x, -position_.y, 0);
+
+    // Render everything
     super::RenderLayersBelow();
 
     for(Entity* entity : entities_) {

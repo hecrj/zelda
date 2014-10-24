@@ -8,6 +8,9 @@
 class Level : public TileMap {
 public:
     typedef TileMap super;
+
+    static const int FOLLOW_MARGIN;
+
     Level(const char* map);
 
     void AddEntity(Entity* entity);
@@ -28,6 +31,7 @@ private:
         }
     };
 
+    vec2f position_;
     std::set<Entity*, YCoordinateCompare> entities_;
     std::vector<Entity*> temp_entities_;
     Quadtree* dynamic_collidables_;
