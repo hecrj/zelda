@@ -11,6 +11,11 @@ void AppRender()
 	game.Render();
 }
 
+void AppReshape(int width, int height)
+{
+    game.Reshape(width, height);
+}
+
 void AppKeyboard(unsigned char key, int x, int y)
 {
 	game.ReadKeyboard(key,x,y,true);
@@ -69,6 +74,7 @@ int main(int argc, char** argv)
 
 	// Register callback functions
 	glutDisplayFunc(AppRender);
+    glutReshapeFunc(AppReshape);
 	glutKeyboardFunc(AppKeyboard);
 	glutKeyboardUpFunc(AppKeyboardUp);
 	glutSpecialFunc(AppSpecialKeys);

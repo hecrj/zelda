@@ -149,3 +149,26 @@ void Game::Render()
 
 	glutSwapBuffers();
 }
+
+void Game::Reshape(int width, int height) {
+    if(width < 500) {
+        glutReshapeWindow(500, height);
+        return;
+    }
+
+    if(height < 500) {
+        glutReshapeWindow(width, 500);
+        return;
+    }
+
+    glViewport(0, 0, width, height);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, width, height, 0, 0, 1);
+    glMatrixMode(GL_MODELVIEW);
+
+    WIDTH = width;
+    HEIGHT = height;
+    DIRTY = true;
+}

@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cursesp.h>
 #include "level.hpp"
 #include "../debug.hpp"
 #include "../entity/map_object.hpp"
@@ -53,26 +52,34 @@ void Level::Update(double delta) {
 void Level::Render() {
     // Recalculate scrolling
     const vec2f& player_position = player_->position();
-    float bottom = position_.y + Game::HEIGHT - FOLLOW_MARGIN;
-    float right = position_.x + Game::WIDTH - FOLLOW_MARGIN;
+    float right = position_.x + Game::WIDTH;
+    float bottom = position_.y + Game::HEIGHT;
 
-    if(right + FOLLOW_MARGIN < map_->width_pixels && player_position.x > right)
-        position_.x += player_position.x - right;
+    float left_limit = position_.x + FOLLOW_MARGIN;
+    float top_limit = position_.y + FOLLOW_MARGIN;
+    float right_limit = right - FOLLOW_MARGIN;
+    float bottom_limit = bottom - FOLLOW_MARGIN;
 
-    else if(position_.x > 0 && player_position.x < position_.x + FOLLOW_MARGIN)
-        position_.x -= position_.x + FOLLOW_MARGIN - player_position.x;
+    if(right < map_->width_pixels and player_position.x > right_limit)
+        position_.x = std::min((float)(map_->width_pixels - Game::WIDTH),
+                position_.x + player_position.x - right_limit);
 
-    if(bottom + FOLLOW_MARGIN < map_->height_pixels && player_position.y > bottom)
-        position_.y += player_position.y - bottom;
+    else if(position_.x > 0 and player_position.x < left_limit)
+        position_.x = std::max(0.0f, position_.x + player_position.x - left_limit);
 
-    else if(position_.y > 0 && player_position.y < position_.y + FOLLOW_MARGIN)
-        position_.y -= position_.y + FOLLOW_MARGIN - player_position.y;
+    if(bottom < map_->height_pixels and player_position.y > bottom_limit)
+        position_.y = std::min((float)(map_->height_pixels - Game::HEIGHT),
+                position_.y + player_position.y - bottom_limit);
+
+    else if(position_.y > 0 and player_position.y < top_limit)
+        position_.y = std::max(0.0f, position_.y + player_position.y - top_limit);
 
     glTranslatef(-position_.x, -position_.y, 0);
 
-    // Render everything
+    // Rendering
     super::RenderLayersBelow();
 
+    // TODO: Render visible entities only
     for(Entity* entity : entities_) {
         entity->Render();
     }

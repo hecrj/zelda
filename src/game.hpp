@@ -21,6 +21,7 @@ public:
 	void ReadMouse(int button, int state, int x, int y);
     void Update(double delta);
 	void Render();
+    void Reshape(int width, int height);
 
 private:
     static GLuint FRAMEBUFFER_AUX;
