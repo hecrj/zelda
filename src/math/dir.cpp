@@ -30,3 +30,13 @@ const Dir Dir::UP = Dir(vec2f(0, -1), 1);
 const Dir Dir::RIGHT = Dir(vec2f(1, 0), 2);
 const Dir Dir::LEFT = Dir(vec2f(-1, 0), 3);
 const Dir* Dir::ALL[] = { &Dir::DOWN, &Dir::UP, &Dir::RIGHT, &Dir::LEFT };
+const std::array<vec2i, 8> Dir::VECTORS = {
+        vec2i(0, 1),
+        vec2i(0, -1),
+        vec2i(1, 0),
+        vec2i(-1, 0),
+        vec2i(-1, -1),
+        vec2i(-1, 1),
+        vec2i(1, -1),
+        vec2i(1, 1)
+};

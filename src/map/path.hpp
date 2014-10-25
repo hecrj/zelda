@@ -1,0 +1,44 @@
+#pragma once
+
+#include "../entity/mob.hpp"
+#include <set>
+
+class Path {
+public:
+    struct Node {
+        Node* parent;
+        unsigned int x;
+        unsigned int y;
+        unsigned int g_cost;
+        unsigned int h_cost;
+        unsigned int cost;
+        bool closed;
+
+        Node(const vec2i& position, const vec2i& destination, unsigned int g_cost, Node* parent);
+
+        unsigned int HeuristicCost(const vec2i& destination) const;
+
+        void UpdateGCost(unsigned int g_cost);
+
+        struct SortByCostAsc {
+            bool operator() (Node* n1, Node* n2) const;
+        };
+    };
+
+    Mob* from;
+    Entity* to;
+    bool ready;
+    bool calculating;
+    std::set<Path::Node*, Path::Node::SortByCostAsc> pending;
+    std::vector<Node*> nodes;
+    vec2i destination;
+
+    Path(Mob* from, Entity* to);
+    ~Path();
+
+    bool Update(double delta);
+
+private:
+    Rectangle r;
+    float accum;
+};

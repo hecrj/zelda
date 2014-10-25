@@ -16,7 +16,3 @@ void Wander::Move(double delta) {
         accum = 0;
     }
 }
-
-void Wander::Update(double delta) {
-
-}

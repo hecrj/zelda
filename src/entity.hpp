@@ -21,6 +21,10 @@ public:
     virtual void Update(double delta);
     virtual void Render() const;
 
+    struct SortByYCoordinateAsc {
+        bool operator() (Entity* e1, Entity* e2) const;
+    };
+
 private:
     int health_;
 };

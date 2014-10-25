@@ -10,7 +10,6 @@ public:
     Wander(Mob* mob);
 
     void Move(double delta);
-    void Update(double delta);
 
 private:
     float accum;

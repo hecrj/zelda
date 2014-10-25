@@ -24,11 +24,13 @@ set(SOURCE_FILES
     src/entity/mob/action/attack.cpp
     src/entity/mob/action/push.cpp
     src/entity/mob/ai.cpp
+    src/entity/mob/ai/chase.cpp
     src/entity/mob/ai/player.cpp
     src/entity/mob/ai/wander.cpp
     src/map/tile_map.cpp
     src/map/tileset.cpp
     src/map/level.cpp
+    src/map/path.cpp
     src/math/dir.cpp
     src/math/quadtree.cpp
     src/math/rectangle.cpp
@@ -51,6 +53,8 @@ include_directories(
 set(NVIDIA_LIB)
 
 # TODO: Improve NVIDIA detection
+# If you have an NVIDIA card you would probably need to change this
+# to the driver you are currently using
 if(EXISTS /usr/lib/nvidia-331-updates)
 set(NVIDIA_LIB -L/usr/lib/nvidia-331-updates/)
 endif()

@@ -9,6 +9,7 @@
 #include <string>
 
 class Level;
+class Path;
 class Mob : public Entity {
 public:
     typedef Entity super;
@@ -22,6 +23,8 @@ public:
     Action* action(std::string name) const;
     Sprite* CurrentSprite(vec2f& position) const;
     Sprite* CurrentSprite() const;
+    Entity* SeekPlayer() const;
+    Path* FindPath(Entity* to);
 
     void set_AI(AI* ai);
     void RegisterAction(std::string name, Action *action);
@@ -30,6 +33,7 @@ public:
     void Slide(const vec2f direction, int intensity, double delta);
     void MeleeAttack(Hitbox* hitbox);
     void Damage(Entity* from, int damage);
+    void FollowPath(Path* path);
 
     void Update(double delta);
     void Render() const;

@@ -2,6 +2,8 @@
 #include "mob.hpp"
 #include "mob/action/push.hpp"
 #include "../map/level.hpp"
+#include "../map/path.hpp"
+#include "../debug.hpp"
 
 Mob::Mob(Level* level, float x, float y, float width, float height, Action* idle_action) :
         super(x, y, width, height, 100),
@@ -109,6 +111,9 @@ void Mob::Update(double delta) {
 void Mob::Render() const {
     current_action_->Render();
 
+    if(Debug::enabled)
+        ai_->Debug();
+
     super::Render();
 }
 
@@ -168,4 +173,17 @@ Sprite *Mob::CurrentSprite(vec2f &position) const {
 
 Sprite *Mob::CurrentSprite() const {
     return current_action_->CurrentAnimation()->CurrentSprite();
+}
+
+void Mob::FollowPath(Path* path) {
+    // TODO: Compute directions to move to next step
+}
+
+Entity* Mob::SeekPlayer() const {
+    // TODO: Check distance and range of vision
+    return level_->players()[0];
+}
+
+Path* Mob::FindPath(Entity* to) {
+    return level_->FindPath(this, to);
 }

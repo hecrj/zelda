@@ -5,6 +5,7 @@
 #include "entity/mob/ai/player.hpp"
 #include "entity/mob/ai/wander.hpp"
 #include "debug.hpp"
+#include "entity/mob/ai/chase.hpp"
 #include <GL/glut.h>
 #include <iostream>
 
@@ -90,11 +91,10 @@ void Game::Init()
     link2->set_position(17 * 16, 11 * 16);
 
     Player* player = new Player(link, keys);
-    Wander* wander = new Wander(link2);
     link->set_AI(player);
-    link2->set_AI(wander);
+    link2->set_AI(new Chase(link2));
 
-    level->set_player(link);
+    level->AddPlayer(link);
     level->AddEntity(link2);
 }
 
@@ -151,13 +151,13 @@ void Game::Render()
 }
 
 void Game::Reshape(int width, int height) {
-    if(width < 500) {
-        glutReshapeWindow(500, height);
+    if(width < 640) {
+        glutReshapeWindow(640, height);
         return;
     }
 
-    if(height < 500) {
-        glutReshapeWindow(width, 500);
+    if(height < 480) {
+        glutReshapeWindow(width, 480);
         return;
     }
 
