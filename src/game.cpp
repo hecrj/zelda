@@ -5,6 +5,9 @@
 #include "entity/mob/ai/player.hpp"
 #include "entity/mob/ai/follower.hpp"
 #include "debug.hpp"
+#include "entity/mob/guard.hpp"
+#include "entity/mob/ai/chase.hpp"
+#include "entity/mob/stalfos.hpp"
 
 int Game::WIDTH = 640;
 int Game::HEIGHT = 480;
@@ -81,18 +84,29 @@ void Game::Init()
     level = new Level("bigger");
 
     Link::Load();
+    Guard::Load();
+    Stalfos::Load();
 
     Link* link = new Link(level);
     Link* link2 = new Link(level);
+    Guard* guard = new Guard(level);
+    Stalfos* stalfos = new Stalfos(level);
+
     link->set_position(17 * 16, 17 * 16);
     link2->set_position(17 * 16, 11 * 16);
+    guard->set_position(20 * 16, 11 * 16);
+    stalfos->set_position(22 * 16, 11 * 16);
 
     Player* player = new Player(link, keys);
     link->set_AI(player);
     link2->set_AI(new Follower(link2));
+    guard->set_AI(new Chase(guard));
+    stalfos->set_AI(new Chase(stalfos));
 
     level->AddPlayer(link);
     level->AddEntity(link2);
+    level->AddEntity(guard);
+    level->AddEntity(stalfos);
 }
 
 void Game::Tick()

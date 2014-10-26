@@ -141,7 +141,7 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
             if(c == Collision::DAMAGE) {
                 // TODO: Make dynamic collidables a Quadtree of entities
                 if(candidate->IsEntity()) {
-                    ((Entity*)candidate)->Damage(this, 5);
+                    ((Entity*)candidate)->Damage(this, 10);
                 }
                 std::cout << "Melee attack collision" << std::endl;
             }
@@ -175,53 +175,30 @@ Sprite *Mob::CurrentSprite() const {
     return current_action_->CurrentAnimation()->CurrentSprite();
 }
 
-void Mob::FollowPath(Path* path, double delta) {
-    if(path->nodes.empty()) {
-        // TODO: Move towards destination entity
-    } else {
-        vec2i next = path->nodes.back();
+bool Mob::FollowPath(Path* path, double delta) {
+    if(path->nodes.empty())
+        return false;
+
+    vec2i next;
+    float dist;
+    vec2f pos(x() / Path::RESOLUTION, y() / Path::RESOLUTION);
+
+    while(path->nodes.size() > 0) {
+        next = path->nodes.back();
+        dist = pos.dist(vec2f(next.x, next.y));
+
+        if(dist > 1)
+            break;
+
         path->nodes.pop_back();
-        vec2f pos(x() / Path::RESOLUTION, y() / Path::RESOLUTION);
-
-        while(path->nodes.size() > 0 and pos.dist(vec2f(next.x, next.y)) < 4) {
-            next = path->nodes.back();
-            path->nodes.pop_back();
-        }
-
-        vec2f dir(next.x, next.y);
-        dir -= pos;
-
-        if(dir.x == 0 || dir.y == 0) {
-            Move(Dir::fromVector(dir), delta);
-        } else {
-            float x = dir.x;
-            float y = dir.y;
-
-            if(std::abs(y) < 0.5) {
-                position_.y += dir.y;
-            } else {
-                dir.x = 0;
-                Move(Dir::fromVector(dir), delta);
-            }
-
-            if(std::abs(x) < 0.5) {
-                position_.x += x;
-            } else {
-                dir.x = x;
-                dir.y = 0;
-                Move(Dir::fromVector(dir), delta);
-            }
-
-            float absx = std::abs(x) + (facing_candidate_ > 1 ? 1 : 0);
-            float absy = std::abs(y) + (facing_candidate_ < 2 ? 1 : 0);
-
-            if(absx > absy) {
-                facing_candidate_ = x > 0 ? 2 : 3;
-            } else {
-                facing_candidate_ = y > 0 ? 0 : 1;
-            }
-        }
     }
+
+    _MoveVector(vec2f(next.x, next.y) - pos, delta);
+    return true;
+}
+
+void Mob::MoveTowards(Entity* entity, double delta) {
+    _MoveVector(entity->center() - center(), delta);
 }
 
 Entity* Mob::SeekPlayer() const {
@@ -231,4 +208,38 @@ Entity* Mob::SeekPlayer() const {
 
 Path* Mob::FindPath(Entity* to) {
     return level_->FindPath(this, to);
+}
+
+void Mob::_MoveVector(vec2f dir, double delta) {
+    // TODO: Improve vector movement
+    if(dir.x == 0 || dir.y == 0) {
+        Move(Dir::fromVector(dir), delta);
+    } else {
+        float x = dir.x;
+        float y = dir.y;
+
+        if(std::abs(y) < 0.5) {
+            position_.y += dir.y;
+        } else {
+            dir.x = 0;
+            Move(Dir::fromVector(dir), delta);
+        }
+
+        if(std::abs(x) < 0.5) {
+            position_.x += x;
+        } else {
+            dir.x = x;
+            dir.y = 0;
+            Move(Dir::fromVector(dir), delta);
+        }
+
+        float absx = std::abs(x) + (facing_candidate_ > 1 ? 5 : 0);
+        float absy = std::abs(y) + (facing_candidate_ < 2 ? 5 : 0);
+
+        if(absx > absy) {
+            facing_candidate_ = x > 0 ? 2 : 3;
+        } else {
+            facing_candidate_ = y > 0 ? 0 : 1;
+        }
+    }
 }

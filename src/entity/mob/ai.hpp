@@ -7,6 +7,7 @@ public:
     AI(Mob* mob);
 
     Path* FindPlayer() const;
+    void UpdatePath(Path*& path, double delta);
 
     virtual void Move(double delta);
     virtual void Update(double delta);
@@ -14,4 +15,7 @@ public:
 
 protected:
     Mob* mob_;
+
+private:
+    Path* temp_path_;
 };

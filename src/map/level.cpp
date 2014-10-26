@@ -5,7 +5,7 @@
 #include "../game.hpp"
 
 const int Level::FOLLOW_MARGIN = 200;
-const int Level::MAX_NODES_PER_TICK = 300;
+const int Level::MAX_NODES_PER_TICK = 600;
 
 Level::Level(const char *map) :
         super(map),
@@ -48,6 +48,7 @@ void Level::Update(double delta) {
                 temp_entities_.push_back(entity);
             } else {
                 dynamic_collidables_->Remove(entity);
+                // TODO: Remove pending paths from entity
                 delete entity;
             }
         }

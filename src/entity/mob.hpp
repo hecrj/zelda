@@ -25,28 +25,32 @@ public:
     Sprite* CurrentSprite() const;
     Entity* SeekPlayer() const;
     Path* FindPath(Entity* to);
+    bool FollowPath(Path* path, double delta);
 
     void set_AI(AI* ai);
     void RegisterAction(std::string name, Action *action);
     void ChangeAction(Action *action);
     void Move(const Dir& direction, double delta);
+    void MoveTowards(Entity* entity, double delta);
     void Slide(const vec2f direction, int intensity, double delta);
     void MeleeAttack(Hitbox* hitbox);
     void Damage(Entity* from, int damage);
-    void FollowPath(Path* path, double delta);
 
     void Update(double delta);
     void Render() const;
 
+protected:
+    Action* idle_action_;
+    Action* current_action_;
+
 private:
     Level* level_;
     AI* ai_;
-    Action* idle_action_;
-    Action* current_action_;
     std::map<std::string, Action*> actions_;
     Dir facing_;
     int facing_candidate_;
     bool moving_;
 
     void _Move(const vec2f& direction, int intensity, double delta);
+    void _MoveVector(vec2f dir, double delta);
 };

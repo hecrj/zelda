@@ -19,6 +19,8 @@ set(SOURCE_FILES
     src/entity/map_object.cpp
     src/entity/mob.cpp
     src/entity/mob/link.cpp
+    src/entity/mob/guard.cpp
+    src/entity/mob/stalfos.cpp
     src/entity/mob/action.cpp
     src/entity/mob/action/move.cpp
     src/entity/mob/action/attack.cpp

@@ -26,6 +26,9 @@ bool Path::Update(double delta) {
         if(accum < 0.2)
             return true;
 
+        if(accum > 1)
+            return false;
+
         const vec2i& last = nodes[0];
 
         rectangle->set_position(last.x * RESOLUTION, last.y * RESOLUTION);
@@ -52,6 +55,8 @@ bool Path::Node::SortByCostAsc::operator()(Path::Node* n1, Path::Node* n2) const
 }
 
 unsigned int Path::Node::HeuristicCost(const vec2i& destination) const {
+    // Using Manhattan distance with diagonal movement it is not admissible
+    // But we get more natural paths this way, despite being longer
     return (unsigned int)(abs(destination.x - x) + abs(destination.y - y));
 }
 

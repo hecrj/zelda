@@ -26,3 +26,15 @@ Path* AI::FindPlayer() const {
 
     return 0;
 }
+
+void AI::UpdatePath(Path*& path, double delta) {
+    if(temp_path_) {
+        if(temp_path_->ready) {
+            delete path;
+            path = temp_path_;
+            temp_path_ = 0;
+        }
+    } else if(not path->Update(delta)) {
+        temp_path_ = mob_->FindPath(path->to);
+    }
+}

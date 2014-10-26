@@ -12,12 +12,9 @@ void Chase::Move(double delta) {
 
     if(path_) {
         if(path_->ready) {
-            mob_->FollowPath(path_, delta);
-
-            if(not path_->Update(delta)) {
-                delete path_;
-                path_ = FindPlayer();
-            }
+            if(not mob_->FollowPath(path_, delta))
+                mob_->MoveTowards(path_->to, delta);
+            UpdatePath(path_, delta);
         }
     } else {
         wander_.Move(delta);
