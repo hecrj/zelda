@@ -8,9 +8,9 @@ Dir::Dir(const vec2f& vector, unsigned int index) :
 
 const Dir& Dir::fromVector(const vec2f& vector) {
     if(vector.x == 0)
-        return vector.y == 1 ? Dir::DOWN : Dir::UP;
+        return vector.y > 0 ? Dir::DOWN : Dir::UP;
 
-    return vector.x == 1 ? Dir::RIGHT : Dir::LEFT;
+    return vector.x > 0 ? Dir::RIGHT : Dir::LEFT;
 }
 
 const Dir& Dir::random() {

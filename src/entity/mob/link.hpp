@@ -12,5 +12,6 @@ public:
     static std::vector<SpriteSet*> ATTACK_ANIMATIONS;
 
     Link(Level* level);
+
     static void Load();
 };

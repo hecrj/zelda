@@ -11,8 +11,8 @@ class Level : public TileMap {
 public:
     typedef TileMap super;
 
-    static const int PATH_RESOLUTION;
     static const int FOLLOW_MARGIN;
+    static const int MAX_NODES_PER_TICK;
 
     Level(const char* map);
 

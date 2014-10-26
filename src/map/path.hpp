@@ -5,6 +5,8 @@
 
 class Path {
 public:
+    static const int RESOLUTION;
+
     struct Node {
         Node* parent;
         unsigned int x;
@@ -27,8 +29,10 @@ public:
 
     Mob* from;
     Entity* to;
+    Rectangle* rectangle;
     bool ready;
     bool calculating;
+    bool found;
     std::set<Path::Node*, Path::Node::SortByCostAsc> pending;
     std::vector<Node*> nodes;
     vec2i destination;
@@ -39,6 +43,5 @@ public:
     bool Update(double delta);
 
 private:
-    Rectangle r;
     float accum;
 };

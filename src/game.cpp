@@ -47,7 +47,7 @@ GLuint Game::FramebufferAux() {
 Game::Game()
 {
     t = 0.0;
-    dt = 0.01;
+    dt = 0.016;
     current_time = CurrentTime();
     accumulator = 0.0;
 

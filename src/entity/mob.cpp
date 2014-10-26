@@ -175,8 +175,37 @@ Sprite *Mob::CurrentSprite() const {
     return current_action_->CurrentAnimation()->CurrentSprite();
 }
 
-void Mob::FollowPath(Path* path) {
-    // TODO: Compute directions to move to next step
+void Mob::FollowPath(Path* path, double delta) {
+    if(path->nodes.empty()) {
+        // TODO: Move towards destination entity
+    } else {
+        Path::Node* next = path->nodes.back();
+        vec2f pos = vec2f(x() / Path::RESOLUTION, y() / Path::RESOLUTION);
+
+        while(path->nodes.size() > 1 and pos.dist(vec2f(next->x, next->y)) < 4) {
+            path->nodes.pop_back();
+            next = path->nodes.back();
+        }
+
+        vec2f dir = vec2f(next->x, next->y) - pos;
+
+        if((dir.x == 0 || dir.y == 0) && std::abs(dir.x + dir.y) >= 1) {
+            Move(Dir::fromVector(dir), delta);
+        } else {
+            float x = dir.x;
+
+            if(std::abs(dir.y) >= 1) {
+                dir.x = 0;
+                Move(Dir::fromVector(dir), delta);
+            }
+
+            if(std::abs(x) >= 1) {
+                dir.x = x;
+                dir.y = 0;
+                Move(Dir::fromVector(dir), delta);
+            }
+        }
+    }
 }
 
 Entity* Mob::SeekPlayer() const {

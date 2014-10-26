@@ -5,12 +5,14 @@
 #include "../game.hpp"
 
 const int Level::FOLLOW_MARGIN = 200;
-const int Level::PATH_RESOLUTION = 2;
+const int Level::MAX_NODES_PER_TICK = 300;
 
-Level::Level(const char *map) : super(map), position_(vec2f(0, 0))
+Level::Level(const char *map) :
+        super(map),
+        position_(vec2f(0, 0))
 {
-    nodes_ = std::vector<std::vector<Path::Node*>>(map_->height_pixels / PATH_RESOLUTION,
-            std::vector<Path::Node*>(map_->width_pixels / PATH_RESOLUTION, 0));
+    nodes_ = std::vector<std::vector<Path::Node*>>(map_->height_pixels / Path::RESOLUTION,
+            std::vector<Path::Node*>(map_->width_pixels / Path::RESOLUTION, 0));
     dynamic_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
 
     for(const auto& k : map_->object_groups) {
@@ -142,65 +144,69 @@ Path* Level::FindPath(Mob* from, Entity* to) {
 
 void Level::CalculatePath() {
     Path& path = *path_queue_.front();
-    path_queue_.pop();
+    Path::Node* start = *path.pending.begin();
 
-    // Clear unused nodes from last search
-    for(int i = 0; i < nodes_.size(); ++i) {
-        for(int j = 0; j < nodes_[0].size(); ++j) {
-            if(nodes_[i][j]) {
-                delete nodes_[i][j];
-                nodes_[i][j] = 0;
+    if(not path.calculating) {
+        // Clear unused nodes from last search
+        for(int i = 0; i < nodes_.size(); ++i) {
+            for(int j = 0; j < nodes_[0].size(); ++j) {
+                if(nodes_[i][j]) {
+                    delete nodes_[i][j];
+                    nodes_[i][j] = 0;
+                }
             }
         }
+
+        nodes_[start->y][start->x] = start;
+        path.calculating = true;
     }
 
-    std::set<Path::Node*, Path::Node::SortByCostAsc> pending;
     std::vector<Rectangle*> collision_candidates;
     bool collision;
+    int i = 0;
 
-    Rectangle* rectangle = new Rectangle(0, 0, path.from->width(), path.from->height());
-    vec2i origin = vec2i((int)(path.from->x() / PATH_RESOLUTION), (int)(path.from->y() / PATH_RESOLUTION));
-    vec2i destination = vec2i((int)(path.to->x() / PATH_RESOLUTION), (int)(path.to->y() / PATH_RESOLUTION));
+    while(not path.pending.empty()) {
+        if(i > MAX_NODES_PER_TICK)
+            return;
 
-    Path::Node* start = new Path::Node(origin, destination, 0, 0);
-    nodes_[start->y][start->x] = start;
-    pending.insert(start);
-
-    while(!pending.empty()) {
-        Path::Node* current = *pending.begin();
-        pending.erase(pending.begin());
+        Path::Node* current = *path.pending.begin();
+        path.pending.erase(path.pending.begin());
         current->closed = true;
+        i++;
 
-        // Better set PATH_RESOLUTION to powers of 2
-        rectangle->set_position(current->x * PATH_RESOLUTION, current->y * PATH_RESOLUTION);
+        path.rectangle->set_position(current->x * Path::RESOLUTION, current->y * Path::RESOLUTION);
 
-        if(not IsInbounds(rectangle))
+        if(not IsInbounds(path.rectangle))
             continue;
 
         collision_candidates.clear();
         collision = false;
-        CollidablesFor(rectangle, collision_candidates);
+        CollidablesFor(path.rectangle, collision_candidates);
 
         for(Rectangle* candidate : collision_candidates) {
             if(candidate == path.to) {
-                if(rectangle->CollidesWith(candidate)) {
+                if(path.rectangle->CollidesWith(candidate)) {
                     // Path found
                     while(current) {
                         nodes_[current->y][current->x] = 0;
-                        path.nodes.insert(path.nodes.begin(), current);
+                        path.nodes.push_back(current);
                         current = current->parent;
                     }
 
+                    // Remove start node
+                    path.nodes.pop_back();
                     path.ready = true;
-                    delete rectangle;
+                    path.found = true;
+                    path.pending.clear();
+                    path_queue_.pop();
                     return;
                 }
             } else {
-                collision = collision or path.from->CanCollideWith(candidate) && rectangle->CollidesWith(candidate);
+                collision = collision or path.from->CanCollideWith(candidate) && path.rectangle->CollidesWith(candidate);
             }
         }
 
-        if(not collision) {
+        if(not collision || current == start) {
             for(const vec2i& dir : Dir::VECTORS) {
                 int x = current->x - dir.x;
                 int y = current->y - dir.y;
@@ -211,15 +217,15 @@ void Level::CalculatePath() {
                 Path::Node* neighbor = nodes_[y][x];
 
                 if(not neighbor) {
-                    neighbor = new Path::Node(vec2i(x, y), destination, current->g_cost, current);
+                    neighbor = new Path::Node(vec2i(x, y), path.destination, current->g_cost, current);
                     nodes_[y][x] = neighbor;
-                    pending.insert(neighbor);
+                    path.pending.insert(neighbor);
                 } else if(neighbor->g_cost > current->g_cost + 1) {
                     if(not neighbor->closed)
-                        pending.erase(neighbor);
+                        path.pending.erase(neighbor);
 
                     neighbor->UpdateGCost(current->g_cost + 1);
-                    pending.insert(neighbor);
+                    path.pending.insert(neighbor);
                 }
             }
         }
@@ -227,7 +233,7 @@ void Level::CalculatePath() {
 
     // Path not found
     path.ready = true;
-    delete rectangle;
+    path_queue_.pop();
 }
 
 const std::vector<Entity*>& Level::players() const {

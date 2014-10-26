@@ -1,6 +1,5 @@
 #include <iostream>
 #include "chase.hpp"
-#include "../../../map/level.hpp"
 
 Chase::Chase(Mob* mob) :
         super(mob),
@@ -11,9 +10,9 @@ Chase::Chase(Mob* mob) :
 void Chase::Move(double delta) {
     if(path_) {
         if(path_->ready) {
-            if(path_->Update(delta))
-                mob_->FollowPath(path_);
-            else
+            mob_->FollowPath(path_, delta);
+
+            if(not path_->Update(delta))
                 SeekPlayer(delta);
         }
     } else {
@@ -37,8 +36,8 @@ void Chase::SeekPlayer(double delta) {
 void Chase::Debug() const {
     if(path_ && path_->ready) {
         for(Path::Node* node : path_->nodes) {
-            Rectangle r(node->x * Level::PATH_RESOLUTION, node->y * Level::PATH_RESOLUTION,
-                    Level::PATH_RESOLUTION, Level::PATH_RESOLUTION);
+            Rectangle r(node->x * Path::RESOLUTION, node->y * Path::RESOLUTION,
+                    Path::RESOLUTION, Path::RESOLUTION);
             r.Render(1, 1, 1);
         }
     }

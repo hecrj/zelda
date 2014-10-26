@@ -33,7 +33,7 @@ public:
     void Slide(const vec2f direction, int intensity, double delta);
     void MeleeAttack(Hitbox* hitbox);
     void Damage(Entity* from, int damage);
-    void FollowPath(Path* path);
+    void FollowPath(Path* path, double delta);
 
     void Update(double delta);
     void Render() const;
