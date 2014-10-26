@@ -8,10 +8,10 @@ Path::Path(Mob* from, Entity* to) :
         rectangle(new Rectangle(0, 0, from->width(), from->height())),
         ready(false),
         calculating(false),
-        accum(0),
-        found(false)
+        found(false),
+        accum(0)
 {
-    origin = vec2i((int)(from->x() / Path::RESOLUTION), (int)(from->y() / Path::RESOLUTION));
+    origin = vec2i((int)(from->x() / RESOLUTION), (int)(from->y() / RESOLUTION));
     destination = vec2i((int)(to->x() / RESOLUTION), (int)(to->y() / RESOLUTION));
 }
 
@@ -47,7 +47,8 @@ Path::Node::Node(const vec2i& position, const vec2i& destination, unsigned int g
 }
 
 bool Path::Node::SortByCostAsc::operator()(Path::Node* n1, Path::Node* n2) const {
-    return n1->cost < n2->cost or (n1->cost == n2->cost and n1->x < n2->x) or (n1->x == n2->x and n1->y < n2->y);
+    return n1->cost < n2->cost or n1->cost == n2->cost and (n1->h_cost < n2->h_cost or
+            n1->h_cost == n2->h_cost and (n1->x < n2->x or n1->x == n2->x and n1->y < n2->y));
 }
 
 unsigned int Path::Node::HeuristicCost(const vec2i& destination) const {

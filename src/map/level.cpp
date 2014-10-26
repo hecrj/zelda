@@ -205,7 +205,7 @@ void Level::CalculatePath() {
             }
         }
 
-        if(not collision || current == start) {
+        if(not collision or current == start) {
             for(const vec2i& dir : Dir::VECTORS) {
                 int x = current->x + dir.x;
                 int y = current->y + dir.y;
@@ -219,7 +219,7 @@ void Level::CalculatePath() {
                     neighbor = new Path::Node(vec2i(x, y), path.destination, current->g_cost, current);
                     nodes_[y][x] = neighbor;
                     path.pending.insert(neighbor);
-                } else if(not neighbor->closed && neighbor->g_cost > current->g_cost + 1) {
+                } else if(not neighbor->closed and neighbor->g_cost > current->g_cost + 1) {
                     path.pending.erase(neighbor);
                     neighbor->UpdateGCost(current->g_cost + 1);
                     path.pending.insert(neighbor);
