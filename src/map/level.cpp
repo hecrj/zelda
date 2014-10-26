@@ -9,7 +9,8 @@ const int Level::MAX_NODES_PER_TICK = 600;
 
 Level::Level(const char *map) :
         super(map),
-        position_(vec2f(0, 0))
+        position_(vec2f(0, 0)),
+        main_player_(0)
 {
     nodes_ = std::vector<std::vector<Path::Node*>>(map_->height_pixels / Path::RESOLUTION,
             std::vector<Path::Node*>(map_->width_pixels / Path::RESOLUTION, 0));
