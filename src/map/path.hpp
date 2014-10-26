@@ -34,13 +34,15 @@ public:
     bool calculating;
     bool found;
     std::set<Path::Node*, Path::Node::SortByCostAsc> pending;
-    std::vector<Node*> nodes;
+    std::vector<vec2i> nodes;
+    vec2i origin;
     vec2i destination;
 
     Path(Mob* from, Entity* to);
     ~Path();
 
     bool Update(double delta);
+    void Render() const;
 
 private:
     float accum;

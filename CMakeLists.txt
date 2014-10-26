@@ -25,6 +25,7 @@ set(SOURCE_FILES
     src/entity/mob/action/push.cpp
     src/entity/mob/ai.cpp
     src/entity/mob/ai/chase.cpp
+    src/entity/mob/ai/follower.cpp
     src/entity/mob/ai/player.cpp
     src/entity/mob/ai/wander.cpp
     src/map/tile_map.cpp

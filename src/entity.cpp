@@ -49,3 +49,7 @@ bool Entity::IsMob() const {
 bool Entity::SortByYCoordinateAsc::operator()(Entity* e1, Entity* e2) const {
     return e1->y() < e2->y() or (e1->y() == e2->y() and e1->x() < e2->x());
 }
+
+float Entity::Distance(Entity* entity) const {
+    return center().dist(entity->center());
+}

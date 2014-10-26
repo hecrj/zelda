@@ -12,8 +12,9 @@ public:
 
     int health() const;
     bool IsAlive() const;
-    virtual bool moving() const;
+    float Distance(Entity* entity) const;
     bool IsEntity() const;
+    virtual bool moving() const;
     virtual bool IsMob() const;
 
     void Kill();

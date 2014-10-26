@@ -11,17 +11,11 @@ Path::Path(Mob* from, Entity* to) :
         accum(0),
         found(false)
 {
+    origin = vec2i((int)(from->x() / Path::RESOLUTION), (int)(from->y() / Path::RESOLUTION));
     destination = vec2i((int)(to->x() / RESOLUTION), (int)(to->y() / RESOLUTION));
-    vec2i origin = vec2i((int)(from->x() / RESOLUTION), (int)(from->y() / RESOLUTION));
-
-    Path::Node* start = new Path::Node(origin, destination, 0, 0);
-    pending.insert(start);
 }
 
 Path::~Path() {
-    for(int i = 0; i < nodes.size(); ++i)
-        delete nodes[i];
-
     delete rectangle;
 }
 
@@ -29,12 +23,12 @@ bool Path::Update(double delta) {
     accum += delta;
 
     if(found) {
-        if(accum < 0.1)
+        if(accum < 0.2)
             return true;
 
-        Node* last = nodes[0];
+        const vec2i& last = nodes[0];
 
-        rectangle->set_position(last->x * RESOLUTION, last->y * RESOLUTION);
+        rectangle->set_position(last.x * RESOLUTION, last.y * RESOLUTION);
         return rectangle->CollidesWith(to);
     }
 
@@ -63,4 +57,13 @@ unsigned int Path::Node::HeuristicCost(const vec2i& destination) const {
 void Path::Node::UpdateGCost(unsigned int g_cost) {
     this->g_cost = g_cost;
     cost = g_cost + h_cost;
+}
+
+void Path::Render() const {
+    if(ready) {
+        for(const vec2i node : nodes) {
+            Rectangle r(node.x * RESOLUTION, node.y * RESOLUTION, RESOLUTION, RESOLUTION);
+            r.Render(1, 1, 1);
+        }
+    }
 }

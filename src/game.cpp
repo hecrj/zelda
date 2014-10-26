@@ -3,11 +3,8 @@
 #include "utils.hpp"
 #include "entity/mob/link.hpp"
 #include "entity/mob/ai/player.hpp"
-#include "entity/mob/ai/wander.hpp"
+#include "entity/mob/ai/follower.hpp"
 #include "debug.hpp"
-#include "entity/mob/ai/chase.hpp"
-#include <GL/glut.h>
-#include <iostream>
 
 int Game::WIDTH = 640;
 int Game::HEIGHT = 480;
@@ -92,7 +89,7 @@ void Game::Init()
 
     Player* player = new Player(link, keys);
     link->set_AI(player);
-    link2->set_AI(new Chase(link2));
+    link2->set_AI(new Follower(link2));
 
     level->AddPlayer(link);
     level->AddEntity(link2);

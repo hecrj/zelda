@@ -65,7 +65,7 @@ void Mob::Slide(const vec2f direction, int intensity, double delta) {
 }
 
 void Mob::_Move(const vec2f& direction, int intensity, double delta) {
-    vec2f new_position = position_ + direction * intensity * delta * 80;
+    vec2f new_position = position_ + direction * intensity * delta * 60;
 
     if(!level_->IsInbounds(new_position, width_, height_)) {
         return;
@@ -179,30 +179,46 @@ void Mob::FollowPath(Path* path, double delta) {
     if(path->nodes.empty()) {
         // TODO: Move towards destination entity
     } else {
-        Path::Node* next = path->nodes.back();
-        vec2f pos = vec2f(x() / Path::RESOLUTION, y() / Path::RESOLUTION);
+        vec2i next = path->nodes.back();
+        path->nodes.pop_back();
+        vec2f pos(x() / Path::RESOLUTION, y() / Path::RESOLUTION);
 
-        while(path->nodes.size() > 1 and pos.dist(vec2f(next->x, next->y)) < 4) {
-            path->nodes.pop_back();
+        while(path->nodes.size() > 0 and pos.dist(vec2f(next.x, next.y)) < 4) {
             next = path->nodes.back();
+            path->nodes.pop_back();
         }
 
-        vec2f dir = vec2f(next->x, next->y) - pos;
+        vec2f dir(next.x, next.y);
+        dir -= pos;
 
-        if((dir.x == 0 || dir.y == 0) && std::abs(dir.x + dir.y) >= 1) {
+        if(dir.x == 0 || dir.y == 0) {
             Move(Dir::fromVector(dir), delta);
         } else {
             float x = dir.x;
+            float y = dir.y;
 
-            if(std::abs(dir.y) >= 1) {
+            if(std::abs(y) < 0.5) {
+                position_.y += dir.y;
+            } else {
                 dir.x = 0;
                 Move(Dir::fromVector(dir), delta);
             }
 
-            if(std::abs(x) >= 1) {
+            if(std::abs(x) < 0.5) {
+                position_.x += x;
+            } else {
                 dir.x = x;
                 dir.y = 0;
                 Move(Dir::fromVector(dir), delta);
+            }
+
+            float absx = std::abs(x) + (facing_candidate_ > 1 ? 1 : 0);
+            float absy = std::abs(y) + (facing_candidate_ < 2 ? 1 : 0);
+
+            if(absx > absy) {
+                facing_candidate_ = x > 0 ? 2 : 3;
+            } else {
+                facing_candidate_ = y > 0 ? 0 : 1;
             }
         }
     }

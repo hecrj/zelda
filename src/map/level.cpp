@@ -144,23 +144,23 @@ Path* Level::FindPath(Mob* from, Entity* to) {
 
 void Level::CalculatePath() {
     Path& path = *path_queue_.front();
-    Path::Node* start = *path.pending.begin();
 
     if(not path.calculating) {
         // Clear unused nodes from last search
         for(int i = 0; i < nodes_.size(); ++i) {
             for(int j = 0; j < nodes_[0].size(); ++j) {
-                if(nodes_[i][j]) {
-                    delete nodes_[i][j];
-                    nodes_[i][j] = 0;
-                }
+                delete nodes_[i][j];
+                nodes_[i][j] = 0;
             }
         }
 
+        Path::Node* start = new Path::Node(path.origin, path.destination, 0, 0);
         nodes_[start->y][start->x] = start;
+        path.pending.insert(start);
         path.calculating = true;
     }
 
+    Path::Node* start = *path.pending.begin();
     std::vector<Rectangle*> collision_candidates;
     bool collision;
     int i = 0;
@@ -188,8 +188,7 @@ void Level::CalculatePath() {
                 if(path.rectangle->CollidesWith(candidate)) {
                     // Path found
                     while(current) {
-                        nodes_[current->y][current->x] = 0;
-                        path.nodes.push_back(current);
+                        path.nodes.push_back(vec2i(current->x, current->y));
                         current = current->parent;
                     }
 
@@ -208,8 +207,8 @@ void Level::CalculatePath() {
 
         if(not collision || current == start) {
             for(const vec2i& dir : Dir::VECTORS) {
-                int x = current->x - dir.x;
-                int y = current->y - dir.y;
+                int x = current->x + dir.x;
+                int y = current->y + dir.y;
 
                 if(x < 0 or y < 0 or x >= nodes_[0].size() or y >= nodes_.size())
                     continue;
@@ -220,10 +219,8 @@ void Level::CalculatePath() {
                     neighbor = new Path::Node(vec2i(x, y), path.destination, current->g_cost, current);
                     nodes_[y][x] = neighbor;
                     path.pending.insert(neighbor);
-                } else if(neighbor->g_cost > current->g_cost + 1) {
-                    if(not neighbor->closed)
-                        path.pending.erase(neighbor);
-
+                } else if(not neighbor->closed && neighbor->g_cost > current->g_cost + 1) {
+                    path.pending.erase(neighbor);
                     neighbor->UpdateGCost(current->g_cost + 1);
                     path.pending.insert(neighbor);
                 }

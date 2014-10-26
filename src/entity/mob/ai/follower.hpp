@@ -4,15 +4,14 @@
 #include "../../../map/path.hpp"
 #include "wander.hpp"
 
-class Chase : public AI {
+class Follower : public AI {
 public:
     typedef AI super;
-    Chase(Mob* mob);
+    Follower(Mob* mob);
 
     void Move(double delta);
     void Debug() const;
 
 private:
-    Wander wander_;
     Path* path_;
 };

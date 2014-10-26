@@ -36,7 +36,7 @@ const std::array<vec2i, 8> Dir::VECTORS = {
         vec2i(1, 0),
         vec2i(-1, 0),
         vec2i(-1, -1),
-        vec2i(-1, 1),
         vec2i(1, -1),
+        vec2i(-1, 1),
         vec2i(1, 1)
 };
