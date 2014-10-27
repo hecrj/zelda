@@ -9,7 +9,8 @@ Path::Path(Mob* from, Entity* to) :
         ready(false),
         calculating(false),
         found(false),
-        accum(0)
+        accum(0),
+        rest(0)
 {
     origin = vec2i((int)(from->x() / RESOLUTION), (int)(from->y() / RESOLUTION));
     destination = vec2i((int)(to->x() / RESOLUTION), (int)(to->y() / RESOLUTION));

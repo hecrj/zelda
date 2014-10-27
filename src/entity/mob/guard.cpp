@@ -24,7 +24,7 @@ Guard::Guard(Level* level) :
                 new ::Move(this, MOVE_ANIMATIONS)
         )
 {
-
+    speed_ = 50;
 }
 
 void Guard::Update(double delta) {

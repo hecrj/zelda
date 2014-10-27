@@ -194,7 +194,6 @@ void Level::CalculatePath() {
                         current = current->parent;
                     }
 
-                    // Remove start node
                     path.nodes.pop_back();
                     path.ready = true;
                     path.found = true;

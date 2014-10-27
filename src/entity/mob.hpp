@@ -42,6 +42,7 @@ public:
 protected:
     Action* idle_action_;
     Action* current_action_;
+    float speed_;
 
 private:
     Level* level_;
@@ -51,6 +52,6 @@ private:
     int facing_candidate_;
     bool moving_;
 
-    void _Move(const vec2f& direction, int intensity, double delta);
+    bool _Move(const vec2f& direction, int intensity, double delta);
     void _MoveVector(vec2f dir, double delta);
 };

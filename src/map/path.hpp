@@ -37,6 +37,7 @@ public:
     std::vector<vec2i> nodes;
     vec2i origin;
     vec2i destination;
+    float rest;
 
     Path(Mob* from, Entity* to);
     ~Path();

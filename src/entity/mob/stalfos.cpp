@@ -22,5 +22,5 @@ Stalfos::Stalfos(Level* level) :
                 new ::Move(this, MOVE_ANIMATIONS)
         )
 {
-
+    speed_ = 50;
 }

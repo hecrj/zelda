@@ -12,7 +12,8 @@ Mob::Mob(Level* level, float x, float y, float width, float height, Action* idle
         facing_candidate_(-1),
         moving_(false),
         idle_action_(idle_action),
-        current_action_(idle_action)
+        current_action_(idle_action),
+        speed_(60)
 {}
 
 Mob::~Mob() {
@@ -62,29 +63,6 @@ void Mob::Move(const Dir& direction, double delta) {
 void Mob::Slide(const vec2f direction, int intensity, double delta) {
     _Move(vec2f(direction.x, 0), intensity, delta);
     _Move(vec2f(0, direction.y), intensity, delta);
-}
-
-void Mob::_Move(const vec2f& direction, int intensity, double delta) {
-    vec2f new_position = position_ + direction * intensity * delta * 60;
-
-    if(!level_->IsInbounds(new_position, width_, height_)) {
-        return;
-    }
-
-    vec2f old_position = position_;
-    position_ = new_position;
-
-    std::vector<Rectangle*> collidables;
-    level_->CollidablesFor(this, collidables);
-
-    for(Rectangle* collidable : collidables) {
-        if(CanCollideWith(collidable) && CollidesWith(collidable)) {
-            position_ = old_position;
-            return;
-        }
-    }
-
-    moving_ = true;
 }
 
 void Mob::Update(double delta) {
@@ -194,6 +172,15 @@ bool Mob::FollowPath(Path* path, double delta) {
     }
 
     _MoveVector(vec2f(next.x, next.y) - pos, delta);
+
+    vec2f dir = path->to->center() - path->from->center();
+
+    if(std::abs(dir.x) > std::abs(dir.y))
+        dir.y = 0;
+    else
+        dir.x = 0;
+
+    facing_candidate_ = Dir::fromVector(dir).index();
     return true;
 }
 
@@ -211,35 +198,50 @@ Path* Mob::FindPath(Entity* to) {
 }
 
 void Mob::_MoveVector(vec2f dir, double delta) {
-    // TODO: Improve vector movement
     if(dir.x == 0 || dir.y == 0) {
-        Move(Dir::fromVector(dir), delta);
+        _Move(Dir::fromVector(dir).vector(), 1, delta);
     } else {
         float x = dir.x;
         float y = dir.y;
 
-        if(std::abs(y) < 0.5) {
-            position_.y += dir.y;
-        } else {
-            dir.x = 0;
-            Move(Dir::fromVector(dir), delta);
-        }
+        dir.x = 0;
 
-        if(std::abs(x) < 0.5) {
-            position_.x += x;
-        } else {
-            dir.x = x;
-            dir.y = 0;
-            Move(Dir::fromVector(dir), delta);
-        }
+        if(std::abs(y) < 0.5)
+            _Move(dir, 1, delta);
+        else
+            _Move(Dir::fromVector(dir).vector(), 1, delta);
 
-        float absx = std::abs(x) + (facing_candidate_ > 1 ? 5 : 0);
-        float absy = std::abs(y) + (facing_candidate_ < 2 ? 5 : 0);
+        dir.x = x;
+        dir.y = 0;
 
-        if(absx > absy) {
-            facing_candidate_ = x > 0 ? 2 : 3;
-        } else {
-            facing_candidate_ = y > 0 ? 0 : 1;
+        if(std::abs(x) < 0.5)
+            _Move(dir, 1, delta);
+        else
+            _Move(Dir::fromVector(dir).vector(), 1, delta);
+    }
+}
+
+bool Mob::_Move(const vec2f& direction, int intensity, double delta) {
+    vec2f new_position = position_ + direction * intensity * delta * speed_;
+
+    if(!level_->IsInbounds(new_position, width_, height_)) {
+        return false;
+    }
+
+    vec2f old_position = position_;
+    position_ = new_position;
+
+    std::vector<Rectangle*> collidables;
+    level_->CollidablesFor(this, collidables);
+
+    for(Rectangle* collidable : collidables) {
+        if(CanCollideWith(collidable) && CollidesWith(collidable)) {
+            // TODO: Handle collisions
+            position_ = old_position;
+            return false;
         }
     }
+
+    moving_ = true;
+    return true;
 }
