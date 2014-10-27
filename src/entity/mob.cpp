@@ -165,7 +165,7 @@ bool Mob::FollowPath(Path* path, double delta) {
         next = path->nodes.back();
         dist = pos.dist(vec2f(next.x, next.y));
 
-        if(dist > 1)
+        if(dist > 4)
             break;
 
         path->nodes.pop_back();
@@ -185,7 +185,15 @@ bool Mob::FollowPath(Path* path, double delta) {
 }
 
 void Mob::MoveTowards(Entity* entity, double delta) {
-    _MoveVector(entity->center() - center(), delta);
+    vec2f dir = entity->center() - center();
+
+    // TODO: Remove code duplication
+    if(std::abs(dir.x) > std::abs(dir.y))
+        dir.y = 0;
+    else
+        dir.x = 0;
+
+    Move(Dir::fromVector(dir), delta);
 }
 
 Entity* Mob::SeekPlayer() const {
@@ -206,26 +214,36 @@ void Mob::_MoveVector(vec2f dir, double delta) {
 
         dir.x = 0;
 
-        if(std::abs(y) < 0.5)
-            _Move(dir, 1, delta);
-        else
+        if(std::abs(y) <= 0.5) {
+            if(std::abs(y) <= 0.01)
+                dir.y = dir.y > 0 ? 0.1f : -0.1f;
+
+            _UpdatePosition(position_ + dir);
+        } else {
             _Move(Dir::fromVector(dir).vector(), 1, delta);
+        }
 
         dir.x = x;
         dir.y = 0;
 
-        if(std::abs(x) < 0.5)
-            _Move(dir, 1, delta);
-        else
+        if(std::abs(x) <= 0.5) {
+            if(std::abs(x) <= 0.01)
+                dir.x = dir.x > 0 ? 0.1f : -0.1f;
+
+            _UpdatePosition(position_ + dir);
+        } else {
             _Move(Dir::fromVector(dir).vector(), 1, delta);
+        }
     }
 }
 
-bool Mob::_Move(const vec2f& direction, int intensity, double delta) {
-    vec2f new_position = position_ + direction * intensity * delta * speed_;
+void Mob::_Move(const vec2f& direction, int intensity, double delta) {
+    _UpdatePosition(position_ + direction * intensity * delta * speed_);
+}
 
+void Mob::_UpdatePosition(const vec2f& new_position) {
     if(!level_->IsInbounds(new_position, width_, height_)) {
-        return false;
+        return;
     }
 
     vec2f old_position = position_;
@@ -238,10 +256,9 @@ bool Mob::_Move(const vec2f& direction, int intensity, double delta) {
         if(CanCollideWith(collidable) && CollidesWith(collidable)) {
             // TODO: Handle collisions
             position_ = old_position;
-            return false;
+            return;
         }
     }
 
-    moving_ = true;
-    return true;
+    moving_ = moving_ or position_.dist(old_position) > 0.5;
 }

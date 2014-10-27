@@ -52,6 +52,7 @@ private:
     int facing_candidate_;
     bool moving_;
 
-    bool _Move(const vec2f& direction, int intensity, double delta);
+    void _Move(const vec2f& direction, int intensity, double delta);
     void _MoveVector(vec2f dir, double delta);
+    void _UpdatePosition(const vec2f& new_position);
 };

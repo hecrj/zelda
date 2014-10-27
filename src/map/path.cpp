@@ -1,6 +1,6 @@
 #include "path.hpp"
 
-const int Path::RESOLUTION = 1;
+const int Path::RESOLUTION = 4;
 
 Path::Path(Mob* from, Entity* to) :
         from(from),
