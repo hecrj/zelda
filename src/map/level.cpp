@@ -19,6 +19,7 @@ Level::Level(const char *map) :
 
     for(const auto& g : map_->object_groups) {
         const TMX::ObjectGroup& object_group = g.second;
+
         // TODO: Specialize map objects correctly
         for(const auto& o : object_group.objects) {
             const TMX::Object& object = o.second;
@@ -30,7 +31,7 @@ Level::Level(const char *map) :
                 Object* map_object = 0;
 
                 if(object.type == "plant") {
-                    map_object = new Plant(tileset_->sprite(object.gid - 1), object.x, object.y - 16);
+                    map_object = new Plant(this, tileset_->sprite(object.gid - 1), object.x, object.y - 16);
                 }
 
                 if(map_object)
@@ -46,6 +47,23 @@ void Level::Update(double delta) {
     if(!path_queue_.empty())
         CalculatePath();
 
+    // Zombies are entities that are dying :(
+    std::vector<Entity*>::iterator it = zombies_.begin();
+    while(it != zombies_.end()) {
+        Entity* zombie = *it;
+
+        if(zombie->IsFinallyDead()) {
+            zombie->Dead();
+            it = zombies_.erase(it);
+
+            if(zombie != main_player_)
+                delete zombie;
+        } else {
+            zombie->KeepDying(delta);
+            it++;
+        }
+    }
+
     for(Entity* entity : entities_) {
         if(entity->IsMob()) {
             dynamic_collidables_->Remove(entity);
@@ -55,8 +73,9 @@ void Level::Update(double delta) {
             if (entity->IsAlive()) {
                 dynamic_collidables_->Insert(entity);
                 temp_entities_.push_back(entity);
-            } else if (entity != main_player_) {
-                delete entity;
+            } else {
+                // TODO: Remove pending paths from entity
+                zombies_.push_back(entity);
             }
         } else {
             if(entity->IsAlive()) {
@@ -64,7 +83,7 @@ void Level::Update(double delta) {
             } else {
                 dynamic_collidables_->Remove(entity);
                 // TODO: Remove pending paths from entity
-                delete entity;
+                zombies_.push_back(entity);
             }
         }
     }
@@ -171,6 +190,7 @@ Path* Level::FindPath(Mob* from, Entity* to) {
 }
 
 void Level::CalculatePath() {
+    // A*
     Path& path = *path_queue_.front();
 
     if(not path.calculating) {

@@ -3,6 +3,7 @@
 
 #pragma once
 
+class Mob;
 class Rectangle {
 public:
     Rectangle(float x, float y, float width, float height);
@@ -21,6 +22,7 @@ public:
     virtual bool IsEntity() const;
     virtual bool CanCollideWith(Rectangle* rectangle) const;
     virtual bool CollidesWith(Rectangle* rectangle) const;
+    virtual bool HandleCollisionWith(Mob* mob);
     virtual Collision CollisionType(Rectangle* rectangle) const;
 
     void set_position(const vec2f& position);

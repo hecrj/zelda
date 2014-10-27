@@ -35,7 +35,13 @@ Link::Link(Level* level) :
                 level,
                 0.0f, 0.0f, 20.0f, 14.0f,
                 new ::Move(this, MOVE_ANIMATIONS)
-        )
+        ),
+        rupees_(0)
 {
+    type_ = PLAYER;
     RegisterAction("attack", new Attack(this, ATTACK_ANIMATIONS));
+}
+
+void Link::UpdateRupees(int rupees) {
+    rupees_ += rupees;
 }

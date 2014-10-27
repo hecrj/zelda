@@ -44,6 +44,10 @@ set(SOURCE_FILES
     src/entity/object.cpp
     src/entity/object/plant.cpp
 
+    # Items
+    src/entity/item.cpp
+    src/entity/item/rupee.cpp
+
     # Map
     src/map/tile_map.cpp
     src/map/tileset.cpp

@@ -5,5 +5,7 @@
 class Plant : public Object {
 public:
     typedef Object super;
-    Plant(Sprite* sprite, float x, float y);
+    Plant(Level* level, Sprite* sprite, float x, float y);
+
+    void Dead();
 };

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <GL/gl.h>
 #include "rectangle.hpp"
+#include "../entity/mob.hpp"
 
 Rectangle::Rectangle(float x, float y, float width, float height) :
         position_(vec2f(x, y)),
@@ -100,4 +101,8 @@ bool Rectangle::IsEntity() const {
 
 Collision Rectangle::CollisionType(Rectangle* rectangle) const {
     return Collision::BLOCK;
+}
+
+bool Rectangle::HandleCollisionWith(Mob* mob) {
+    return true;
 }

@@ -256,9 +256,10 @@ void Mob::_UpdatePosition(const vec2f& new_position) {
 
     for(Rectangle* collidable : collidables) {
         if(CanCollideWith(collidable) && CollidesWith(collidable)) {
-            // TODO: Handle collisions
-            position_ = old_position;
-            return;
+            if(collidable->HandleCollisionWith(this)) {
+                position_ = old_position;
+                return;
+            }
         }
     }
 

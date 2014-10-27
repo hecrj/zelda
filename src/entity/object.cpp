@@ -1,7 +1,8 @@
 #include "object.hpp"
 
-Object::Object(Sprite* sprite, float x, float y) :
+Object::Object(Level* level, Sprite* sprite, float x, float y) :
         super(x, y, sprite->width(), sprite->height()),
+        level_(level),
         sprite_(sprite)
 {}
 

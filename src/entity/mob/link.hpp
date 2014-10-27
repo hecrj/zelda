@@ -13,7 +13,12 @@ public:
     static std::vector<SpriteSet*> MOVE_ANIMATIONS;
     static std::vector<SpriteSet*> ATTACK_ANIMATIONS;
 
+    static void Load();
+
     Link(Level* level);
 
-    static void Load();
+    void UpdateRupees(int rupees);
+
+private:
+    int rupees_;
 };

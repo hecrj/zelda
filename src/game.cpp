@@ -9,6 +9,7 @@
 #include "entity/mob/ai/chase.hpp"
 #include "entity/mob/stalfos.hpp"
 #include "hud.hpp"
+#include "entity/item/rupee.hpp"
 
 int Game::WIDTH = 640;
 int Game::HEIGHT = 480;
@@ -87,6 +88,7 @@ void Game::Init()
     Link::Load();
     Guard::Load();
     Stalfos::Load();
+    Rupee::Load();
 
     Link* link = new Link(level);
     hud = new Hud(link);

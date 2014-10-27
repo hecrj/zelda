@@ -4,13 +4,15 @@
 Entity::Entity(float width, float height) :
         super(0, 0, width, height),
         health_(20),
-        type_(UNKNOWN)
+        type_(UNKNOWN),
+        die_animation_(0)
 {}
 
 Entity::Entity(float x, float y, float width, float height) :
         super(x, y, width, height),
         health_(20),
-        type_(UNKNOWN)
+        type_(UNKNOWN),
+        die_animation_(0)
 {}
 
 bool Entity::IsAlive() const {
@@ -58,4 +60,16 @@ float Entity::Distance(Entity* entity) const {
 
 EntityType Entity::type() const {
     return type_;
+}
+
+bool Entity::IsFinallyDead() const {
+    return not die_animation_ or die_animation_->IsFinished();
+}
+
+void Entity::KeepDying(double delta) {
+    die_animation_->Update(delta);
+}
+
+void Entity::Dead() {
+    // Do nothing
 }

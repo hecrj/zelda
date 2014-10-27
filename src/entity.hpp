@@ -16,10 +16,13 @@ public:
     bool IsAlive() const;
     float Distance(Entity* entity) const;
     bool IsEntity() const;
+    bool IsFinallyDead() const;
     virtual bool moving() const;
     virtual bool IsMob() const;
 
     void Kill();
+    void KeepDying(double delta);
+    virtual void Dead();
     virtual void Damage(Entity* from, int damage);
     virtual void Update(double delta);
     virtual void Render() const;
@@ -31,4 +34,5 @@ public:
 protected:
     int health_;
     EntityType type_;
+    Animation* die_animation_;
 };

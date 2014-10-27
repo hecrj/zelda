@@ -34,6 +34,7 @@ private:
     std::vector<Entity*> players_;
     std::set<Entity*, Entity::SortByYCoordinateAsc> entities_;
     std::vector<Entity*> temp_entities_;
+    std::vector<Entity*> zombies_;
     std::map<std::string, Location*> locations_;
     Quadtree* dynamic_collidables_;
 
