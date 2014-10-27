@@ -1,8 +1,9 @@
 #include <iostream>
 #include "level.hpp"
 #include "../debug.hpp"
-#include "../entity/map_object.hpp"
+#include "../entity/object.hpp"
 #include "../game.hpp"
+#include "../entity/object/plant.hpp"
 
 const int Level::FOLLOW_MARGIN = 200;
 const int Level::MAX_NODES_PER_TICK = 600;
@@ -26,8 +27,14 @@ Level::Level(const char *map) :
                 Location* location = new Location(object);
                 locations_[object.name] = location;
             } else {
-                MapObject* map_object = new MapObject(tileset_->sprite(object.gid - 1), object.x, object.y - 16);
-                AddEntity(map_object);
+                Object* map_object = 0;
+
+                if(object.type == "plant") {
+                    map_object = new Plant(tileset_->sprite(object.gid - 1), object.x, object.y - 16);
+                }
+
+                if(map_object)
+                    AddEntity(map_object);
             }
         }
     }
