@@ -6,7 +6,7 @@
 #include "../debug.hpp"
 
 Mob::Mob(Level* level, float x, float y, float width, float height, Action* idle_action) :
-        super(x, y, width, height, 100),
+        super(x, y, width, height),
         level_(level),
         facing_(Dir::UP),
         facing_candidate_(-1),
@@ -119,7 +119,7 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
             if(c == Collision::DAMAGE) {
                 // TODO: Make dynamic collidables a Quadtree of entities
                 if(candidate->IsEntity()) {
-                    ((Entity*)candidate)->Damage(this, 10);
+                    ((Entity*)candidate)->Damage(this, 1);
                 }
                 std::cout << "Melee attack collision" << std::endl;
             }
@@ -134,7 +134,7 @@ void Mob::Damage(Entity* from, int damage) {
         vec2f dir = center() - from->center();
         dir.normalize();
 
-        ChangeAction(new Push(this, idle_action_, dir, damage, 0.1f));
+        ChangeAction(new Push(this, idle_action_, dir, 10, 0.1f));
     }
 }
 

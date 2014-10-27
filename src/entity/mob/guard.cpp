@@ -30,7 +30,7 @@ Guard::Guard(Level* level) :
 void Guard::Update(double delta) {
     super::Update(delta);
 
-    /*AnimationHitbox* hitbox = new AnimationHitbox(position_, current_action_->CurrentAnimation());
+    AnimationHitbox* hitbox = new AnimationHitbox(position_, current_action_->CurrentAnimation());
     MeleeAttack(hitbox);
-    delete hitbox;*/
+    delete hitbox;
 }

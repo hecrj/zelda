@@ -8,6 +8,7 @@
 #include "entity/mob/guard.hpp"
 #include "entity/mob/ai/chase.hpp"
 #include "entity/mob/stalfos.hpp"
+#include "hud.hpp"
 
 int Game::WIDTH = 640;
 int Game::HEIGHT = 480;
@@ -83,6 +84,7 @@ void Game::Init()
     // Load demo map
     level = new Level("bigger");
 
+    Hud::Load();
     Link::Load();
     Guard::Load();
     Stalfos::Load();
@@ -107,6 +109,8 @@ void Game::Init()
     level->AddEntity(link2);
     level->AddEntity(guard);
     level->AddEntity(stalfos);
+
+    hud = new Hud(link);
 }
 
 void Game::Tick()
@@ -157,6 +161,7 @@ void Game::Render()
 	glLoadIdentity();
 
 	level->Render();
+    hud->Render();
 
 	glutSwapBuffers();
 }

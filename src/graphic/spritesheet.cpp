@@ -34,7 +34,7 @@ SpriteSheet::SpriteSheet(const char* path, int width, int height, int sprite_wid
     hit_spritesheet_ = 0;
 }
 
-std::vector<Sprite*> SpriteSheet::GetSprites(int row, int sprite_count) {
+std::vector<Sprite*> SpriteSheet::GetSprites(int row, int sprite_count) const {
     std::vector<Sprite*> sprites;
 
     float y = row * height_ratio_;

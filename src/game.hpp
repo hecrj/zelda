@@ -1,6 +1,7 @@
 #pragma once
 
 #include "map/level.hpp"
+#include "hud.hpp"
 
 class Game
 {
@@ -29,6 +30,7 @@ private:
 
 	bool keys[256];
 	Level* level;
+    Hud* hud;
 
     // Timing variables
     double t;

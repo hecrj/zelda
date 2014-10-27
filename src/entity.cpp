@@ -3,12 +3,14 @@
 
 Entity::Entity(float width, float height) :
         super(0, 0, width, height),
-        health_(100)
+        health_(20),
+        type_(UNKNOWN)
 {}
 
-Entity::Entity(float x, float y, float width, float height, int health) :
+Entity::Entity(float x, float y, float width, float height) :
         super(x, y, width, height),
-        health_(health)
+        health_(20),
+        type_(UNKNOWN)
 {}
 
 bool Entity::IsAlive() const {
@@ -52,4 +54,8 @@ bool Entity::SortByYCoordinateAsc::operator()(Entity* e1, Entity* e2) const {
 
 float Entity::Distance(Entity* entity) const {
     return center().dist(entity->center());
+}
+
+EntityType Entity::type() const {
+    return type_;
 }
