@@ -9,7 +9,7 @@ public:
     typedef AI super;
     Chase(Mob* mob);
 
-    void Move(double delta);
+    void Update(double delta);
     void Debug() const;
 
 private:

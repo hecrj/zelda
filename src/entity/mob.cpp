@@ -36,6 +36,11 @@ void Mob::ChangeAction(Action* action)
     if(current_action_->IsTemporary())
         delete current_action_;
 
+    if(facing_candidate_ != -1) {
+        facing_ = *Dir::ALL[facing_candidate_];
+        facing_candidate_ = -1;
+    }
+
     current_action_ = action;
     current_action_->Enter();
 }
@@ -71,15 +76,12 @@ void Mob::Update(double delta) {
     if(current_action_->IsFinished())
         ChangeAction(idle_action_);
 
-    if(CanMove()) {
-        ai_->Move(delta);
-
-        if(facing_candidate_ != -1) {
-            facing_ = *Dir::ALL[facing_candidate_];
-            facing_candidate_ = -1;
-        }
-
+    if(CanMove())
         ai_->Update(delta);
+
+    if(facing_candidate_ != -1) {
+        facing_ = *Dir::ALL[facing_candidate_];
+        facing_candidate_ = -1;
     }
 
     current_action_->Update(delta);

@@ -6,9 +6,9 @@ Chase::Chase(Mob* mob) :
         path_(0)
 {}
 
-void Chase::Move(double delta) {
+void Chase::Update(double delta) {
     if(not path_)
-        path_ = FindPlayer();
+        path_ = PathToPlayer();
 
     if(path_ and path_->ready) {
             if(not mob_->FollowPath(path_, delta))
@@ -16,11 +16,11 @@ void Chase::Move(double delta) {
 
             if(not path_->Update(delta)) {
                 delete path_;
-                path_ = FindPlayer();
+                path_ = PathToPlayer();
             }
 
     } else {
-        wander_.Move(delta);
+        wander_.Update(delta);
     }
 }
 

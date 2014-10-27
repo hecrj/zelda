@@ -5,16 +5,16 @@ Follower::Follower(Mob* mob) :
         path_(0)
 {}
 
-void Follower::Move(double delta) {
+void Follower::Update(double delta) {
     if(not path_)
-        path_ = FindPlayer();
+        path_ = PathToPlayer();
 
     if(path_ && path_->ready) {
         mob_->FollowPath(path_, delta);
 
         if(not path_->Update(delta) && mob_->Distance(path_->to) > 50) {
             delete path_;
-            path_ = FindPlayer();
+            path_ = PathToPlayer();
         }
     }
 }
