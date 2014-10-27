@@ -18,6 +18,7 @@ set(SOURCE_FILES
     src/graphic/spritesheet.cpp
     src/graphic/sprite_set.cpp
     src/entity/map_object.cpp
+    src/map/location.cpp
     src/entity/mob.cpp
     src/entity/mob/link.cpp
     src/entity/mob/guard.cpp

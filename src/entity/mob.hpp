@@ -28,6 +28,7 @@ public:
     bool FollowPath(Path* path, double delta);
 
     void set_AI(AI* ai);
+    void set_facing(const Dir& dir);
     void RegisterAction(std::string name, Action *action);
     void ChangeAction(Action *action);
     void Move(const Dir& direction, double delta);

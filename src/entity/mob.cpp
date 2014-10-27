@@ -264,3 +264,7 @@ void Mob::_UpdatePosition(const vec2f& new_position) {
 
     moving_ = moving_ or position_.dist(old_position) > 0.5;
 }
+
+void Mob::set_facing(const Dir& dir) {
+    facing_ = dir;
+}

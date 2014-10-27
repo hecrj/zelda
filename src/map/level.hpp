@@ -3,6 +3,7 @@
 #include "tile_map.hpp"
 #include "../entity.hpp"
 #include "../entity/mob.hpp"
+#include "location.hpp"
 #include "path.hpp"
 #include <set>
 #include <queue>
@@ -22,7 +23,7 @@ public:
     void AddEntity(Entity* entity);
     void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
-    void AddPlayer(Entity* player);
+    void AddPlayer(Entity* player, std::string location);
 
     void Update(double delta);
     void Render();
@@ -33,6 +34,7 @@ private:
     std::vector<Entity*> players_;
     std::set<Entity*, Entity::SortByYCoordinateAsc> entities_;
     std::vector<Entity*> temp_entities_;
+    std::map<std::string, Location*> locations_;
     Quadtree* dynamic_collidables_;
 
     // Pathfinding

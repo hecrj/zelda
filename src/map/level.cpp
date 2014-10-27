@@ -16,12 +16,19 @@ Level::Level(const char *map) :
             std::vector<Path::Node*>(map_->width_pixels / Path::RESOLUTION, 0));
     dynamic_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
 
-    for(const auto& k : map_->object_groups) {
-        const TMX::ObjectGroup& object_group = k.second;
+    for(const auto& g : map_->object_groups) {
+        const TMX::ObjectGroup& object_group = g.second;
+        // TODO: Specialize map objects correctly
+        for(const auto& o : object_group.objects) {
+            const TMX::Object& object = o.second;
 
-        for(const TMX::Object& object : object_group.object) {
-            MapObject* map_object = new MapObject(tileset_->sprite(object.gid - 1), object.x, object.y - 16);
-            AddEntity(map_object);
+            if(object.type == "location") {
+                Location* location = new Location(object);
+                locations_[object.name] = location;
+            } else {
+                MapObject* map_object = new MapObject(tileset_->sprite(object.gid - 1), object.x, object.y - 16);
+                AddEntity(map_object);
+            }
         }
     }
 }
@@ -122,9 +129,21 @@ void Level::AddEntity(Entity* entity) {
     dynamic_collidables_->Insert(entity);
 }
 
-void Level::AddPlayer(Entity* player) {
+
+void Level::AddPlayer(Entity* player, std::string location) {
     if(!main_player_)
         main_player_ = player;
+
+    std::map<std::string, Location*>::iterator it = locations_.find(location);
+
+    if(it == locations_.end()) {
+        std::cerr << "Location not found: " << location << std::endl;
+        exit(1);
+    }
+
+    Location* location_object = it->second;
+    location_object->Place(player);
+
     players_.push_back(player);
     AddEntity(player);
 }

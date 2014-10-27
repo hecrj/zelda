@@ -371,4 +371,11 @@
   <object type="plant" gid="777" x="704" y="32" width="16" height="16"/>
   <object type="plant" gid="777" x="720" y="48" width="16" height="16"/>
  </objectgroup>
+ <objectgroup name="Locations">
+  <object name="game_start" type="location" x="656" y="632" width="16" height="8">
+   <properties>
+    <property name="orientation" value="UP"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

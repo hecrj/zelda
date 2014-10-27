@@ -75,7 +75,6 @@ void Game::Init()
     glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
     glOrtho(0, WIDTH, HEIGHT, 0, 0, 1);
-
 	glMatrixMode(GL_MODELVIEW);
 
     // Set seed
@@ -90,27 +89,10 @@ void Game::Init()
     Stalfos::Load();
 
     Link* link = new Link(level);
-    Link* link2 = new Link(level);
-    Guard* guard = new Guard(level);
-    Stalfos* stalfos = new Stalfos(level);
-
-    link->set_position(17 * 16, 17 * 16);
-    link2->set_position(17 * 16, 11 * 16);
-    guard->set_position(20 * 16, 11 * 16);
-    stalfos->set_position(22 * 16, 11 * 16);
-
-    Player* player = new Player(link, keys);
-    link->set_AI(player);
-    link2->set_AI(new Follower(link2));
-    guard->set_AI(new Chase(guard));
-    stalfos->set_AI(new Chase(stalfos));
-
-    level->AddPlayer(link);
-    level->AddEntity(link2);
-    level->AddEntity(guard);
-    level->AddEntity(stalfos);
-
     hud = new Hud(link);
+
+    link->set_AI(new Player(link, keys));
+    level->AddPlayer(link, "game_start");
 }
 
 void Game::Tick()
