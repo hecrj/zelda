@@ -30,10 +30,13 @@ Rupee::Rupee(Rupee::Type type, float x, float y) :
         super(RUPEES[type], x, y),
         rupee_type_(type)
 {
-    effect_ = new Bounce(12, 0.25);
+    effect_ = new Bounce(this, 12, 0.25);
 }
 
 bool Rupee::HandleCollisionWith(Mob* mob) {
+    if(not IsAlive())
+        return false;
+
     int amount = rupee_type_ == Rupee::Type::GREEN ? 1 : rupee_type_ == Rupee::Type::BLUE ? 2 : 5;
 
     // Mob has to be a player

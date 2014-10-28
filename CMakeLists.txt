@@ -14,14 +14,17 @@ set(SOURCE_FILES
 
     # Graphical stuff
     src/graphic/animation.cpp
-    src/graphic/effect.cpp
-    src/graphic/effect/bounce.cpp
     src/graphic/hitbox.cpp
     src/graphic/hitbox/animation_hitbox.cpp
     src/graphic/pixelmap.cpp
     src/graphic/sprite.cpp
     src/graphic/spritesheet.cpp
     src/graphic/sprite_set.cpp
+
+    ## Graphic effects
+    src/graphic/effect.cpp
+    src/graphic/effect/bounce.cpp
+    src/graphic/effect/rotation_fade.cpp
 
     # Mobs
     src/entity/mob.cpp

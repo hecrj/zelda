@@ -11,6 +11,7 @@ public:
     typedef Hitbox super;
     Entity(float width, float height);
     Entity(float x, float y, float width, float height);
+    ~Entity();
 
     int health() const;
     EntityType type() const;
@@ -22,7 +23,8 @@ public:
     virtual bool IsMob() const;
 
     void Kill();
-    void KeepDying(double delta);
+
+    virtual void Die();
     virtual void Dead();
     virtual void Damage(Entity* from, int damage);
     virtual void Update(double delta);
@@ -37,5 +39,5 @@ protected:
     int health_;
     EntityType type_;
     Effect* effect_;
-    Animation* die_animation_;
+    Effect* die_effect_;
 };

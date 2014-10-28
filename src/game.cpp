@@ -91,10 +91,15 @@ void Game::Init()
     Rupee::Load();
 
     Link* link = new Link(level);
+    Stalfos* stalfos = new Stalfos(level);
     hud = new Hud(link);
 
     link->set_AI(new Player(link, keys));
+    stalfos->set_AI(new Chase(stalfos));
+    stalfos->set_position(16 * 15, 16 * 15);
+
     level->AddPlayer(link, "game_start");
+    level->AddEntity(stalfos);
 }
 
 void Game::Tick()

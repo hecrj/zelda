@@ -33,14 +33,15 @@ private:
     Entity* main_player_;
     std::vector<Entity*> players_;
     std::set<Entity*, Entity::SortByYCoordinateAsc> entities_;
-    std::vector<Entity*> temp_entities_;
+    std::vector<Entity*> alive_entities_;
     std::vector<Entity*> zombies_;
     std::map<std::string, Location*> locations_;
     Quadtree* dynamic_collidables_;
 
     // Pathfinding
     std::vector<std::vector<Path::Node*>> nodes_;
-    std::queue<Path*> path_queue_;
+    std::list<Path*> pending_paths_;
 
     void CalculatePath();
+    void RemovePendingPaths(Entity* entity);
 };

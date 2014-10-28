@@ -5,9 +5,10 @@
 
 class Bounce : public Effect {
 public:
+    typedef Effect super;
     static const float GRAVITY;
 
-    Bounce(float height, float duration);
+    Bounce(Entity* entity, float height, float duration);
 
     bool IsFinished() const;
 

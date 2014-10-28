@@ -5,7 +5,7 @@ Entity::Entity(float width, float height) :
         super(0, 0, width, height),
         health_(20),
         type_(UNKNOWN),
-        die_animation_(0),
+        die_effect_(0),
         effect_(0)
 {}
 
@@ -13,7 +13,7 @@ Entity::Entity(float x, float y, float width, float height) :
         super(x, y, width, height),
         health_(20),
         type_(UNKNOWN),
-        die_animation_(0),
+        die_effect_(0),
         effect_(0)
 {}
 
@@ -37,14 +37,10 @@ void Entity::Update(double delta) {
 }
 
 void Entity::Render() const {
-    if(effect_ and not effect_->IsFinished()) {
-        glPushMatrix();
+    if(effect_)
         effect_->Render();
+    else
         Draw();
-        glPopMatrix();
-    } else {
-        Draw();
-    }
 }
 
 bool Entity::moving() const {
@@ -80,13 +76,24 @@ EntityType Entity::type() const {
 }
 
 bool Entity::IsFinallyDead() const {
-    return not die_animation_ or die_animation_->IsFinished();
-}
-
-void Entity::KeepDying(double delta) {
-    die_animation_->Update(delta);
+    return not effect_ or effect_->IsFinished();
 }
 
 void Entity::Dead() {
     // Do nothing
+}
+
+void Entity::Die() {
+    if(die_effect_) {
+        effect_ = die_effect_;
+        die_effect_ = 0;
+    }
+}
+
+Entity::~Entity() {
+    if(die_effect_)
+        delete die_effect_;
+
+    if(effect_)
+        delete effect_;
 }

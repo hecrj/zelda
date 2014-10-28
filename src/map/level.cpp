@@ -44,56 +44,66 @@ Level::Level(const char *map) :
 void Level::Update(double delta) {
     // We calculate one path per game tick
     // This way we distribute work in different ticks
-    if(!path_queue_.empty())
+    if(!pending_paths_.empty())
         CalculatePath();
 
     // Zombies are entities that are dying :(
     std::vector<Entity*>::iterator it = zombies_.begin();
     while(it != zombies_.end()) {
         Entity* zombie = *it;
+        entities_.erase(zombie);
 
         if(zombie->IsFinallyDead()) {
             zombie->Dead();
+
             it = zombies_.erase(it);
 
             if(zombie != main_player_)
                 delete zombie;
         } else {
-            zombie->KeepDying(delta);
+            zombie->Update(delta);
+            entities_.insert(zombie);
             it++;
         }
     }
 
-    for(Entity* entity : entities_) {
+    it = alive_entities_.begin();
+    while(it != alive_entities_.end()) {
+        Entity* entity = *it;
+
         if(entity->IsMob()) {
+            entities_.erase(entity);
             dynamic_collidables_->Remove(entity);
 
             entity->Update(delta);
 
+            entities_.insert(entity);
+
             if (entity->IsAlive()) {
                 dynamic_collidables_->Insert(entity);
-                temp_entities_.push_back(entity);
+                ++it;
             } else {
-                // TODO: Remove pending paths from entity
+                entity->Die();
+
+                RemovePendingPaths(entity);
                 zombies_.push_back(entity);
+                it = alive_entities_.erase(it);
             }
         } else {
+            entity->Update(delta);
+
             if(entity->IsAlive()) {
-                entity->Update(delta);
-                temp_entities_.push_back(entity);
+                ++it;
             } else {
+                entity->Die();
+
+                RemovePendingPaths(entity);
                 dynamic_collidables_->Remove(entity);
-                // TODO: Remove pending paths from entity
                 zombies_.push_back(entity);
+                it = alive_entities_.erase(it);
             }
         }
     }
-
-    // We need to update the set in order to keep it sorted
-    // TODO: Do the sorting when rendering?
-    entities_.clear();
-    entities_.insert(temp_entities_.begin(), temp_entities_.end());
-    temp_entities_.clear();
 }
 
 void Level::Render() {
@@ -152,6 +162,11 @@ void Level::Render() {
 }
 
 void Level::AddEntity(Entity* entity) {
+    if(entity->IsAlive())
+        alive_entities_.push_back(entity);
+    else
+        zombies_.push_back(entity);
+
     entities_.insert(entity);
     dynamic_collidables_->Insert(entity);
 }
@@ -175,6 +190,10 @@ void Level::AddPlayer(Entity* player, std::string location) {
     AddEntity(player);
 }
 
+const std::vector<Entity*>& Level::players() const {
+    return players_;
+}
+
 void Level::CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {
     super::CollidablesFor(rectangle, collidables);
     dynamic_collidables_->Retrieve(rectangle, collidables);
@@ -186,13 +205,13 @@ void Level::DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>&
 
 Path* Level::FindPath(Mob* from, Entity* to) {
     Path* path = new Path(from, to);
-    path_queue_.push(path);
+    pending_paths_.push_back(path);
     return path;
 }
 
 void Level::CalculatePath() {
     // A*
-    Path& path = *path_queue_.front();
+    Path& path = *pending_paths_.front();
 
     if(not path.calculating) {
         // Clear unused nodes from last search
@@ -245,7 +264,7 @@ void Level::CalculatePath() {
                     path.ready = true;
                     path.found = true;
                     path.pending.clear();
-                    path_queue_.pop();
+                    pending_paths_.pop_front();
                     return;
                 }
             } else {
@@ -278,9 +297,23 @@ void Level::CalculatePath() {
 
     // Path not found
     path.ready = true;
-    path_queue_.pop();
+    pending_paths_.pop_front();
 }
 
-const std::vector<Entity*>& Level::players() const {
-    return players_;
+void Level::RemovePendingPaths(Entity* entity) {
+    std::list<Path*>::iterator it = pending_paths_.begin();
+    while(it != pending_paths_.end()) {
+        Path* path = *it;
+
+        if(path->from == entity)
+            it = pending_paths_.erase(it);
+        else if(path->to == entity) {
+            path->ready = true;
+            path->found = false;
+            path->calculating = true;
+            it = pending_paths_.erase(it);
+        } else {
+            ++it;
+        }
+    }
 }
