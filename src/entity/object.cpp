@@ -6,7 +6,7 @@ Object::Object(Level* level, Sprite* sprite, float x, float y) :
         sprite_(sprite)
 {}
 
-void Object::Render() const {
+void Object::Draw() const {
     sprite_->Render(position_);
 }
 

@@ -1,6 +1,7 @@
 #include "rupee.hpp"
 #include "../mob.hpp"
 #include "../mob/link.hpp"
+#include "../../graphic/effect/bounce.hpp"
 
 SpriteSheet* Rupee::RUPEES_SPRITESHEET;
 std::vector<Sprite*> Rupee::RUPEES;
@@ -28,7 +29,9 @@ Rupee* Rupee::Random(float x, float y) {
 Rupee::Rupee(Rupee::Type type, float x, float y) :
         super(RUPEES[type], x, y),
         rupee_type_(type)
-{}
+{
+    effect_ = new Bounce(12, 0.25);
+}
 
 bool Rupee::HandleCollisionWith(Mob* mob) {
     int amount = rupee_type_ == Rupee::Type::GREEN ? 1 : rupee_type_ == Rupee::Type::BLUE ? 2 : 5;

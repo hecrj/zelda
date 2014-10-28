@@ -12,7 +12,7 @@ public:
     Sprite* CurrentSprite(vec2f& sprite_position) const;
     Sprite* CurrentSprite() const;
 
-    void Render() const;
+    void Draw() const;
 
 protected:
     Level* level_;

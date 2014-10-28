@@ -38,7 +38,7 @@ public:
     void Damage(Entity* from, int damage);
 
     void Update(double delta);
-    void Render() const;
+    void Draw() const;
 
 protected:
     Action* idle_action_;

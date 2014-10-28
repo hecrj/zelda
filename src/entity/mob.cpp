@@ -88,13 +88,11 @@ void Mob::Update(double delta) {
     super::Update(delta);
 }
 
-void Mob::Render() const {
+void Mob::Draw() const {
     current_action_->Render();
 
     if(Debug::enabled)
         ai_->Debug();
-
-    super::Render();
 }
 
 Action* Mob::action(std::string name) const {

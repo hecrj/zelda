@@ -3,6 +3,7 @@
 #include "math/vec2.hpp"
 #include "graphic/hitbox.hpp"
 #include "entity/entity_type.hpp"
+#include "graphic/effect.hpp"
 #include <string>
 
 class Entity : public Hitbox {
@@ -26,6 +27,7 @@ public:
     virtual void Damage(Entity* from, int damage);
     virtual void Update(double delta);
     virtual void Render() const;
+    virtual void Draw() const = 0;
 
     struct SortByYCoordinateAsc {
         bool operator() (Entity* e1, Entity* e2) const;
@@ -34,5 +36,6 @@ public:
 protected:
     int health_;
     EntityType type_;
+    Effect* effect_;
     Animation* die_animation_;
 };

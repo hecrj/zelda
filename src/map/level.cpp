@@ -79,6 +79,7 @@ void Level::Update(double delta) {
             }
         } else {
             if(entity->IsAlive()) {
+                entity->Update(delta);
                 temp_entities_.push_back(entity);
             } else {
                 dynamic_collidables_->Remove(entity);
