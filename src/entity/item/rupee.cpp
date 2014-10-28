@@ -21,7 +21,7 @@ Rupee* Rupee::Random(float x, float y) {
     else
         type = Rupee::Type::RED;
 
-    return new Rupee(type, x - 4.5f, y - 8.0f);
+    return new Rupee(type, x - RUPEES[type]->width() / 2.0f, y - RUPEES[type]->height() / 2.0f);
 }
 
 Rupee::Rupee(Rupee::Type type, float x, float y) :
