@@ -45,3 +45,7 @@ Link::Link(Level* level) :
 void Link::UpdateRupees(int rupees) {
     rupees_ += rupees;
 }
+
+int Link::rupees() const {
+    return rupees_;
+}

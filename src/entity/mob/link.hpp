@@ -17,6 +17,8 @@ public:
 
     Link(Level* level);
 
+    int rupees() const;
+
     void UpdateRupees(int rupees);
 
 private:

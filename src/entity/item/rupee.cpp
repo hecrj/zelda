@@ -1,5 +1,6 @@
 #include "rupee.hpp"
 #include "../mob.hpp"
+#include "../mob/link.hpp"
 
 SpriteSheet* Rupee::RUPEES_SPRITESHEET;
 std::vector<Sprite*> Rupee::RUPEES;
@@ -26,11 +27,14 @@ Rupee* Rupee::Random(float x, float y) {
 
 Rupee::Rupee(Rupee::Type type, float x, float y) :
         super(RUPEES[type], x, y),
-        type_(type)
+        rupee_type_(type)
 {}
 
 bool Rupee::HandleCollisionWith(Mob* mob) {
-    // TODO: Update Link rupees
+    int amount = rupee_type_ == Rupee::Type::GREEN ? 1 : rupee_type_ == Rupee::Type::BLUE ? 2 : 5;
+
+    // Mob has to be a player
+    ((Link*) mob)->UpdateRupees(amount);
 
     Kill();
     return false;

@@ -21,5 +21,5 @@ public:
     bool HandleCollisionWith(Mob* mob);
 
 private:
-    Rupee::Type type_;
+    Rupee::Type rupee_type_;
 };

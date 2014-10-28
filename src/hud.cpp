@@ -1,4 +1,6 @@
 #include "hud.hpp"
+#include "entity/item/rupee.hpp"
+#include <GL/freeglut.h>
 
 SpriteSheet* Hud::HEARTS_SPRITESHEET;
 std::vector<Sprite*> Hud::HEARTS;
@@ -27,4 +29,12 @@ void Hud::Render() const {
             health = 0;
         }
     }
+
+    vec2f position(vec2f(5, 10 + HEARTS[0]->height()));
+    Rupee::RUPEES[Rupee::Type::GREEN]->Render(position);
+
+    glRasterPos2i((int)(position.x + Rupee::RUPEES[Rupee::Type::GREEN]->width() + 3), (int)position.y + 15);
+    char buffer[4];
+    sprintf(buffer, "x%02d", player_->rupees());
+    glutBitmapString(GLUT_BITMAP_9_BY_15, (unsigned char*)buffer);
 }
