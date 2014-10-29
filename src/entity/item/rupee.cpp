@@ -30,7 +30,7 @@ Rupee::Rupee(Rupee::Type type, float x, float y) :
         super(RUPEES[type], x, y),
         rupee_type_(type)
 {
-    effect_ = new Bounce(this, 12, 0.25);
+    ChangeEffect(new Bounce(this, 12, 0.25));
 }
 
 bool Rupee::HandleCollisionWith(Mob* mob) {

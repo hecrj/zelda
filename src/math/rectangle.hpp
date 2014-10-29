@@ -1,11 +1,13 @@
-#include "vec2.hpp"
-#include "../graphic/collision.hpp"
-
 #pragma once
 
+#include "vec2.hpp"
+#include "../graphic/collision.hpp"
+#include "../graphic/drawable.hpp"
+
 class Mob;
-class Rectangle {
+class Rectangle : public Drawable {
 public:
+    typedef Drawable super;
     Rectangle(float x, float y, float width, float height);
 
     float x();
@@ -27,7 +29,8 @@ public:
 
     void set_position(const vec2f& position);
     void set_position(float x, float y);
-    void Render(float r, float g, float b) const;
+    void DrawBox(float r, float g, float b) const;
+    void Draw() const;
     void Print() const;
 
 protected:

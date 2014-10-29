@@ -170,7 +170,7 @@ void Level::Render() {
         }
 
         for(Rectangle* candidate : candidates)
-            candidate->Render(1, 0, 1);
+            candidate->DrawBox(1, 0, 1);
     }
 }
 

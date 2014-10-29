@@ -1,9 +1,9 @@
 #pragma once
 
-class Entity;
+class Drawable;
 class Effect {
 public:
-    Effect(Entity* entity);
+    Effect(Drawable* drawable);
 
     virtual bool IsFinished() const = 0;
 
@@ -11,5 +11,5 @@ public:
     virtual void Render() const = 0;
 
 protected:
-    Entity* entity_;
+    Drawable* drawable_;
 };

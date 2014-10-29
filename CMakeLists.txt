@@ -14,6 +14,7 @@ set(SOURCE_FILES
 
     # Graphical stuff
     src/graphic/animation.cpp
+    src/graphic/drawable.cpp
     src/graphic/hitbox.cpp
     src/graphic/hitbox/animation_hitbox.cpp
     src/graphic/pixelmap.cpp

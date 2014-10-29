@@ -27,9 +27,6 @@ public:
     virtual void Die();
     virtual void Dead();
     virtual void Damage(Entity* from, int damage);
-    virtual void Update(double delta);
-    virtual void Render() const;
-    virtual void Draw() const = 0;
 
     struct SortByYCoordinateAsc {
         bool operator() (Entity* e1, Entity* e2) const;
@@ -38,6 +35,5 @@ public:
 protected:
     int health_;
     EntityType type_;
-    Effect* effect_;
     Effect* die_effect_;
 };

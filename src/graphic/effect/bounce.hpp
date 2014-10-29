@@ -2,13 +2,14 @@
 
 #include "../effect.hpp"
 #include "../../math/vec2.hpp"
+#include "../drawable.hpp"
 
 class Bounce : public Effect {
 public:
     typedef Effect super;
     static const float GRAVITY;
 
-    Bounce(Entity* entity, float height, float duration);
+    Bounce(Drawable* drawable, float height, float duration);
 
     bool IsFinished() const;
 

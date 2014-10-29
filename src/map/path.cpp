@@ -70,7 +70,7 @@ void Path::Render() const {
     if(ready) {
         for(const vec2i node : nodes) {
             Rectangle r(node.x * RESOLUTION, node.y * RESOLUTION, RESOLUTION, RESOLUTION);
-            r.Render(1, 1, 1);
+            r.DrawBox(1, 1, 1);
         }
     }
 }

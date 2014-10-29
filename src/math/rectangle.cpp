@@ -76,18 +76,11 @@ void Rectangle::Print() const {
             position_.x + width_ << ", " << position_.y + height_ << ")" << std::endl;
 }
 
-void Rectangle::Render(float r, float g, float b) const {
+void Rectangle::DrawBox(float r, float g, float b) const {
     glColor4f(r, g, b, 1);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    glBegin(GL_QUADS);
 
-    glVertex2f(position_.x, position_.y);
-    glVertex2f(position_.x + width_, position_.y);
-    glVertex2f(position_.x + width_, position_.y + height_);
-    glVertex2f(position_.x, position_.y + height_);
+    Rectangle::Draw();
 
-    glEnd();
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glColor4f(1, 1, 1, 1);
 }
 
@@ -105,4 +98,17 @@ Collision Rectangle::CollisionType(Rectangle* rectangle) const {
 
 bool Rectangle::HandleCollisionWith(Mob* mob) {
     return true;
+}
+
+void Rectangle::Draw() const {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glBegin(GL_QUADS);
+
+    glVertex2f(position_.x, position_.y);
+    glVertex2f(position_.x + width_, position_.y);
+    glVertex2f(position_.x + width_, position_.y + height_);
+    glVertex2f(position_.x, position_.y + height_);
+
+    glEnd();
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

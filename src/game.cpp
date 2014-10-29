@@ -86,7 +86,7 @@ void Game::Init()
     srand((unsigned) time(NULL));
 
     // Load demo map
-    level = new Level("dungeon");
+    level = new Level("bigger");
 
     Hud::Load();
     Link::Load();

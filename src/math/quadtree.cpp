@@ -148,7 +148,7 @@ bool Quadtree::IsEmpty() const {
 }
 
 void Quadtree::Render(float r, float g, float b) const {
-    bounds_.Render(r, g, b);
+    bounds_.DrawBox(r, g, b);
 
     if(children_[0]) {
         for(int i = 0; i < 4; i++) {

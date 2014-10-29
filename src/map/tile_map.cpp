@@ -79,7 +79,7 @@ void TileMap::RenderLayersAbove() const {
 
     if(Debug::enabled) {
         for(Rectangle* r : blocked_tiles_)
-            r->Render(0, 1, 0);
+            r->DrawBox(0, 1, 0);
 
         static_collidables_->Render(0, 0, 1);
     }

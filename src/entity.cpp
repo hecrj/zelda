@@ -5,16 +5,14 @@ Entity::Entity(float width, float height) :
         super(0, 0, width, height),
         health_(20),
         type_(UNKNOWN),
-        die_effect_(0),
-        effect_(0)
+        die_effect_(0)
 {}
 
 Entity::Entity(float x, float y, float width, float height) :
         super(x, y, width, height),
         health_(20),
         type_(UNKNOWN),
-        die_effect_(0),
-        effect_(0)
+        die_effect_(0)
 {}
 
 bool Entity::IsAlive() const {
@@ -23,24 +21,6 @@ bool Entity::IsAlive() const {
 
 void Entity::Kill() {
     health_ = 0;
-}
-
-void Entity::Update(double delta) {
-    if(effect_) {
-        if(effect_->IsFinished()) {
-            delete effect_;
-            effect_ = 0;
-        } else {
-            effect_->Update(delta);
-        }
-    }
-}
-
-void Entity::Render() const {
-    if(effect_)
-        effect_->Render();
-    else
-        Draw();
 }
 
 bool Entity::moving() const {
@@ -76,7 +56,7 @@ EntityType Entity::type() const {
 }
 
 bool Entity::IsFinallyDead() const {
-    return not effect_ or effect_->IsFinished();
+    return not current_effect_ or current_effect_->IsFinished();
 }
 
 void Entity::Dead() {
@@ -84,16 +64,11 @@ void Entity::Dead() {
 }
 
 void Entity::Die() {
-    if(die_effect_) {
-        effect_ = die_effect_;
-        die_effect_ = 0;
-    }
+    if(die_effect_)
+        ChangeEffect(die_effect_);
 }
 
 Entity::~Entity() {
     if(die_effect_)
         delete die_effect_;
-
-    if(effect_)
-        delete effect_;
 }
