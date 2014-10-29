@@ -83,3 +83,10 @@ Sprite* Tileset::sprite(int tile_id) {
     sprites_[tile_id] = sprite;
     return sprite;
 }
+
+Tileset::~Tileset() {
+    for(const auto& ksprite : sprites_)
+        delete ksprite.second;
+
+    glDeleteTextures(1, &texture_);
+}

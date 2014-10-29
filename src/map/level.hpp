@@ -16,6 +16,7 @@ public:
     static const int MAX_NODES_PER_TICK;
 
     Level(const char* map);
+    ~Level();
 
     Path* FindPath(Mob* from, Entity* to);
     const std::vector<Entity*>& players() const;

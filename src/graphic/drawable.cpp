@@ -10,26 +10,30 @@ Drawable::~Drawable() {
 }
 
 void Drawable::Render() const {
-    if(current_effect_)
-        current_effect_->Render();
-    else
+    if(not current_effect_)
         Draw();
+    else
+        current_effect_->Render();
 }
 
-void Drawable::Update(double delta) {
-    if(current_effect_) {
+void Drawable::Tick(double delta) {
+    if(not current_effect_) {
+        Update(delta);
+    } else {
         if(current_effect_->IsFinished()) {
-            delete current_effect_;
-            current_effect_ = 0;
+            ChangeEffect(current_effect_->next());
         } else {
-            current_effect_->Update(delta);
+            current_effect_->Tick(delta);
         }
     }
 }
 
 void Drawable::ChangeEffect(Effect* effect) {
-    if(current_effect_)
-        delete current_effect_;
-
+    Effect* old = current_effect_;
     current_effect_ = effect;
+
+    if(old) {
+        old->Leave();
+        delete old;
+    }
 }

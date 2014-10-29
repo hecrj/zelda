@@ -30,6 +30,7 @@ public:
     void set_position(const vec2f& position);
     void set_position(float x, float y);
     void DrawBox(float r, float g, float b) const;
+    void Update(double delta);
     void Draw() const;
     void Print() const;
 

@@ -11,7 +11,7 @@ Bounce::Bounce(Drawable* drawable, float height, float t) :
     final_speed_ = -speed_;
 }
 
-void Bounce::Update(double delta) {
+void Bounce::Tick(double delta) {
     position_ += vec2f(0, speed_  * (float)delta);
     speed_ += GRAVITY * delta;
 }

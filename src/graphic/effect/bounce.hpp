@@ -13,7 +13,7 @@ public:
 
     bool IsFinished() const;
 
-    void Update(double delta);
+    void Tick(double delta);
     void Render() const;
 
 private:

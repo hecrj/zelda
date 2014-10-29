@@ -13,6 +13,7 @@
 #include "entity/mob/stalfos.hpp"
 #include "hud.hpp"
 #include "entity/item/rupee.hpp"
+#include "graphic/effect/fade.hpp"
 
 int Game::WIDTH = 640;
 int Game::HEIGHT = 480;
@@ -111,7 +112,7 @@ void Game::Tick()
     accumulator += frame_time;
 
     while(accumulator >= dt) {
-        Update(dt);
+        super::Tick(dt);
         accumulator -= dt;
         t += dt;
     }
@@ -141,31 +142,32 @@ void Game::Update(double delta)
     if(not level->transition_requested()) {
         level->Update(delta);
     } else {
-        std::string map;
-        std::string place;
+        ChangeEffect(new Fade("out", this, 0.5, [this]{
+            std::string map;
+            std::string place;
 
-        std::vector<Entity*> players(level->players());
-        level->transition_data(map, place);
+            level->transition_data(map, place);
+            std::vector<Entity*> players(level->players());
 
-        Level* new_level = new Level(map.c_str());
-        delete level;
+            Level* new_level = new Level(map.c_str());
+            delete level;
 
-        for(Entity* player : players)
-            new_level->AddPlayer(player, place);
+            for(Entity* player : players)
+                new_level->AddPlayer(player, place);
 
-        level = new_level;
+            level = new_level;
+            ChangeEffect(new Fade("in", this, 0.5, []{}));
+        }));
     }
 }
 
-void Game::Render()
+void Game::Draw() const
 {
 	glClear(GL_COLOR_BUFFER_BIT);	
 	glLoadIdentity();
 
 	level->Render();
     hud->Render();
-
-	glutSwapBuffers();
 }
 
 void Game::Reshape(int width, int height) {

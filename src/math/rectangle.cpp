@@ -112,3 +112,7 @@ void Rectangle::Draw() const {
     glEnd();
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
+
+void Rectangle::Update(double delta) {
+    // Do nothing
+}

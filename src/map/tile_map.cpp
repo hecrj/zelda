@@ -49,6 +49,14 @@ void TileMap::InitBlockedTiles(const std::vector<TMX::TileLayer*>& layers, std::
 
 TileMap::~TileMap()
 {
+    delete map_;
+    delete static_collidables_;
+    delete tileset_;
+
+    for(Rectangle* tile : blocked_tiles_)
+        delete tile;
+
+    glDeleteTextures(2, new GLuint[2]{texture_below_, texture_above_});
 }
 
 void TileMap::CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {

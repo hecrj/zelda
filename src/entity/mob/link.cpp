@@ -43,6 +43,9 @@ Link::Link() :
 
 void Link::UpdateRupees(int rupees) {
     rupees_ += rupees;
+
+    if(rupees_ > 99)
+        rupees_ = 99;
 }
 
 int Link::rupees() const {

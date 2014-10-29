@@ -51,6 +51,35 @@ Level::Level(const char *map) :
     }
 }
 
+Level::~Level() {
+    delete dynamic_collidables_;
+
+    for(Entity* entity : alive_entities_) {
+        if(entity->type() != PLAYER)
+            delete entity;
+    }
+
+    for(Entity* zombie : zombies_) {
+        if(zombie->type() != PLAYER)
+            delete zombie;
+    }
+
+    for(const auto& klocation : locations_) {
+        delete klocation.second;
+    }
+
+    for(const auto& row : nodes_) {
+        for(Path::Node* node : row) {
+            if(node)
+                delete node;
+        }
+    }
+
+    for(Path* path : pending_paths_)
+        delete path;
+}
+
+
 void Level::Update(double delta) {
     // We calculate one path per game tick
     // This way we distribute work in different ticks
@@ -71,7 +100,7 @@ void Level::Update(double delta) {
             if(zombie != main_player_)
                 delete zombie;
         } else {
-            zombie->Update(delta);
+            zombie->Tick(delta);
             entities_.insert(zombie);
             it++;
         }
@@ -85,7 +114,7 @@ void Level::Update(double delta) {
             entities_.erase(entity);
             dynamic_collidables_->Remove(entity);
 
-            entity->Update(delta);
+            entity->Tick(delta);
 
             entities_.insert(entity);
 
@@ -100,7 +129,7 @@ void Level::Update(double delta) {
                 it = alive_entities_.erase(it);
             }
         } else {
-            entity->Update(delta);
+            entity->Tick(delta);
 
             if(entity->IsAlive()) {
                 ++it;

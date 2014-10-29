@@ -7,6 +7,7 @@
 class Tileset {
 public:
     Tileset(TSX::Tileset* tileset);
+    ~Tileset();
 
     Sprite* sprite(int tile_id);
 

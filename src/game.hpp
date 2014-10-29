@@ -3,9 +3,10 @@
 #include "map/level.hpp"
 #include "hud.hpp"
 
-class Game
+class Game : public Drawable
 {
 public:
+    typedef Drawable super;
     static int WIDTH;
     static int HEIGHT;
     static bool DIRTY;
@@ -22,7 +23,7 @@ public:
 	void ReadKeyboard(unsigned char key, int x, int y, bool press);
 	void ReadMouse(int button, int state, int x, int y);
     void Update(double delta);
-	void Render();
+	void Draw() const;
     void Reshape(int width, int height);
 
 private:

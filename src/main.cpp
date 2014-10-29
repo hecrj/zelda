@@ -8,7 +8,8 @@ Game game;
 
 void AppRender()
 {
-	game.Render();
+    game.Render();
+    glutSwapBuffers();
 }
 
 void AppReshape(int width, int height)
