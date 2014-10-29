@@ -38,9 +38,9 @@ void Fade::Render() const {
     glBegin(GL_QUADS);
 
     glVertex2f(0, 0);
-    glVertex2f(Game::WIDTH, 0);
-    glVertex2f(Game::WIDTH, Game::HEIGHT);
-    glVertex2f(0, Game::HEIGHT);
+    glVertex2f(Game::WINDOW_WIDTH, 0);
+    glVertex2f(Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT);
+    glVertex2f(0, Game::WINDOW_HEIGHT);
 
     glEnd();
     glPopMatrix();

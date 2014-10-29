@@ -9,11 +9,11 @@ struct SpriteSet {
     float width;
     float height;
     int idle_index;
-    // TODO: Support different intervals per sprite
-    int interval;
+    std::vector<int> intervals;
     vec2f position;
     bool ping_pong;
 
-    SpriteSet(const std::vector<Sprite*>& sprites, int idle_index, int interval);
-    SpriteSet(const std::vector<Sprite*>& sprites, int idle_index, int interval, vec2f position);
+    SpriteSet(const std::vector<Sprite*>& sprites, int idle_index, int interval, const vec2f& position);
+    SpriteSet(const std::vector<Sprite*>& sprites, int idle_index, const vec2f& position,
+            const std::vector<int>& intervals);
 };

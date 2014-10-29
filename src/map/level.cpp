@@ -6,7 +6,7 @@
 #include "../entity/object/plant.hpp"
 #include "../entity/event/map_transition.hpp"
 
-const int Level::FOLLOW_MARGIN = 200;
+const int Level::FOLLOW_MARGIN = 100;
 const int Level::MAX_NODES_PER_TICK = 600;
 
 Level::Level(const char *map) :
@@ -170,7 +170,8 @@ void Level::Render() {
     else if(position_.y > 0 and player_position.y < top_limit)
         position_.y = std::max(0.0f, position_.y + player_position.y - top_limit);
 
-    glTranslatef(-position_.x, -position_.y, 0);
+    glTranslatef(-position_.x * Game::SCALE, -position_.y * Game::SCALE, 0);
+    glScalef(Game::SCALE, Game::SCALE, 0);
 
     // Rendering
     super::RenderLayersBelow();

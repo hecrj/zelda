@@ -27,7 +27,9 @@ void Animation::Reset() {
 void Animation::Update(double delta) {
     accum_ += delta * 1000;
 
-    if(accum_ > spriteset_->interval) {
+    if(accum_ > spriteset_->intervals[current_frame_]) {
+        accum_ -= spriteset_->intervals[current_frame_];
+
         if(spriteset_->ping_pong) {
             current_frame_ = current_frame_ + (ascending_ ? 1 : -1);
 
@@ -41,8 +43,6 @@ void Animation::Update(double delta) {
                 current_frame_ = 0;
             }
         }
-
-        accum_ -= spriteset_->interval;
     }
 }
 

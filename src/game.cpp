@@ -15,10 +15,13 @@
 #include "entity/item/rupee.hpp"
 #include "graphic/effect/fade.hpp"
 
-int Game::WIDTH = 640;
-int Game::HEIGHT = 480;
+const int Game::SCALE = 2;
+int Game::WINDOW_WIDTH = 1024;
+int Game::WINDOW_HEIGHT = 768;
+int Game::WIDTH = Game::WINDOW_WIDTH / Game::SCALE;
+int Game::HEIGHT = Game::WINDOW_HEIGHT / Game::SCALE;
 bool Game::DIRTY = true;
-Rectangle Game::RECTANGLE = Rectangle(0, 0, Game::WIDTH, Game::HEIGHT);
+Rectangle Game::RECTANGLE = Rectangle(0, 0, Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT);
 GLuint Game::FRAMEBUFFER_AUX = 0;
 GLuint Game::RENDERBUFFER_AUX = 0;
 
@@ -37,7 +40,7 @@ GLuint Game::FramebufferAux() {
         glGenFramebuffers(1, &fbo);
         glGenRenderbuffers(1, &render_buf);
         glBindRenderbuffer(GL_RENDERBUFFER, render_buf);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8, WIDTH, HEIGHT);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8, WINDOW_WIDTH, WINDOW_HEIGHT);
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
         glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, render_buf);
 
@@ -80,7 +83,7 @@ void Game::Init()
 
     glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-    glOrtho(0, WIDTH, HEIGHT, 0, 0, 1);
+    glOrtho(0, WINDOW_WIDTH, WINDOW_HEIGHT, 0, 0, 1);
 	glMatrixMode(GL_MODELVIEW);
 
     // Set seed
@@ -163,9 +166,6 @@ void Game::Update(double delta)
 
 void Game::Draw() const
 {
-	glClear(GL_COLOR_BUFFER_BIT);	
-	glLoadIdentity();
-
 	level->Render();
     hud->Render();
 }
@@ -188,8 +188,10 @@ void Game::Reshape(int width, int height) {
     glOrtho(0, width, height, 0, 0, 1);
     glMatrixMode(GL_MODELVIEW);
 
-    WIDTH = width;
-    HEIGHT = height;
+    WINDOW_WIDTH = width;
+    WINDOW_HEIGHT = height;
+    WIDTH = WINDOW_WIDTH / SCALE;
+    HEIGHT = WINDOW_HEIGHT / SCALE;
     RECTANGLE = Rectangle(0, 0, WIDTH, HEIGHT);
     DIRTY = true;
 }

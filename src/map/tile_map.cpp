@@ -107,6 +107,7 @@ void TileMap::InitTextures() {
     glLoadIdentity();
     glOrtho(0, map_->width_pixels, map_->height_pixels, 0, 0, 1);
     glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
     // Create and bind framebuffer
     GLuint fb = 0;
@@ -147,11 +148,11 @@ void TileMap::InitTextures() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glDeleteFramebuffers(1, &fb);
 
-    glViewport(0, 0, Game::WIDTH, Game::HEIGHT);
+    glViewport(0, 0, Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT);
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0, Game::WIDTH, Game::HEIGHT, 0, 0, 1);
+    glOrtho(0, Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT, 0, 0, 1);
     glMatrixMode(GL_MODELVIEW);
 }
 

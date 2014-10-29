@@ -30,7 +30,7 @@ Sprite::Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, 
 
     glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
     glReadBuffer(GL_COLOR_ATTACHMENT0);
-    glReadPixels(0, Game::HEIGHT-height, width, height, GL_RGBA, GL_UNSIGNED_BYTE, (void*)pixels);
+    glReadPixels(0, Game::WINDOW_HEIGHT -height, width, height, GL_RGBA, GL_UNSIGNED_BYTE, (void*)pixels);
 
     for(int i = 0; i < height; ++i) {
         for(int j = 0; j < width; ++j) {

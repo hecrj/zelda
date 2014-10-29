@@ -7,8 +7,11 @@ class Game : public Drawable
 {
 public:
     typedef Drawable super;
+    static int WINDOW_WIDTH;
+    static int WINDOW_HEIGHT;
     static int WIDTH;
     static int HEIGHT;
+    const static int SCALE;
     static bool DIRTY;
     static Rectangle RECTANGLE;
     static GLuint FramebufferAux();

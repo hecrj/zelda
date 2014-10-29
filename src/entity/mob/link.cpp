@@ -10,10 +10,10 @@ std::vector<SpriteSet*> Link::ATTACK_ANIMATIONS;
 void Link::Load() {
     MOVE_SPRITE_SHEET = new SpriteSheet("charset/link/move_shield.png", 147, 108, 21, 27);
     MOVE_ANIMATIONS = {
-            new SpriteSet(MOVE_SPRITE_SHEET->GetSprites(0, 7), 3, 60, vec2f(0.0f, -12.0f)),
-            new SpriteSet(MOVE_SPRITE_SHEET->GetSprites(1, 7), 3, 60, vec2f(0.0f, -12.0f)),
-            new SpriteSet(MOVE_SPRITE_SHEET->GetSprites(2, 7), 3, 60, vec2f(0.0f, -12.0f)),
-            new SpriteSet(MOVE_SPRITE_SHEET->GetSprites(3, 7), 3, 60, vec2f(0.0f, -12.0f))
+            new SpriteSet(MOVE_SPRITE_SHEET->GetSprites(0, 7), 3, vec2f(0.0f, -12.0f), {30, 40, 50, 40, 50, 40, 30}),
+            new SpriteSet(MOVE_SPRITE_SHEET->GetSprites(1, 7), 3, vec2f(0.0f, -12.0f), {30, 40, 50, 40, 50, 40, 30}),
+            new SpriteSet(MOVE_SPRITE_SHEET->GetSprites(2, 7), 3, vec2f(0.0f, -12.0f), {30, 40, 40, 40, 40, 30, 30}),
+            new SpriteSet(MOVE_SPRITE_SHEET->GetSprites(3, 7), 3, vec2f(0.0f, -12.0f), {30, 30, 40, 40, 40, 40, 30})
     };
 
     MOVE_ANIMATIONS[Dir::DOWN.index()]->ping_pong = true;

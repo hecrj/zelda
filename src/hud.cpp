@@ -1,5 +1,6 @@
 #include "hud.hpp"
 #include "entity/item/rupee.hpp"
+#include "game.hpp"
 #include <GL/freeglut.h>
 
 SpriteSheet* Hud::HEARTS_SPRITESHEET;
@@ -16,7 +17,9 @@ Hud::Hud(Link *player) :
 
 
 void Hud::Render() const {
+    glPushMatrix();
     glLoadIdentity();
+    glScalef(Game::SCALE, Game::SCALE, 0);
 
     int health = player_->health();
 
@@ -37,4 +40,5 @@ void Hud::Render() const {
     char buffer[4];
     sprintf(buffer, "x%02d", player_->rupees());
     glutBitmapString(GLUT_BITMAP_9_BY_15, (unsigned char*)buffer);
+    glPopMatrix();
 }

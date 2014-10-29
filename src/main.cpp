@@ -8,7 +8,11 @@ Game game;
 
 void AppRender()
 {
+    glClear(GL_COLOR_BUFFER_BIT);
+    glLoadIdentity();
+
     game.Render();
+
     glutSwapBuffers();
 }
 
@@ -60,11 +64,13 @@ int main(int argc, char** argv)
 	//Create centered window
 	res_x = glutGet(GLUT_SCREEN_WIDTH);
 	res_y = glutGet(GLUT_SCREEN_HEIGHT);
-	pos_x = (res_x>>1)-(Game::WIDTH>>1);
-	pos_y = (res_y>>1)-(Game::HEIGHT>>1);
+	/*pos_x = (res_x>>1)-(Game::WINDOW_WIDTH >>1);
+	pos_y = (res_y>>1)-(Game::WINDOW_HEIGHT >>1);*/
+    pos_x = 200;
+    pos_y = 200;
 
 	glutInitWindowPosition(pos_x, pos_y);
-	glutInitWindowSize(Game::WIDTH, Game::HEIGHT);
+	glutInitWindowSize(Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT);
 	glutCreateWindow("Zelda");
 
 	/*glutGameModeString("800x600:32");
