@@ -10,7 +10,7 @@ public:
     static int HEIGHT;
     static bool DIRTY;
     static GLuint FramebufferAux();
-
+    static void Error(const char* error, const std::string& wat);
 	Game();
 	virtual ~Game();
 

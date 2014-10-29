@@ -8,4 +8,6 @@ public:
     Item(Sprite* sprite, float x, float y);
 
     bool CanCollideWith(Rectangle* rectangle) const;
+
+    void Damage(Entity* from, int damage);
 };

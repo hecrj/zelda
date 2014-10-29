@@ -1,4 +1,7 @@
 #define GL_GLEXT_PROTOTYPES 1
+
+#include <sstream>
+#include <iostream>
 #include "game.hpp"
 #include "utils.hpp"
 #include "entity/mob/link.hpp"
@@ -90,16 +93,12 @@ void Game::Init()
     Stalfos::Load();
     Rupee::Load();
 
-    Link* link = new Link(level);
-    Stalfos* stalfos = new Stalfos(level);
+    Link* link = new Link();
     hud = new Hud(link);
 
     link->set_AI(new Player(link, keys));
-    stalfos->set_AI(new Chase(stalfos));
-    stalfos->set_position(16 * 15, 16 * 15);
 
-    level->AddPlayer(link, "game_start");
-    level->AddEntity(stalfos);
+    level->AddPlayer(link, "start");
 }
 
 void Game::Tick()
@@ -123,7 +122,6 @@ void Game::Finalize()
 {
 }
 
-//Input
 void Game::ReadKeyboard(unsigned char key, int x, int y, bool press)
 {
 	keys[key] = press;
@@ -137,13 +135,27 @@ void Game::ReadMouse(int button, int state, int x, int y)
 
 }
 
-//Process
 void Game::Update(double delta)
 {
-	level->Update(delta);
+    if(not level->transition_requested()) {
+        level->Update(delta);
+    } else {
+        std::string map;
+        std::string place;
+
+        std::vector<Entity*> players(level->players());
+        level->transition_data(map, place);
+
+        Level* new_level = new Level(map.c_str());
+        delete level;
+
+        for(Entity* player : players)
+            new_level->AddPlayer(player, place);
+
+        level = new_level;
+    }
 }
 
-//Output
 void Game::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT);	
@@ -176,4 +188,12 @@ void Game::Reshape(int width, int height) {
     WIDTH = width;
     HEIGHT = height;
     DIRTY = true;
+}
+
+void Game::Error(const char* error, const std::string& wat) {
+    std::stringstream ss;
+    ss << error << wat;
+
+    std::cerr << ss.str() << std::endl;
+    exit(1);
 }

@@ -15,7 +15,7 @@ public:
 
     static void Load();
 
-    Link(Level* level);
+    Link();
 
     int rupees() const;
 

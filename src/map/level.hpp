@@ -20,10 +20,16 @@ public:
     Path* FindPath(Mob* from, Entity* to);
     const std::vector<Entity*>& players() const;
 
+    bool transition_requested() const;
+    void transition_data(std::string& map, std::string& place) const;
+
     void AddEntity(Entity* entity);
+    void AddCollidable(Rectangle* rectangle);
+    void AddLocation(Location* location);
     void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void AddPlayer(Entity* player, std::string location);
+    void Transition(const std::string& map, const std::string& place);
 
     void Update(double delta);
     void Render();
@@ -37,6 +43,10 @@ private:
     std::vector<Entity*> zombies_;
     std::map<std::string, Location*> locations_;
     Quadtree* dynamic_collidables_;
+
+    bool transition_requested_;
+    std::string transition_map_;
+    std::string transition_place_;
 
     // Pathfinding
     std::vector<std::vector<Path::Node*>> nodes_;

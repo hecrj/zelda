@@ -15,9 +15,8 @@ void Stalfos::Load() {
     };
 }
 
-Stalfos::Stalfos(Level* level) :
+Stalfos::Stalfos() :
         super(
-                level,
                 0.0f, 0.0f, 20.0f, 14.0f,
                 new ::Move(this, MOVE_ANIMATIONS)
         )

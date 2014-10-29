@@ -8,3 +8,8 @@ bool Item::CanCollideWith(Rectangle* rectangle) const {
     // Items are only collidable with the Player
     return rectangle->IsEntity() and ((Entity*) rectangle)->type() == PLAYER;
 }
+
+void Item::Damage(Entity* from, int damage) {
+    if(CanCollideWith(from))
+        HandleCollisionWith((Mob*)from);
+}

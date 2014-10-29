@@ -10,10 +10,10 @@ void Object::Draw() const {
     sprite_->Render(position_);
 }
 
-Sprite * Object::CurrentSprite(vec2f &sprite_position) const {
+Sprite* Object::CurrentSprite(vec2f &sprite_position) const {
     return sprite_;
 }
 
-Sprite * Object::CurrentSprite() const {
+Sprite* Object::CurrentSprite() const {
     return sprite_;
 }

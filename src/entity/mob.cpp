@@ -5,9 +5,9 @@
 #include "../map/path.hpp"
 #include "../debug.hpp"
 
-Mob::Mob(Level* level, float x, float y, float width, float height, Action* idle_action) :
+Mob::Mob(float x, float y, float width, float height, Action* idle_action) :
         super(x, y, width, height),
-        level_(level),
+        level_(0),
         facing_(Dir::UP),
         facing_candidate_(-1),
         moving_(false),
@@ -121,7 +121,6 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
                 if(candidate->IsEntity()) {
                     ((Entity*)candidate)->Damage(this, 1);
                 }
-                std::cout << "Melee attack collision" << std::endl;
             }
         }
     }
@@ -266,4 +265,8 @@ void Mob::_UpdatePosition(const vec2f& new_position) {
 
 void Mob::set_facing(const Dir& dir) {
     facing_ = dir;
+}
+
+void Mob::set_level(Level* level) {
+    level_ = level;
 }

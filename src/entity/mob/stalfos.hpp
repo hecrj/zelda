@@ -12,5 +12,5 @@ public:
 
     static void Load();
 
-    Stalfos(Level* level);
+    Stalfos();
 };

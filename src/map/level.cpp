@@ -4,6 +4,7 @@
 #include "../entity/object.hpp"
 #include "../game.hpp"
 #include "../entity/object/plant.hpp"
+#include "../entity/event/map_transition.hpp"
 
 const int Level::FOLLOW_MARGIN = 200;
 const int Level::MAX_NODES_PER_TICK = 600;
@@ -11,24 +12,26 @@ const int Level::MAX_NODES_PER_TICK = 600;
 Level::Level(const char *map) :
         super(map),
         position_(vec2f(0, 0)),
-        main_player_(0)
+        main_player_(0),
+        transition_requested_(false)
 {
     nodes_ = std::vector<std::vector<Path::Node*>>(map_->height_pixels / Path::RESOLUTION,
             std::vector<Path::Node*>(map_->width_pixels / Path::RESOLUTION, 0));
     dynamic_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
 
-    for(const auto& g : map_->object_groups) {
-        const TMX::ObjectGroup& object_group = g.second;
+    for(auto& g : map_->object_groups) {
+        TMX::ObjectGroup& object_group = g.second;
 
         // TODO: Specialize map objects correctly
-        for(const auto& o : object_group.objects) {
-            const TMX::Object& object = o.second;
+        for(auto& o : object_group.objects) {
+            TMX::Object& object = o.second;
 
             if(object.type == "location") {
-                Location* location = new Location(object);
-                locations_[object.name] = location;
+                Location* location = new Location(object.x, object.y, object.width, object.height, object.name,
+                    object.property["orientation"]);
+                AddLocation(location);
             } else {
-                Object* map_object = 0;
+                Entity* map_object = 0;
 
                 if(object.type == "plant") {
                     map_object = new Plant(this, tileset_->sprite(object.gid - 1), object.x, object.y - 16);
@@ -36,6 +39,13 @@ Level::Level(const char *map) :
 
                 if(map_object)
                     AddEntity(map_object);
+            }
+
+            // Events
+            if(object.type == "map_transition") {
+                MapTransition* transition = new MapTransition(this, object.x, object.y, object.width, object.height, object.name,
+                        object.property["orientation"], object.property["map"], object.property["place"]);
+                AddCollidable(transition);
             }
         }
     }
@@ -149,7 +159,7 @@ void Level::Render() {
         // Show collidable candidates
         std::vector<Rectangle*> candidates;
 
-        for(Entity* entity : entities_) {
+        for(Entity* entity : players_) {
             if(entity->IsMob()) {
                 static_collidables_->Retrieve(entity, candidates);
                 dynamic_collidables_->Retrieve(entity, candidates);
@@ -161,16 +171,26 @@ void Level::Render() {
     }
 }
 
+void Level::AddLocation(Location* location) {
+    locations_[location->name()] = location;
+}
+
+void Level::AddCollidable(Rectangle* rectangle) {
+    dynamic_collidables_->Insert(rectangle);
+}
+
 void Level::AddEntity(Entity* entity) {
+    if(entity->IsMob())
+        ((Mob*)entity)->set_level(this);
+
     if(entity->IsAlive())
         alive_entities_.push_back(entity);
     else
         zombies_.push_back(entity);
 
     entities_.insert(entity);
-    dynamic_collidables_->Insert(entity);
+    AddCollidable(entity);
 }
-
 
 void Level::AddPlayer(Entity* player, std::string location) {
     if(!main_player_)
@@ -316,4 +336,20 @@ void Level::RemovePendingPaths(Entity* entity) {
             ++it;
         }
     }
+}
+
+void Level::Transition(const std::string& map, const std::string& place_) {
+    transition_requested_ = true;
+    transition_map_ = map;
+    transition_place_ = place_;
+}
+
+bool Level::transition_requested() const {
+    return transition_requested_;
+}
+
+
+void Level::transition_data(std::string& map, std::string& place) const {
+    map = transition_map_;
+    place = transition_place_;
 }

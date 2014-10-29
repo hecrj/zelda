@@ -1,24 +1,16 @@
 #include <iostream>
 #include "location.hpp"
 #include "../entity/mob.hpp"
+#include "../game.hpp"
 
-Location::Location(float x, float y, float width, float height, const std::string& orientation) :
-        super(x, y, width, height)
+Location::Location(float x, float y, float width, float height, const std::string& name, const std::string& orientation) :
+        super(x, y, width, height),
+        name_(name)
 {
+    if(orientation.empty())
+        Game::Error("Orientation property not found at location: ", name_);
+
     set_orientation(orientation);
-}
-
-Location::Location(const TMX::Object& object) :
-        super(object.x, object.y, 0, 0)
-{
-    std::map<std::string, std::string>::const_iterator it = object.property.find("orientation");
-
-    if(it == object.property.end()) {
-        std::cerr << "Orientation property not found at location: " << object.name << std::endl;
-        exit(1);
-    }
-
-    set_orientation(it->second);
 }
 
 void Location::Place(Entity* entity) const {
@@ -54,4 +46,8 @@ void Location::set_orientation(const std::string& orientation) {
     } else if(orientation == "LEFT") {
         xdir = -1;
     }
+}
+
+const std::string& Location::name() const {
+    return name_;
 }

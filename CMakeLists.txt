@@ -53,6 +53,10 @@ set(SOURCE_FILES
     src/entity/item.cpp
     src/entity/item/rupee.cpp
 
+    # Events
+    src/entity/event.cpp
+    src/entity/event/map_transition.cpp
+
     # Map
     src/map/tile_map.cpp
     src/map/tileset.cpp

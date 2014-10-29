@@ -17,9 +17,8 @@ void Guard::Load() {
     };
 }
 
-Guard::Guard(Level* level) :
+Guard::Guard() :
         super(
-                level,
                 0.0f, 0.0f, 18.0f, 14.0f,
                 new ::Move(this, MOVE_ANIMATIONS)
         )

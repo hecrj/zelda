@@ -8,12 +8,13 @@
 class Location : public Rectangle {
 public:
     typedef Rectangle super;
-    Location(float x, float y, float width, float height, const std::string& orientation);
-    Location(const TMX::Object& object);
+    Location(float x, float y, float width, float height, const std::string& name, const std::string& orientation);
 
     void Place(Entity* entity) const;
+    const std::string& name() const;
 
 private:
+    std::string name_;
     int xdir;
     int ydir;
 
