@@ -7,6 +7,9 @@ public:
     Drawable();
     ~Drawable();
 
+    virtual bool IsHitbox() const;
+    virtual bool IsEntity() const;
+
     void ChangeEffect(Effect* effect);
     void Tick(double delta);
     void Render() const;

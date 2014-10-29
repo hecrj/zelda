@@ -2,7 +2,7 @@
 
 #include "../effect.hpp"
 #include "../../math/vec2.hpp"
-#include "../drawable.hpp"
+#include "../../math/rectangle.hpp"
 
 class Bounce : public Effect {
 public:
@@ -15,6 +15,7 @@ public:
 
     void Tick(double delta);
     void Render() const;
+    void Leave();
 
 private:
     vec2f position_;

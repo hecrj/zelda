@@ -1,5 +1,6 @@
 #include <GL/gl.h>
 #include "bounce.hpp"
+#include "../../entity.hpp"
 
 const float Bounce::GRAVITY = 500;
 
@@ -25,4 +26,11 @@ void Bounce::Render() const {
 
 bool Bounce::IsFinished() const {
     return speed_ >= final_speed_;
+}
+
+
+void Bounce::Leave() {
+    if(drawable_->IsEntity()) {
+        ((Entity*)drawable_)->NotifyCollisions();
+    }
 }

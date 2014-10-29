@@ -23,11 +23,11 @@ Rupee* Rupee::Random(float x, float y) {
     else
         type = Rupee::Type::RED;
 
-    return new Rupee(type, x - RUPEES[type]->width() / 2.0f, y - RUPEES[type]->height() / 2.0f);
+    return new Rupee(type, x - RUPEES[type]->width() / 2.0f, y - (RUPEES[type]->height() - 10) / 2.0f);
 }
 
 Rupee::Rupee(Rupee::Type type, float x, float y) :
-        super(RUPEES[type], x, y),
+        super(RUPEES[type], x, y, vec2f(0, -10)),
         rupee_type_(type)
 {
     ChangeEffect(new Bounce(this, 12, 0.25));

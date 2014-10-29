@@ -34,7 +34,7 @@ Level::Level(const char *map) :
                 Entity* map_object = 0;
 
                 if(object.type == "plant") {
-                    map_object = new Plant(this, tileset_->sprite(object.gid - 1), object.x, object.y - 16);
+                    map_object = new Plant(tileset_->sprite(object.gid - 1), object.x, object.y - 16);
                 }
 
                 if(map_object)
@@ -43,8 +43,8 @@ Level::Level(const char *map) :
 
             // Events
             if(object.type == "map_transition") {
-                MapTransition* transition = new MapTransition(this, object.x, object.y, object.width, object.height, object.name,
-                        object.property["orientation"], object.property["map"], object.property["place"]);
+                MapTransition* transition = new MapTransition(this, object.x, object.y, object.width, object.height,
+                        object.name, object.property["orientation"], object.property["map"], object.property["place"]);
                 AddCollidable(transition);
             }
         }
@@ -213,8 +213,7 @@ void Level::AddCollidable(Rectangle* rectangle) {
 }
 
 void Level::AddEntity(Entity* entity) {
-    if(entity->IsMob())
-        ((Mob*)entity)->set_level(this);
+    entity->set_level(this);
 
     if(entity->IsAlive())
         alive_entities_.push_back(entity);

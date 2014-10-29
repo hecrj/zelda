@@ -7,16 +7,15 @@
 class Object : public Entity {
 public:
     typedef Entity super;
-    Object(Level* level, Sprite* sprite, float x, float y);
+    Object(Sprite* sprite, float x, float y);
+    Object(Sprite* sprite, float x, float y, const vec2f& offset);
 
     Sprite* CurrentSprite(vec2f& sprite_position) const;
     Sprite* CurrentSprite() const;
 
     void Draw() const;
 
-protected:
-    Level* level_;
-
 private:
     Sprite* sprite_;
+    vec2f offset_;
 };

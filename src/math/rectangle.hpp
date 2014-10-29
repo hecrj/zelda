@@ -20,8 +20,6 @@ public:
     float width() const;
     float height() const;
 
-    virtual bool IsHitbox() const;
-    virtual bool IsEntity() const;
     virtual bool CanCollideWith(Rectangle* rectangle) const;
     virtual bool CollidesWith(Rectangle* rectangle) const;
     virtual bool HandleCollisionWith(Mob* mob);

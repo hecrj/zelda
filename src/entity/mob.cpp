@@ -7,7 +7,6 @@
 
 Mob::Mob(float x, float y, float width, float height, Action* idle_action) :
         super(x, y, width, height),
-        level_(0),
         facing_(Dir::UP),
         facing_candidate_(-1),
         moving_(false),
@@ -251,7 +250,7 @@ void Mob::_UpdatePosition(const vec2f& new_position) {
     level_->CollidablesFor(this, collidables);
 
     for(Rectangle* collidable : collidables) {
-        if(CanCollideWith(collidable) && CollidesWith(collidable)) {
+        if(collidable->CanCollideWith(this) && CollidesWith(collidable)) {
             if(collidable->HandleCollisionWith(this)) {
                 position_ = old_position;
                 return;
@@ -264,8 +263,4 @@ void Mob::_UpdatePosition(const vec2f& new_position) {
 
 void Mob::set_facing(const Dir& dir) {
     facing_ = dir;
-}
-
-void Mob::set_level(Level* level) {
-    level_ = level;
 }

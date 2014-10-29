@@ -9,6 +9,14 @@ Drawable::~Drawable() {
         delete current_effect_;
 }
 
+bool Drawable::IsHitbox() const {
+    return false;
+}
+
+bool Drawable::IsEntity() const {
+    return false;
+}
+
 void Drawable::Render() const {
     if(not current_effect_)
         Draw();

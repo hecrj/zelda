@@ -1,8 +1,12 @@
 #include "item.hpp"
+#include "../graphic/effect/float.hpp"
 
-Item::Item(Sprite* sprite, float x, float y) :
-        super(0, sprite, x, y)
-{}
+Item::Item(Sprite* sprite, float x, float y, const vec2f& offset) :
+        super(sprite, x, y, offset)
+{
+    die_effect_ = new Float(this, 25, 0.25);
+}
+
 
 bool Item::CanCollideWith(Rectangle* rectangle) const {
     // Items are only collidable with the Player

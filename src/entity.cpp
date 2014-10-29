@@ -1,4 +1,5 @@
 #include "entity.hpp"
+#include "map/level.hpp"
 #include "debug.hpp"
 
 Entity::Entity(float width, float height) :
@@ -14,6 +15,11 @@ Entity::Entity(float x, float y, float width, float height) :
         type_(UNKNOWN),
         die_effect_(0)
 {}
+
+Entity::~Entity() {
+    if(die_effect_)
+        delete die_effect_;
+}
 
 bool Entity::IsAlive() const {
     return health_ > 0;
@@ -64,11 +70,29 @@ void Entity::Dead() {
 }
 
 void Entity::Die() {
-    if(die_effect_)
+    if(die_effect_) {
         ChangeEffect(die_effect_);
+        die_effect_ = 0;
+    }
 }
 
-Entity::~Entity() {
-    if(die_effect_)
-        delete die_effect_;
+void Entity::set_level(Level* level) {
+    level_ = level;
+}
+
+void Entity::NotifyCollisions() {
+    std::vector<Rectangle*> collidables;
+    level_->CollidablesFor(this, collidables);
+
+    for(Rectangle* collidable : collidables) {
+        if(collidable->IsEntity() && ((Entity*)collidable)->IsMob()) {
+            Mob* mob = (Mob*)collidable;
+
+            if(CanCollideWith(mob) && CollidesWith(mob)) {
+                if(HandleCollisionWith(mob)) {
+                    return;
+                }
+            }
+        }
+    }
 }

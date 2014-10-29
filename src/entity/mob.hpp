@@ -8,7 +8,6 @@
 #include <map>
 #include <string>
 
-class Level;
 class Path;
 class Mob : public Entity {
 public:
@@ -27,7 +26,6 @@ public:
     Path* FindPath(Entity* to);
     bool FollowPath(Path* path, double delta);
 
-    void set_level(Level* level);
     void set_AI(AI* ai);
     void set_facing(const Dir& dir);
     void RegisterAction(std::string name, Action *action);
@@ -47,7 +45,6 @@ protected:
     float speed_;
 
 private:
-    Level* level_;
     AI* ai_;
     std::map<std::string, Action*> actions_;
     Dir facing_;

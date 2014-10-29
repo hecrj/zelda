@@ -84,14 +84,6 @@ void Rectangle::DrawBox(float r, float g, float b) const {
     glColor4f(1, 1, 1, 1);
 }
 
-bool Rectangle::IsHitbox() const {
-    return false;
-}
-
-bool Rectangle::IsEntity() const {
-    return false;
-}
-
 Collision Rectangle::CollisionType(Rectangle* rectangle) const {
     return Collision::BLOCK;
 }

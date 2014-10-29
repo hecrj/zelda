@@ -27,6 +27,7 @@ set(SOURCE_FILES
     src/graphic/callback_effect.cpp
     src/graphic/effect/bounce.cpp
     src/graphic/effect/fade.cpp
+    src/graphic/effect/float.cpp
     src/graphic/effect/rotation_fade.cpp
 
     # Mobs
