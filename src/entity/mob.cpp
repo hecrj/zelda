@@ -113,11 +113,10 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
     level_->DynamicCollidablesFor(hitbox, candidates);
 
     for(Rectangle* candidate : candidates) {
-        if(candidate->CanCollideWith(hitbox) && hitbox->CollidesWith(candidate)) {
+        if(candidate->CanCollideWith(this) && hitbox->CollidesWith(candidate)) {
             Collision c = hitbox->CollisionType(candidate);
 
             if(c == Collision::DAMAGE) {
-                // TODO: Make dynamic collidables a Quadtree of entities
                 if(candidate->IsEntity()) {
                     ((Entity*)candidate)->Damage(this, 1);
                 }

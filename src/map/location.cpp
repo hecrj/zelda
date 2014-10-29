@@ -17,17 +17,25 @@ void Location::Place(Entity* entity) const {
     float x = 0;
     float y = 0;
 
-    if(xdir == 1)
-        x = width_ + 5;
-    else if(xdir == -1)
-        x = -entity->width() - 5;
+    if(xdir == 1) {
+        x = width_ / 2.0f + 5;
+    } else if(xdir == -1) {
+        x = -entity->width() - width_ / 2.0f - 5;
+    }
 
-    if(ydir == 1)
-        y = height_ + 5;
-    else
-        y = -entity->height() - 5;
+    if(ydir == 1) {
+        y = height_ / 2.0f + 5;
+    } else {
+        y = -entity->height() - height_ / 2.0f - 5;
+    }
 
-    entity->set_position(position_ + vec2f(x, y));
+    if(xdir == 1 or xdir == -1)
+        y = -entity->height() / 2.0f;
+
+    if(ydir == 1 or ydir == -1)
+        x = -entity->width() / 2.0f;
+
+    entity->set_position(center() + vec2f(x, y));
 
     if(entity->IsMob()) {
         ((Mob*) entity)->set_facing(Dir::fromVector(vec2f(xdir, ydir)));

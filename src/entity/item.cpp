@@ -6,7 +6,7 @@ Item::Item(Sprite* sprite, float x, float y) :
 
 bool Item::CanCollideWith(Rectangle* rectangle) const {
     // Items are only collidable with the Player
-    return rectangle->IsEntity() and ((Entity*) rectangle)->type() == PLAYER;
+    return not effect_ and rectangle->IsEntity() and ((Entity*) rectangle)->type() == PLAYER;
 }
 
 void Item::Damage(Entity* from, int damage) {

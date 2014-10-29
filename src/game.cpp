@@ -17,6 +17,7 @@
 int Game::WIDTH = 640;
 int Game::HEIGHT = 480;
 bool Game::DIRTY = true;
+Rectangle Game::RECTANGLE = Rectangle(0, 0, Game::WIDTH, Game::HEIGHT);
 GLuint Game::FRAMEBUFFER_AUX = 0;
 GLuint Game::RENDERBUFFER_AUX = 0;
 
@@ -85,7 +86,7 @@ void Game::Init()
     srand((unsigned) time(NULL));
 
     // Load demo map
-    level = new Level("bigger");
+    level = new Level("dungeon");
 
     Hud::Load();
     Link::Load();
@@ -187,6 +188,7 @@ void Game::Reshape(int width, int height) {
 
     WIDTH = width;
     HEIGHT = height;
+    RECTANGLE = Rectangle(0, 0, WIDTH, HEIGHT);
     DIRTY = true;
 }
 

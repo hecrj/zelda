@@ -146,9 +146,12 @@ void Level::Render() {
     // Rendering
     super::RenderLayersBelow();
 
-    // TODO: Render visible entities only
+    // Render visible entities only
+    Game::RECTANGLE.set_position(position_.x, position_.y);
+    Rectangle* view = &Game::RECTANGLE;
     for(Entity* entity : entities_) {
-        entity->Render();
+        if(entity->CollidesWith(view))
+            entity->Render();
     }
 
     super::RenderLayersAbove();

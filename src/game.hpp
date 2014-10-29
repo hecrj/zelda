@@ -9,6 +9,7 @@ public:
     static int WIDTH;
     static int HEIGHT;
     static bool DIRTY;
+    static Rectangle RECTANGLE;
     static GLuint FramebufferAux();
     static void Error(const char* error, const std::string& wat);
 	Game();
