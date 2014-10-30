@@ -78,6 +78,7 @@ add_executable(zelda ${SOURCE_FILES})
 
 add_subdirectory(lib/soil)
 add_subdirectory(lib/TMXParser)
+add_subdirectory(lib/sfml-audio)
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 
@@ -86,6 +87,7 @@ include_directories(
     ${GLUT_INCLUDE_DIRS}
     ${SOIL_INCLUDE_DIRS}
     ${TMXPARSER_INCLUDE_DIRS}
+    ${SFML_INCLUDE_DIRS}
 )
 
 set(NVIDIA_LIB)
@@ -103,4 +105,5 @@ target_link_libraries(zelda
     ${NVIDIA_LIB}
     SOIL
     TMXParser
+    sfml-audio
 )

@@ -5,3 +5,6 @@
 [submodule "lib/soil"]
 	path = lib/soil
 	url = https://github.com/gamerslab/Simple-OpenGL-Image-Library
+[submodule "lib/sfml-audio"]
+	path = lib/sfml-audio
+	url = git@github.com:gamerslab/sfml-audio.git

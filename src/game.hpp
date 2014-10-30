@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SFML/System/Clock.hpp>
 #include "map/level.hpp"
 #include "hud.hpp"
 
@@ -33,6 +34,7 @@ private:
     static GLuint FRAMEBUFFER_AUX;
     static GLuint RENDERBUFFER_AUX;
 
+    sf::Clock clock;
 	bool keys[256];
 	Level* level;
     Hud* hud;
