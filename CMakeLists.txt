@@ -67,6 +67,10 @@ set(SOURCE_FILES
     src/map/level.cpp
     src/map/location.cpp
     src/map/path.cpp
+    src/map/level_events.cpp
+
+    ## Level events
+    src/map/level/beginning.cpp
 
     # Mathematical data structures
     src/math/dir.cpp
