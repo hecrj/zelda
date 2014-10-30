@@ -171,13 +171,13 @@ void Game::Draw() const
 }
 
 void Game::Reshape(int width, int height) {
-    if(width < 640) {
-        glutReshapeWindow(640, height);
+    if(width < 800) {
+        glutReshapeWindow(800, height);
         return;
     }
 
-    if(height < 480) {
-        glutReshapeWindow(width, 480);
+    if(height < 600) {
+        glutReshapeWindow(width, 600);
         return;
     }
 

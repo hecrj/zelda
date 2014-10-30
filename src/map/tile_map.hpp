@@ -16,15 +16,14 @@ public:
 
     virtual void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
 
-    void RenderLayersBelow() const;
+    void RenderLayersBelow(int frame) const;
     void RenderLayersAbove() const;
-	virtual void Render() const;
 
 protected:
     TMX::Map* map_;
     Quadtree* static_collidables_;
     Tileset* tileset_;
-    GLuint texture_below_;
+    std::vector<GLuint> textures_below_;
     GLuint texture_above_;
 
 private:
@@ -32,6 +31,7 @@ private:
 
     void InitBlockedTiles(const std::vector<TMX::TileLayer*>& layers, std::vector<std::vector<bool>>& blocked);
     void InitTextures();
-    void RenderLayers(const std::vector<TMX::TileLayer*>& layers) const;
+    void RenderLayers(const std::vector<TMX::TileLayer*>& layers, int frame) const;
     void RenderTexture(GLuint texture) const;
+    GLuint GenerateTexture(const std::vector<TMX::TileLayer*>& layers, int frame) const;
 };

@@ -56,7 +56,10 @@ TileMap::~TileMap()
     for(Rectangle* tile : blocked_tiles_)
         delete tile;
 
-    glDeleteTextures(2, new GLuint[2]{texture_below_, texture_above_});
+    for(GLuint texture : textures_below_)
+        glDeleteTextures(1, &texture);
+
+    glDeleteTextures(1, &texture_above_);
 }
 
 void TileMap::CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {
@@ -72,14 +75,14 @@ bool TileMap::IsInbounds(const vec2f& position, float width, float height) const
             position.y >= 0.0f and position.y + height < (float)map_->height_pixels;
 }
 
-void TileMap::RenderLayers(const std::vector<TMX::TileLayer*>& layers) const
+void TileMap::RenderLayers(const std::vector<TMX::TileLayer*>& layers, int frame) const
 {
     for(TMX::TileLayer* layer : layers)
-        tileset_->RenderTiles(layer->width, layer->height, layer->tiles);
+        tileset_->RenderTiles(layer->width, layer->height, layer->tiles, frame);
 }
 
-void TileMap::RenderLayersBelow() const {
-    RenderTexture(texture_below_);
+void TileMap::RenderLayersBelow(int frame) const {
+    RenderTexture(textures_below_[frame]);
 }
 
 void TileMap::RenderLayersAbove() const {
@@ -91,11 +94,6 @@ void TileMap::RenderLayersAbove() const {
 
         static_collidables_->Render(0, 0, 1);
     }
-}
-
-void TileMap::Render() const {
-    RenderLayersBelow();
-    RenderLayersAbove();
 }
 
 void TileMap::InitTextures() {
@@ -115,18 +113,8 @@ void TileMap::InitTextures() {
     glBindFramebuffer(GL_FRAMEBUFFER, fb);
 
     // Generate the texture below entities
-    glGenTextures(1, &texture_below_);
-    glBindTexture(GL_TEXTURE_2D, texture_below_);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, map_->width_pixels, map_->height_pixels, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture_below_, 0);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
-    RenderLayers(map_->tile_layers_below);
+    for(int i = 0; i < tileset_->frames; ++i)
+        textures_below_.push_back(GenerateTexture(map_->tile_layers_below, i));
 
     // Generate the texture above entities
     glGenTextures(1, &texture_above_);
@@ -140,7 +128,7 @@ void TileMap::InitTextures() {
 
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT);
-    RenderLayers(map_->tile_layers_above);
+    RenderLayers(map_->tile_layers_above, 0);
 
     // Unbind and delete framebuffer
     glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, 0, 0);
@@ -174,4 +162,22 @@ void TileMap::RenderTexture(GLuint texture) const {
 
     glEnd();
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+GLuint TileMap::GenerateTexture(const std::vector<TMX::TileLayer*>& layers, int frame) const {
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, map_->width_pixels, map_->height_pixels, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    RenderLayers(layers, frame);
+
+    return texture;
 }

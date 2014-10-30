@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="lttp" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="frames" value="3"/>
+  <property name="interval" value="0.7"/>
+ </properties>
  <image source="lttp.png" trans="ff40ff" width="576" height="576"/>
  <tile id="8">
   <properties>
@@ -418,6 +422,7 @@
  </tile>
  <tile id="294">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
@@ -858,6 +863,7 @@
  </tile>
  <tile id="546">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
@@ -923,6 +929,7 @@
  </tile>
  <tile id="582">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
@@ -978,6 +985,7 @@
  </tile>
  <tile id="618">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>

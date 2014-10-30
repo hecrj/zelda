@@ -36,6 +36,8 @@ public:
     void Render();
 
 private:
+    int current_frame_;
+    float accum_;
     vec2f position_;
     Entity* main_player_;
     std::vector<Entity*> players_;

@@ -3,7 +3,10 @@
 #include "tileset.hpp"
 
 Tileset::Tileset(TSX::Tileset *tileset) :
-        info_(tileset)
+        info_(tileset),
+        frames(tileset->frames),
+        interval(tileset->interval),
+        random(tileset->random)
 {
     texture_ = SOIL_load_OGL_texture(info_->image.source.c_str(),
             SOIL_LOAD_RGBA,
@@ -22,7 +25,7 @@ Tileset::Tileset(TSX::Tileset *tileset) :
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<int>>& tiles) const {
+void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<int>>& tiles, int frame) const {
     const TSX::Tileset& tileset = *info_;
 
     glBindTexture(GL_TEXTURE_2D, texture_);
@@ -31,6 +34,12 @@ void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<i
     for(int i = 0; i < height; ++i) {
         for(int j = 0; j < width; ++j) {
             int tile_id = tiles[i][j] - 1;
+            const auto& tile = tileset.tiles.find(tile_id);
+
+            if(tile == tileset.tiles.end())
+                continue;
+
+            tile_id += tile->second.animated ? (tile->second.first_frame + frame) % tileset.frames : 0;
             int col = tile_id % tileset.width;
             int row = tile_id / tileset.width;
 

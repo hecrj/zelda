@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="dungeon" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="frames" value="3"/>
+  <property name="interval" value="0.25"/>
+  <property name="random" value="true"/>
+ </properties>
  <image source="dungeons.png" width="480" height="288"/>
  <tile id="0">
   <properties>
@@ -83,11 +88,13 @@
  </tile>
  <tile id="144">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
  <tile id="180">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
@@ -103,6 +110,7 @@
  </tile>
  <tile id="183">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
@@ -118,6 +126,7 @@
  </tile>
  <tile id="186">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
@@ -133,6 +142,7 @@
  </tile>
  <tile id="189">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
@@ -148,6 +158,7 @@
  </tile>
  <tile id="210">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
@@ -163,6 +174,7 @@
  </tile>
  <tile id="213">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
@@ -178,6 +190,7 @@
  </tile>
  <tile id="216">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
@@ -193,6 +206,7 @@
  </tile>
  <tile id="219">
   <properties>
+   <property name="animated" value="true"/>
    <property name="blocked" value="true"/>
   </properties>
  </tile>

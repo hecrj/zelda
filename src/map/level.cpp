@@ -6,11 +6,13 @@
 #include "../entity/object/plant.hpp"
 #include "../entity/event/map_transition.hpp"
 
-const int Level::FOLLOW_MARGIN = 100;
+const int Level::FOLLOW_MARGIN = 120;
 const int Level::MAX_NODES_PER_TICK = 600;
 
 Level::Level(const char *map) :
         super(map),
+        current_frame_(0),
+        accum_(0),
         position_(vec2f(0, 0)),
         main_player_(0),
         transition_requested_(false)
@@ -81,6 +83,25 @@ Level::~Level() {
 
 
 void Level::Update(double delta) {
+    if(tileset_->frames > 1) {
+        // Update the current map frame
+        accum_ += delta;
+
+        if(accum_ >= tileset_->interval) {
+            accum_ -= tileset_->interval;
+
+            if(tileset_->random) {
+                int old = current_frame_;
+                current_frame_ = rand() % tileset_->frames;
+
+                if(old == current_frame_)
+                    current_frame_ = (current_frame_ + 1) % tileset_->frames;
+            } else {
+                current_frame_ = (current_frame_ + 1) % tileset_->frames;
+            }
+        }
+    }
+
     // We calculate one path per game tick
     // This way we distribute work in different ticks
     if(!pending_paths_.empty())
@@ -174,7 +195,7 @@ void Level::Render() {
     glScalef(Game::SCALE, Game::SCALE, 0);
 
     // Rendering
-    super::RenderLayersBelow();
+    super::RenderLayersBelow(current_frame_);
 
     // Render visible entities only
     Game::RECTANGLE.set_position(position_.x, position_.y);
