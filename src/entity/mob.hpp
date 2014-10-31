@@ -20,7 +20,6 @@ public:
     const Dir& facing() const;
     bool moving() const;
     bool IsMob() const;
-    bool IsVulnerable() const;
     Action* action(std::string name) const;
     Sprite* CurrentSprite(vec2f& position) const;
     Sprite* CurrentSprite() const;

@@ -8,11 +8,12 @@ public:
 
     PoleSwitch(float x, float y, Sprite* red, Sprite* yellow);
 
-    bool IsVulnerable() const;
     Sprite* CurrentSprite() const;
     Sprite* CurrentSprite(vec2f& position) const;
+    bool CanCollideWith(Rectangle* rectangle) const;
 
     void Draw() const;
+    void Damage(Entity* from, int amount);
 
 private:
     std::vector<Sprite*> sprites_;

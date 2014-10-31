@@ -23,7 +23,3 @@ Sprite* Object::CurrentSprite(vec2f &sprite_position) const {
 Sprite* Object::CurrentSprite() const {
     return sprite_;
 }
-
-bool Object::IsVulnerable() const {
-    return true;
-}

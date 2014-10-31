@@ -9,7 +9,8 @@ Entity::Entity(float x, float y, float width, float height) :
         type_(UNKNOWN),
         die_effect_(0),
         hurt_sound_(0),
-        die_sound_(0)
+        die_sound_(0),
+        is_vulnerable_(true)
 {}
 
 Entity::~Entity() {
@@ -97,7 +98,7 @@ void Entity::NotifyCollisions() {
 }
 
 bool Entity::IsVulnerable() const {
-    return false;
+    return is_vulnerable_;
 }
 
 Sprite* Entity::CurrentSprite() const {

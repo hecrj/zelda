@@ -15,6 +15,7 @@ Door::Door(float x, float y, int tile_id, Tileset* tileset) :
         tileset_(tileset),
         opened_(false)
 {
+    is_vulnerable_ = false;
     tiles_ = std::vector<std::vector<int>>(2, std::vector<int>(2));
 
     for(int i = 0; i < 2; ++i) {

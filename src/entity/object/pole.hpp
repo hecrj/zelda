@@ -7,9 +7,9 @@ public:
     typedef Entity super;
 
     enum Type { BLUE, YELLOW };
-    enum Status { BLUE_OPEN, BLUE_CLOSED, TRANSITION };
 
     static Type OPEN;
+    static bool IN_TRANSITION;
 
     Pole(float x, float y, Type type, Sprite* closed, Sprite* transition);
 
@@ -18,8 +18,6 @@ public:
     void Draw() const;
 
 private:
-    static Status INTERNAL_STATUS;
-
     Type type_;
     Sprite* closed_;
     Sprite* transition_;

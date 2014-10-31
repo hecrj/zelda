@@ -22,7 +22,7 @@ public:
     bool IsFinallyDead() const;
     virtual bool moving() const;
     virtual bool IsMob() const;
-    virtual bool IsVulnerable() const;
+    bool IsVulnerable() const;
 
     Sprite* CurrentSprite() const;
     Sprite* CurrentSprite(vec2f& position) const;
@@ -44,6 +44,7 @@ protected:
     int health_;
     EntityType type_;
     Effect* die_effect_;
+    bool is_vulnerable_;
 
     sf::SoundBuffer* hurt_sound_;
     sf::SoundBuffer* die_sound_;

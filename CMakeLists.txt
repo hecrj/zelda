@@ -33,6 +33,7 @@ set(SOURCE_FILES
     src/graphic/effect/float.cpp
     src/graphic/effect/rotation_fade.cpp
     src/graphic/effect/overlay.cpp
+    src/graphic/effect/timer.cpp
 
     # Entities
     src/entity.cpp
