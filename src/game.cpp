@@ -14,6 +14,7 @@
 #include "hud.hpp"
 #include "entity/item/rupee.hpp"
 #include "graphic/effect/fade.hpp"
+#include "audio/music.hpp"
 
 const int Game::SCALE = 2;
 int Game::WINDOW_WIDTH = 1024;
@@ -115,7 +116,7 @@ void Game::Tick()
     accumulator += frame_time;
 
     while(accumulator >= dt) {
-        super::Tick(dt);
+        Update(dt);
         accumulator -= dt;
         t += dt;
     }
@@ -142,32 +143,43 @@ void Game::ReadMouse(int button, int state, int x, int y)
 
 void Game::Update(double delta)
 {
-    if(not level->transition_requested()) {
-        level->Update(delta);
-    } else {
-        ChangeEffect(new Fade("out", this, 0.5, [this]{
-            std::string map;
-            std::string place;
+    Music::Update(delta);
 
-            level->transition_data(map, place);
+    if(not level->transition_requested()) {
+        level->Tick(delta);
+    } else {
+        Music::ClearQueue();
+        Music::FadeOut(0.5);
+
+        std::string map;
+        std::string place;
+        level->consume_transition(map, place);
+
+        level->ChangeEffect(new Fade(Fade::OUT, 0.5, [this, map, place]{
             std::vector<Entity*> players(level->players());
 
-            Level* new_level = new Level(map.c_str());
-            delete level;
+            Level* old_level = level;
+            level = new Level(map.c_str());
 
             for(Entity* player : players)
-                new_level->AddPlayer(player, place);
+                level->AddPlayer(player, place);
 
-            level = new_level;
-            ChangeEffect(new Fade("in", this, 0.5, []{}));
+            level->ChangeEffect(new Fade(Fade::IN, 0.5, [old_level]{
+                delete old_level;
+            }));
         }));
     }
 }
 
-void Game::Draw() const
+void Game::Render() const
 {
+    glClear(GL_COLOR_BUFFER_BIT);
+    glLoadIdentity();
+
 	level->Render();
     hud->Render();
+
+    glutSwapBuffers();
 }
 
 void Game::Reshape(int width, int height) {
@@ -198,7 +210,7 @@ void Game::Reshape(int width, int height) {
 
 void Game::Error(const char* error, const std::string& wat) {
     std::stringstream ss;
-    ss << error << wat;
+    ss << error << ' ' << wat;
 
     std::cerr << ss.str() << std::endl;
     exit(1);

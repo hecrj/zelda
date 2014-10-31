@@ -9,7 +9,7 @@ public:
     typedef Effect super;
     static const float GRAVITY;
 
-    Bounce(Drawable* drawable, float height, float duration);
+    Bounce(float height, float duration);
 
     bool IsFinished() const;
 

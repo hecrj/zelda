@@ -16,11 +16,11 @@ git submodule update --init
 
 ## Satisfying dependencies
 
-You need to have `OpenGL`, `glut` and `cmake` installed.
+You need to have `OpenGL`, `glut`, `OpenAL`, `sndfile`, `cmake` installed.
 
-### Debian-based
+### Ubuntu 14.04
 ```
-sudo apt-get install freeglut3-dev libxmu-dev libxi-dev cmake
+sudo apt-get install freeglut3-dev libxmu-dev libxi-dev libopenal-dev libsndfile1-dev cmake
 ```
 
 ## Compiling the game

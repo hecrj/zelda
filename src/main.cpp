@@ -9,12 +9,7 @@ Game game;
 
 void AppRender()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
-    glLoadIdentity();
-
     game.Render();
-
-    glutSwapBuffers();
 }
 
 void AppReshape(int width, int height)

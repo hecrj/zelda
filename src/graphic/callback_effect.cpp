@@ -1,8 +1,7 @@
 #include <functional>
 #include "callback_effect.hpp"
 
-CallbackEffect::CallbackEffect(Drawable* drawable, const std::function<void()>& callback) :
-        super(drawable),
+CallbackEffect::CallbackEffect(const std::function<void()>& callback) :
         callback_(callback)
 {}
 

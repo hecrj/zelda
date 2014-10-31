@@ -5,7 +5,11 @@
 class Fade : public CallbackEffect {
 public:
     typedef CallbackEffect super;
-    Fade(const std::string& type, Drawable* drawable, float duration, const std::function<void()>& callback);
+
+    static const bool IN;
+    static const bool OUT;
+
+    Fade(bool fade_in, float duration, const std::function<void()>& callback);
 
     bool IsFinished() const;
 

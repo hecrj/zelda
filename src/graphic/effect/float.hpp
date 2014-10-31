@@ -5,7 +5,7 @@
 class Float : public Effect {
 public:
     typedef Effect super;
-    Float(Drawable* drawable, int height, float duration);
+    Float(int height, float duration);
 
     bool IsFinished() const;
 

@@ -6,5 +6,5 @@
 class RotationFade : public Effect {
 public:
     typedef Effect super;
-    RotationFade(Drawable* drawable, float duration);
+    RotationFade(float duration);
 };

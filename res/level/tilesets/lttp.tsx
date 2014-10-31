@@ -3,6 +3,8 @@
  <properties>
   <property name="frames" value="3"/>
   <property name="interval" value="0.7"/>
+  <property name="intro" value="overworld_intro"/>
+  <property name="music" value="overworld"/>
  </properties>
  <image source="lttp.png" trans="ff40ff" width="576" height="576"/>
  <tile id="8">

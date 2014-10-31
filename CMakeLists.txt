@@ -12,6 +12,9 @@ set(SOURCE_FILES
     src/entity.cpp
     src/utils.cpp
 
+    # Audio
+    src/audio/music.cpp
+
     # Graphical stuff
     src/graphic/animation.cpp
     src/graphic/drawable.cpp

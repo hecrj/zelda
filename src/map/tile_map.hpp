@@ -4,8 +4,9 @@
 #include "GL/glut.h"
 #include "../math/quadtree.hpp"
 #include "tileset.hpp"
+#include "../graphic/drawable.hpp"
 
-class TileMap
+class TileMap : public Drawable
 {
 public:
 	TileMap(const char* s);

@@ -2,8 +2,7 @@
 #include "float.hpp"
 #include "../drawable.hpp"
 
-Float::Float(Drawable* drawable, int height, float duration) :
-        super(drawable),
+Float::Float(int height, float duration) :
         duration_(duration),
         speed_(-height / duration),
         time_(0)

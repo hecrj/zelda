@@ -5,6 +5,7 @@
 #include "../game.hpp"
 #include "../entity/object/plant.hpp"
 #include "../entity/event/map_transition.hpp"
+#include "../audio/music.hpp"
 
 const int Level::FOLLOW_MARGIN = 120;
 const int Level::MAX_NODES_PER_TICK = 600;
@@ -24,7 +25,6 @@ Level::Level(const char *map) :
     for(auto& g : map_->object_groups) {
         TMX::ObjectGroup& object_group = g.second;
 
-        // TODO: Specialize map objects correctly
         for(auto& o : object_group.objects) {
             TMX::Object& object = o.second;
 
@@ -50,6 +50,13 @@ Level::Level(const char *map) :
                 AddCollidable(transition);
             }
         }
+    }
+
+    if(not map_->tilesets[0]->music.empty()) {
+        if(not map_->tilesets[0]->intro.empty())
+            Music::Enqueue(map_->tilesets[0]->intro, Music::NO_LOOP);
+
+        Music::Enqueue(map_->tilesets[0]->music, Music::LOOP);
     }
 }
 
@@ -164,33 +171,12 @@ void Level::Update(double delta) {
             }
         }
     }
+
+    if(main_player_->moving())
+        CalculateScrolling();
 }
 
-void Level::Render() {
-    // Recalculate scrolling
-    const vec2f& player_position = main_player_->position();
-    float right = position_.x + Game::WIDTH;
-    float bottom = position_.y + Game::HEIGHT;
-
-    float left_limit = position_.x + FOLLOW_MARGIN;
-    float top_limit = position_.y + FOLLOW_MARGIN;
-    float right_limit = right - FOLLOW_MARGIN;
-    float bottom_limit = bottom - FOLLOW_MARGIN;
-
-    if(right < map_->width_pixels and player_position.x > right_limit)
-        position_.x = std::min((float)(map_->width_pixels - Game::WIDTH),
-                position_.x + player_position.x - right_limit);
-
-    else if(position_.x > 0 and player_position.x < left_limit)
-        position_.x = std::max(0.0f, position_.x + player_position.x - left_limit);
-
-    if(bottom < map_->height_pixels and player_position.y > bottom_limit)
-        position_.y = std::min((float)(map_->height_pixels - Game::HEIGHT),
-                position_.y + player_position.y - bottom_limit);
-
-    else if(position_.y > 0 and player_position.y < top_limit)
-        position_.y = std::max(0.0f, position_.y + player_position.y - top_limit);
-
+void Level::Draw() const {
     glTranslatef(-position_.x * Game::SCALE, -position_.y * Game::SCALE, 0);
     glScalef(Game::SCALE, Game::SCALE, 0);
 
@@ -246,9 +232,6 @@ void Level::AddEntity(Entity* entity) {
 }
 
 void Level::AddPlayer(Entity* player, std::string location) {
-    if(!main_player_)
-        main_player_ = player;
-
     std::map<std::string, Location*>::iterator it = locations_.find(location);
 
     if(it == locations_.end()) {
@@ -258,6 +241,11 @@ void Level::AddPlayer(Entity* player, std::string location) {
 
     Location* location_object = it->second;
     location_object->Place(player);
+
+    if(!main_player_) {
+        main_player_ = player;
+        CalculateScrolling();
+    }
 
     players_.push_back(player);
     AddEntity(player);
@@ -402,7 +390,33 @@ bool Level::transition_requested() const {
 }
 
 
-void Level::transition_data(std::string& map, std::string& place) const {
+void Level::consume_transition(std::string& map, std::string& place) {
     map = transition_map_;
     place = transition_place_;
+    transition_requested_ = false;
+}
+
+void Level::CalculateScrolling() {
+    const vec2f& player_position = main_player_->position();
+    float right = position_.x + Game::WIDTH;
+    float bottom = position_.y + Game::HEIGHT;
+
+    float left_limit = position_.x + FOLLOW_MARGIN;
+    float top_limit = position_.y + FOLLOW_MARGIN;
+    float right_limit = right - FOLLOW_MARGIN;
+    float bottom_limit = bottom - FOLLOW_MARGIN;
+
+    if(right < map_->width_pixels and player_position.x > right_limit)
+        position_.x = std::min((float)(map_->width_pixels - Game::WIDTH),
+                position_.x + player_position.x - right_limit);
+
+    else if(position_.x > 0 and player_position.x < left_limit)
+        position_.x = std::max(0.0f, position_.x + player_position.x - left_limit);
+
+    if(bottom < map_->height_pixels and player_position.y > bottom_limit)
+        position_.y = std::min((float)(map_->height_pixels - Game::HEIGHT),
+                position_.y + player_position.y - bottom_limit);
+
+    else if(position_.y > 0 and player_position.y < top_limit)
+        position_.y = std::max(0.0f, position_.y + player_position.y - top_limit);
 }

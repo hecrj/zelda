@@ -5,9 +5,12 @@
 #include "../drawable.hpp"
 #include "../../game.hpp"
 
-Fade::Fade(const std::string& type, Drawable* drawable, float duration, const std::function<void()>& callback) :
-        super(drawable, callback),
-        fade_in_(type == "in"),
+const bool Fade::IN = true;
+const bool Fade::OUT = false;
+
+Fade::Fade(bool fade_in, float duration, const std::function<void()>& callback) :
+        super(callback),
+        fade_in_(fade_in),
         duration_(duration),
         time_(0)
 {}

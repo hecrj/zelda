@@ -4,8 +4,7 @@
 
 const float Bounce::GRAVITY = 500;
 
-Bounce::Bounce(Drawable* drawable, float height, float t) :
-        super(drawable),
+Bounce::Bounce(float height, float t) :
         position_(vec2f(0, 0))
 {
     speed_ = (-height - 0.5f * GRAVITY * t * t) / t;

@@ -40,6 +40,9 @@ void Drawable::ChangeEffect(Effect* effect) {
     Effect* old = current_effect_;
     current_effect_ = effect;
 
+    if(current_effect_)
+        current_effect_->set_drawable(this);
+
     if(old) {
         old->Leave();
         delete old;

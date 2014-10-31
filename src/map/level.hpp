@@ -22,7 +22,7 @@ public:
     const std::vector<Entity*>& players() const;
 
     bool transition_requested() const;
-    void transition_data(std::string& map, std::string& place) const;
+    void consume_transition(std::string& map, std::string& place);
 
     void AddEntity(Entity* entity);
     void AddCollidable(Rectangle* rectangle);
@@ -33,7 +33,7 @@ public:
     void Transition(const std::string& map, const std::string& place);
 
     void Update(double delta);
-    void Render();
+    void Draw() const;
 
 private:
     int current_frame_;
@@ -55,6 +55,7 @@ private:
     std::vector<std::vector<Path::Node*>> nodes_;
     std::list<Path*> pending_paths_;
 
+    void CalculateScrolling();
     void CalculatePath();
     void RemovePendingPaths(Entity* entity);
 };

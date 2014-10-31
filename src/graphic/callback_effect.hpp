@@ -6,7 +6,7 @@
 class CallbackEffect : public Effect {
 public:
     typedef Effect super;
-    CallbackEffect(Drawable* drawable, const std::function<void()>& callback);
+    CallbackEffect(const std::function<void()>& callback);
 
     void Leave();
 

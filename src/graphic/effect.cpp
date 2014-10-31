@@ -2,13 +2,13 @@
 #include "../entity.hpp"
 #include "drawable.hpp"
 
-Effect::Effect(Drawable* drawable) :
-        Effect(drawable, 0)
+Effect::Effect() :
+        Effect(0)
 {}
 
-Effect::Effect(Drawable* drawable, Effect* next) :
-        drawable_(drawable),
-        next_(next)
+Effect::Effect(Effect* next) :
+        next_(next),
+        drawable_(0)
 {}
 
 void Effect::Leave() {
@@ -17,4 +17,8 @@ void Effect::Leave() {
 
 Effect* Effect::next() const {
     return next_;
+}
+
+void Effect::set_drawable(Drawable* drawable) {
+    drawable_ = drawable;
 }

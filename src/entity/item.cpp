@@ -4,7 +4,7 @@
 Item::Item(Sprite* sprite, float x, float y, const vec2f& offset) :
         super(sprite, x, y, offset)
 {
-    die_effect_ = new Float(this, 25, 0.25);
+    die_effect_ = new Float(25, 0.25);
 }
 
 
