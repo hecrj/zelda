@@ -59,6 +59,8 @@ set(SOURCE_FILES
     ## Objects
     src/entity/object.cpp
     src/entity/object/plant.cpp
+    src/entity/object/pole_switch.cpp
+    src/entity/object/pole.cpp
 
     ## Items
     src/entity/item.cpp

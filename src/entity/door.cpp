@@ -38,18 +38,6 @@ Door::Door(float x, float y, int tile_id, Tileset* tileset) :
     die_sound_ = OPEN_SOUND;
 }
 
-Sprite* Door::CurrentSprite(vec2f& sprite_position) const {
-    return 0;
-}
-
-Sprite* Door::CurrentSprite() const {
-    return 0;
-}
-
-bool Door::IsVulnerable() const {
-    return false;
-}
-
 void Door::Draw() const {
     if(IsAlive())
         tileset_->RenderIndividualTiles(position_.x, position_.y, tiles_);

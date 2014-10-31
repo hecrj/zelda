@@ -7,6 +7,8 @@
 #include "../entity/event/map_transition.hpp"
 #include "../audio/music.hpp"
 #include "../entity/door/key_door.hpp"
+#include "../entity/object/pole_switch.hpp"
+#include "../entity/object/pole.hpp"
 
 const int Level::FOLLOW_MARGIN = 120;
 const int Level::MAX_NODES_PER_TICK = 600;
@@ -40,6 +42,13 @@ Level::Level(const char *map) :
                     map_object = new Plant(tileset_->sprite(object.gid), object.x, object.y - 16);
                 } else if(object.type == "key_door") {
                     map_object = new KeyDoor(object.x, object.y - 16, object.gid, tileset_);
+                } else if(object.type == "pole_switch") {
+                    map_object = new PoleSwitch(object.x, object.y - 16,
+                            tileset_->sprite(object.gid), tileset_->sprite(object.gid + 1));
+                } else if(object.type == "blue_pole" or object.type == "yellow_pole") {
+                    map_object = new Pole(object.x, object.y - 16,
+                            object.type == "blue_pole" ? Pole::Type::BLUE : Pole::Type::YELLOW,
+                            tileset_->sprite(object.gid), tileset_->sprite(object.gid+1));
                 }
 
                 if(map_object)

@@ -270,3 +270,7 @@ void Mob::set_facing(const Dir& dir) {
 sf::SoundBuffer* Mob::attack_sound() const {
     return attack_sound_;
 }
+
+bool Mob::IsVulnerable() const {
+    return true;
+}

@@ -13,10 +13,6 @@ public:
 
     Door(float x, float y, int tile_id, Tileset* tileset);
 
-    bool IsVulnerable() const;
-    Sprite* CurrentSprite(vec2f& sprite_position) const;
-    Sprite* CurrentSprite() const;
-
     void Draw() const;
     void Open();
 

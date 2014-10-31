@@ -24,6 +24,9 @@ public:
     virtual bool IsMob() const;
     virtual bool IsVulnerable() const;
 
+    Sprite* CurrentSprite() const;
+    Sprite* CurrentSprite(vec2f& position) const;
+
     void set_level(Level* level);
     void NotifyCollisions();
 

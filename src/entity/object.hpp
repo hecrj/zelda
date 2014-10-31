@@ -10,6 +10,7 @@ public:
     Object(Sprite* sprite, float x, float y);
     Object(Sprite* sprite, float x, float y, const vec2f& offset);
 
+    bool IsVulnerable() const;
     Sprite* CurrentSprite(vec2f& sprite_position) const;
     Sprite* CurrentSprite() const;
 

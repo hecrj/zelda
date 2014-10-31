@@ -97,5 +97,13 @@ void Entity::NotifyCollisions() {
 }
 
 bool Entity::IsVulnerable() const {
-    return true;
+    return false;
+}
+
+Sprite* Entity::CurrentSprite() const {
+    return 0;
+}
+
+Sprite* Entity::CurrentSprite(vec2f& position) const {
+    return 0;
 }
