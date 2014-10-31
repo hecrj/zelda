@@ -95,3 +95,7 @@ void Entity::NotifyCollisions() {
         }
     }
 }
+
+bool Entity::IsVulnerable() const {
+    return true;
+}

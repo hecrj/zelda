@@ -16,6 +16,7 @@ public:
     Sprite* sprite(int tile_id);
 
     void RenderTiles(int width, int height, const std::vector<std::vector<int>>& tiles, int frame) const;
+    void RenderIndividualTiles(float x, float y, const std::vector<std::vector<int>>& tiles) const;
 
 private:
     TSX::Tileset* info_;

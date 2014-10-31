@@ -9,7 +9,6 @@ set(SOURCE_FILES
     src/game.cpp
     src/hud.cpp
     src/main.cpp
-    src/entity.cpp
     src/utils.cpp
 
     # Audio
@@ -33,38 +32,45 @@ set(SOURCE_FILES
     src/graphic/effect/fade.cpp
     src/graphic/effect/float.cpp
     src/graphic/effect/rotation_fade.cpp
+    src/graphic/effect/overlay.cpp
 
-    # Mobs
+    # Entities
+    src/entity.cpp
+
+    ## Mobs
     src/entity/mob.cpp
     src/entity/mob/link.cpp
     src/entity/mob/guard.cpp
     src/entity/mob/stalfos.cpp
 
-    ## Mob actions
+    ### Mob actions
     src/entity/mob/action.cpp
     src/entity/mob/action/move.cpp
     src/entity/mob/action/attack.cpp
     src/entity/mob/action/push.cpp
 
-    ## Mob AIs
+    ### Mob AIs
     src/entity/mob/ai.cpp
     src/entity/mob/ai/chase.cpp
     src/entity/mob/ai/follower.cpp
     src/entity/mob/ai/player.cpp
     src/entity/mob/ai/wander.cpp
 
-    # Objects
+    ## Objects
     src/entity/object.cpp
     src/entity/object/plant.cpp
-    src/entity/object/door.cpp
 
-    # Items
+    ## Items
     src/entity/item.cpp
     src/entity/item/rupee.cpp
 
-    # Events
+    ## Events
     src/entity/event.cpp
     src/entity/event/map_transition.cpp
+
+    ## Doors
+    src/entity/door.cpp
+    src/entity/door/key_door.cpp
 
     # Map
     src/map/tile_map.cpp

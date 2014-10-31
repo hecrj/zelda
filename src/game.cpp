@@ -17,7 +17,7 @@
 #include "audio/music.hpp"
 #include "audio/sound.hpp"
 #include "entity/object/plant.hpp"
-#include "entity/object/door.hpp"
+#include "entity/door.hpp"
 
 const int Game::SCALE = 2;
 int Game::WINDOW_WIDTH = 1024;
@@ -103,7 +103,7 @@ void Game::Init()
     Door::Load();
 
     // Load demo map
-    level = new Level("bigger");
+    level = new Level("dungeon");
 
     Link* link = new Link();
     hud = new Hud(link);

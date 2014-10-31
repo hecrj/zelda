@@ -222,22 +222,22 @@
    <property name="blocked" value="true"/>
   </properties>
  </tile>
- <tile id="308">
+ <tile id="310">
   <properties>
    <property name="above" value="true"/>
   </properties>
  </tile>
- <tile id="309">
+ <tile id="311">
   <properties>
    <property name="above" value="true"/>
   </properties>
  </tile>
- <tile id="398">
+ <tile id="400">
   <properties>
    <property name="above" value="true"/>
   </properties>
  </tile>
- <tile id="399">
+ <tile id="401">
   <properties>
    <property name="above" value="true"/>
   </properties>

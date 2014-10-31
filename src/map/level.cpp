@@ -6,6 +6,7 @@
 #include "../entity/object/plant.hpp"
 #include "../entity/event/map_transition.hpp"
 #include "../audio/music.hpp"
+#include "../entity/door/key_door.hpp"
 
 const int Level::FOLLOW_MARGIN = 120;
 const int Level::MAX_NODES_PER_TICK = 600;
@@ -36,7 +37,9 @@ Level::Level(const char *map) :
                 Entity* map_object = 0;
 
                 if(object.type == "plant") {
-                    map_object = new Plant(tileset_->sprite(object.gid - 1), object.x, object.y - 16);
+                    map_object = new Plant(tileset_->sprite(object.gid), object.x, object.y - 16);
+                } else if(object.type == "key_door") {
+                    map_object = new KeyDoor(object.x, object.y - 16, object.gid, tileset_);
                 }
 
                 if(map_object)

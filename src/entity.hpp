@@ -22,6 +22,7 @@ public:
     bool IsFinallyDead() const;
     virtual bool moving() const;
     virtual bool IsMob() const;
+    virtual bool IsVulnerable() const;
 
     void set_level(Level* level);
     void NotifyCollisions();

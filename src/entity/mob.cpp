@@ -114,11 +114,12 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
 
     for(Rectangle* candidate : candidates) {
         if(candidate->CanCollideWith(this) && hitbox->CollidesWith(candidate)) {
-            Collision c = hitbox->CollisionType(candidate);
+            if(candidate->IsEntity() && ((Entity*) candidate)->IsVulnerable()) {
+                Collision c = hitbox->CollisionType(candidate);
 
-            if(c == Collision::DAMAGE) {
-                if(candidate->IsEntity()) {
-                    ((Entity*)candidate)->Damage(this, 1);
+                // Eventually, we could add here more collision types, like shield, etc.
+                if(c == Collision::DAMAGE) {
+                    ((Entity*) candidate)->Damage(this, 1);
                 }
             }
         }

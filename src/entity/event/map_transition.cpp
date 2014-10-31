@@ -1,8 +1,6 @@
 #include <iostream>
 #include "map_transition.hpp"
 #include "../../game.hpp"
-#include "../../audio/sound.hpp"
-#include "../object/door.hpp"
 
 MapTransition::MapTransition(Level* level, float x, float y, float width, float height,
         const std::string& name, const std::string& orientation, const std::string& map, const std::string& place) :
