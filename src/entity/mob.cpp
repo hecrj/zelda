@@ -12,7 +12,8 @@ Mob::Mob(float x, float y, float width, float height, Action* idle_action) :
         moving_(false),
         idle_action_(idle_action),
         current_action_(idle_action),
-        speed_(60)
+        speed_(60),
+        attack_sound_(0)
 {}
 
 Mob::~Mob() {
@@ -95,15 +96,15 @@ void Mob::Draw() const {
 }
 
 Action* Mob::action(std::string name) const {
-    std::map<std::string, Action*>::const_iterator it = actions_.find(name);
+    const auto& it = actions_.find(name);
 
-    if(it == actions_.end())
-        return 0;
-    else
+    if(it != actions_.end())
         return it->second;
+    else
+        return 0;
 }
 
-void Mob::RegisterAction(std::string name, Action *action) {
+void Mob::AddAction(const std::string& name, Action* action) {
     actions_[name] = action;
 }
 
@@ -263,4 +264,8 @@ void Mob::_UpdatePosition(const vec2f& new_position) {
 
 void Mob::set_facing(const Dir& dir) {
     facing_ = dir;
+}
+
+sf::SoundBuffer* Mob::attack_sound() const {
+    return attack_sound_;
 }

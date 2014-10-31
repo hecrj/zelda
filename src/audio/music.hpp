@@ -21,5 +21,4 @@ private:
     static float accum_;
     static bool fade_enabled_;
     static float fade_speed_;
-    static bool played_;
 };

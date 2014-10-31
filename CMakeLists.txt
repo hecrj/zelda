@@ -14,6 +14,7 @@ set(SOURCE_FILES
 
     # Audio
     src/audio/music.cpp
+    src/audio/sound.cpp
 
     # Graphical stuff
     src/graphic/animation.cpp
@@ -55,6 +56,7 @@ set(SOURCE_FILES
     # Objects
     src/entity/object.cpp
     src/entity/object/plant.cpp
+    src/entity/object/door.cpp
 
     # Items
     src/entity/item.cpp

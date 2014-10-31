@@ -13,6 +13,9 @@ public:
     static std::vector<SpriteSet*> MOVE_ANIMATIONS;
     static std::vector<SpriteSet*> ATTACK_ANIMATIONS;
 
+    static sf::SoundBuffer* ATTACK_SOUND;
+    static sf::SoundBuffer* HURT_SOUND;
+
     static void Load();
 
     Link();

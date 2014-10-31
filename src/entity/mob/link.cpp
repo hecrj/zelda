@@ -1,11 +1,14 @@
 #include "link.hpp"
 #include "action/move.hpp"
 #include "action/attack.hpp"
+#include "../../audio/sound.hpp"
 
 SpriteSheet* Link::MOVE_SPRITE_SHEET;
 std::vector<SpriteSet*> Link::MOVE_ANIMATIONS;
 SpriteSheet* Link::ATTACK_SPRITE_SHEET;
 std::vector<SpriteSet*> Link::ATTACK_ANIMATIONS;
+sf::SoundBuffer* Link::ATTACK_SOUND;
+sf::SoundBuffer* Link::HURT_SOUND;
 
 void Link::Load() {
     MOVE_SPRITE_SHEET = new SpriteSheet("charset/link/move_shield.png", 147, 108, 21, 27);
@@ -28,6 +31,9 @@ void Link::Load() {
             new SpriteSet(ATTACK_SPRITE_SHEET->GetSprites(2, 9), 0, 20, vec2f(-2.0f, -12.0f)),
             new SpriteSet(ATTACK_SPRITE_SHEET->GetSprites(3, 9), 0, 20, vec2f(-11.0f, -12.0f))
     };
+
+    ATTACK_SOUND = Sound::Buffer("link/sword1.wav");
+    HURT_SOUND = Sound::Buffer("link/hurt.wav");
 }
 
 Link::Link() :
@@ -38,7 +44,10 @@ Link::Link() :
         rupees_(0)
 {
     type_ = PLAYER;
-    RegisterAction("attack", new Attack(this, ATTACK_ANIMATIONS));
+    attack_sound_ = ATTACK_SOUND;
+    hurt_sound_ = HURT_SOUND;
+
+    AddAction("attack", new Attack(this, ATTACK_ANIMATIONS));
 }
 
 void Link::UpdateRupees(int rupees) {

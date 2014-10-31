@@ -12,7 +12,6 @@ sf::Music Music::music_;
 float Music::accum_ = 0;
 bool Music::fade_enabled_ = false;
 float Music::fade_speed_ = 0;
-bool Music::played_ = true;
 
 void Music::Enqueue(const std::string& file, bool loop) {
     music_queue_.push(MusicItem(file, loop));

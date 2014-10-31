@@ -1,19 +1,15 @@
 #include "entity.hpp"
 #include "map/level.hpp"
 #include "debug.hpp"
-
-Entity::Entity(float width, float height) :
-        super(0, 0, width, height),
-        health_(20),
-        type_(UNKNOWN),
-        die_effect_(0)
-{}
+#include "audio/sound.hpp"
 
 Entity::Entity(float x, float y, float width, float height) :
         super(x, y, width, height),
         health_(20),
         type_(UNKNOWN),
-        die_effect_(0)
+        die_effect_(0),
+        hurt_sound_(0),
+        die_sound_(0)
 {}
 
 Entity::~Entity() {
@@ -42,6 +38,7 @@ int Entity::health() const {
 }
 
 void Entity::Damage(Entity* from, int damage) {
+    Sound::Play(hurt_sound_);
     health_ -= damage;
 }
 
@@ -70,6 +67,8 @@ void Entity::Dead() {
 }
 
 void Entity::Die() {
+    Sound::Play(die_sound_);
+
     if(die_effect_) {
         ChangeEffect(die_effect_);
         die_effect_ = 0;

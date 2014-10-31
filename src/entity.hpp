@@ -5,12 +5,12 @@
 #include "entity/entity_type.hpp"
 #include "graphic/effect.hpp"
 #include <string>
+#include <SFML/Audio/SoundBuffer.hpp>
 
 class Level;
 class Entity : public Hitbox {
 public:
     typedef Hitbox super;
-    Entity(float width, float height);
     Entity(float x, float y, float width, float height);
     ~Entity();
 
@@ -40,4 +40,7 @@ protected:
     int health_;
     EntityType type_;
     Effect* die_effect_;
+
+    sf::SoundBuffer* hurt_sound_;
+    sf::SoundBuffer* die_sound_;
 };

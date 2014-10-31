@@ -1,5 +1,6 @@
 #include "attack.hpp"
 #include "../../mob.hpp"
+#include "../../../audio/sound.hpp"
 
 Attack::Attack(Mob* mob, const std::vector<SpriteSet*>& animations) : super(mob, animations) {
 }
@@ -7,6 +8,7 @@ Attack::Attack(Mob* mob, const std::vector<SpriteSet*>& animations) : super(mob,
 void Attack::Enter() {
     super::Enter();
     hitbox_ = new AnimationHitbox(mob_->position(), CurrentAnimation());
+    Sound::Play(mob_->attack_sound());
 }
 
 void Attack::Update(double delta) {

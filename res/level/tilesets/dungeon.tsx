@@ -3,6 +3,8 @@
  <properties>
   <property name="frames" value="3"/>
   <property name="interval" value="0.25"/>
+  <property name="intro" value="sanctuary_dungeon_intro"/>
+  <property name="music" value="sanctuary_dungeon"/>
   <property name="random" value="true"/>
  </properties>
  <image source="dungeons.png" width="480" height="288"/>

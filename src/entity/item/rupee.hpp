@@ -12,6 +12,7 @@ public:
 
     static SpriteSheet* RUPEES_SPRITESHEET;
     static std::vector<Sprite*> RUPEES;
+    static sf::SoundBuffer* GET_SOUND;
 
     static void Load();
     static Rupee* Random(float x, float y);

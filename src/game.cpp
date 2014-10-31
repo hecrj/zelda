@@ -15,6 +15,9 @@
 #include "entity/item/rupee.hpp"
 #include "graphic/effect/fade.hpp"
 #include "audio/music.hpp"
+#include "audio/sound.hpp"
+#include "entity/object/plant.hpp"
+#include "entity/object/door.hpp"
 
 const int Game::SCALE = 2;
 int Game::WINDOW_WIDTH = 1024;
@@ -90,14 +93,17 @@ void Game::Init()
     // Set seed
     srand((unsigned) time(NULL));
 
-    // Load demo map
-    level = new Level("bigger");
-
+    // Load game resources
     Hud::Load();
     Link::Load();
     Guard::Load();
     Stalfos::Load();
     Rupee::Load();
+    Plant::Load();
+    Door::Load();
+
+    // Load demo map
+    level = new Level("bigger");
 
     Link* link = new Link();
     hud = new Hud(link);
@@ -144,6 +150,7 @@ void Game::ReadMouse(int button, int state, int x, int y)
 void Game::Update(double delta)
 {
     Music::Update(delta);
+    Sound::Update(delta);
 
     if(not level->transition_requested()) {
         level->Tick(delta);

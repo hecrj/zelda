@@ -7,6 +7,8 @@ SpriteSheet::SpriteSheet(const char* path, int width, int height, int sprite_wid
     std::stringstream resource_path;
     resource_path << "res/" << path;
 
+    std::cout << "Loading spritesheet: " << resource_path.str() << std::endl;
+
     texture_ = SOIL_load_OGL_texture(resource_path.str().c_str(),
             SOIL_LOAD_RGBA,
             SOIL_CREATE_NEW_ID,

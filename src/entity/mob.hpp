@@ -7,6 +7,7 @@
 #include "../math/dir.hpp"
 #include <map>
 #include <string>
+#include <SFML/Audio/SoundBuffer.hpp>
 
 class Path;
 class Mob : public Entity {
@@ -26,9 +27,11 @@ public:
     Path* FindPath(Entity* to);
     bool FollowPath(Path* path, double delta);
 
+    sf::SoundBuffer* attack_sound() const;
+
     void set_AI(AI* ai);
     void set_facing(const Dir& dir);
-    void RegisterAction(std::string name, Action *action);
+    void AddAction(const std::string& name, Action* action);
     void ChangeAction(Action *action);
     void Move(const Dir& direction, double delta);
     void MoveTowards(Entity* entity, double delta);
@@ -43,6 +46,7 @@ protected:
     Action* idle_action_;
     Action* current_action_;
     float speed_;
+    sf::SoundBuffer* attack_sound_;
 
 private:
     AI* ai_;
