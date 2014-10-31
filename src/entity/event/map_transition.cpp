@@ -20,7 +20,6 @@ MapTransition::MapTransition(Level* level, float x, float y, float width, float 
 }
 
 bool MapTransition::HandleCollisionWith(Mob* mob) {
-    Sound::Play(Door::OPEN_SOUND);
     level_->Transition(map_, place_);
 
     return false;
