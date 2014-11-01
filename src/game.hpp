@@ -9,6 +9,10 @@ class Game
 public:
     static const unsigned char ACTION_KEY;
     static const int SCALE;
+    static const int MIN_WINDOW_WIDTH;
+    static const int MIN_WINDOW_HEIGHT;
+    static const int MIN_WIDTH;
+    static const int MIN_HEIGHT;
     static int WINDOW_WIDTH;
     static int WINDOW_HEIGHT;
     static int WIDTH;

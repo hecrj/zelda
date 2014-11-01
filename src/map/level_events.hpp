@@ -6,12 +6,12 @@
 
 class LevelEvents {
 public:
-    typedef void (*MapEvent)(Level*);
+    typedef void (* LevelEvent)(Level*);
     LevelEvents();
 
-    void Register(const std::string& name, MapEvent event);
-    MapEvent event(const std::string& name) const;
+    void Register(const std::string& name, LevelEvent event);
+    LevelEvent event(const std::string& name) const;
 
 private:
-    std::map<std::string, MapEvent> events_;
+    std::map<std::string, LevelEvent> events_;
 };

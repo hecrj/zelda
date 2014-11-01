@@ -1,5 +1,7 @@
 #include <iostream>
 #include "level.hpp"
+#include "level_events.hpp"
+#include "events/intro.hpp"
 #include "../debug.hpp"
 #include "../entity/object.hpp"
 #include "../game.hpp"
@@ -12,9 +14,11 @@
 
 const int Level::FOLLOW_MARGIN = 120;
 const int Level::MAX_NODES_PER_TICK = 600;
+std::map<std::string, LevelEvents*> Level::LEVEL_EVENTS;
 
-Level::Level(const char *map) :
+Level::Level(const char *map, Hud* hud) :
         super(map),
+        hud_(hud),
         current_frame_(0),
         accum_(0),
         position_(vec2f(0, 0)),
@@ -70,6 +74,13 @@ Level::Level(const char *map) :
 
         Music::Enqueue(map_->tilesets[0]->music, Music::LOOP);
     }
+
+    show_hud_ = map_->tilesets[0]->show_hud;
+
+    if(LEVEL_EVENTS.find(std::string(map)) != LEVEL_EVENTS.end())
+        events_ = LEVEL_EVENTS[std::string(map)];
+    else
+        events_ = 0;
 }
 
 Level::~Level() {
@@ -98,6 +109,16 @@ Level::~Level() {
 
     for(Path* path : pending_paths_)
         delete path;
+}
+
+void Level::Init() {
+    if(events_) {
+        // Trigger start event
+        LevelEvents::LevelEvent event = events_->event("start");
+
+        if(event)
+            event(this);
+    }
 }
 
 
@@ -221,6 +242,9 @@ void Level::Draw() const {
         for(Rectangle* candidate : candidates)
             candidate->DrawBox(1, 0, 1);
     }
+
+    if(show_hud_)
+        hud_->Render();
 }
 
 void Level::AddLocation(Location* location) {
@@ -431,4 +455,8 @@ void Level::CalculateScrolling() {
 
     else if(position_.y > 0 and player_position.y < top_limit)
         position_.y = std::max(0.0f, position_.y + player_position.y - top_limit);
+}
+
+void Level::Load() {
+    LEVEL_EVENTS["intro"] = new Intro();
 }

@@ -19,6 +19,11 @@
 
 const unsigned char Game::ACTION_KEY = 'z';
 const int Game::SCALE = 2;
+const int Game::MIN_WINDOW_WIDTH = 800;
+const int Game::MIN_WINDOW_HEIGHT = 600;
+const int Game::MIN_WIDTH = MIN_WINDOW_WIDTH / SCALE;
+const int Game::MIN_HEIGHT = MIN_WINDOW_HEIGHT / SCALE;
+
 int Game::WINDOW_WIDTH = 1024;
 int Game::WINDOW_HEIGHT = 768;
 int Game::WIDTH = Game::WINDOW_WIDTH / Game::SCALE;
@@ -109,6 +114,7 @@ void Game::Init()
     // Load game resources
     Font::Load();
     TitleScreen::Load();
+    Level::Load();
     Hud::Load();
     Link::Load();
     Guard::Load();
@@ -173,13 +179,13 @@ void Game::Render() const
 }
 
 void Game::Reshape(int width, int height) {
-    if(width < 800) {
-        glutReshapeWindow(800, height);
+    if(width < MIN_WINDOW_WIDTH) {
+        glutReshapeWindow(MIN_WINDOW_WIDTH, height);
         return;
     }
 
-    if(height < 600) {
-        glutReshapeWindow(width, 600);
+    if(height < MIN_WINDOW_HEIGHT) {
+        glutReshapeWindow(width, MIN_WINDOW_HEIGHT);
         return;
     }
 

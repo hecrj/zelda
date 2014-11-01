@@ -5,15 +5,14 @@
 
 LevelScreen::LevelScreen(bool* keys, const char* name)
 {
-    // Load demo map
-    level = new Level(name);
-
     Link* link = new Link();
     hud = new Hud(link);
 
     link->set_AI(new Player(link, keys));
 
+    level = new Level(name, hud);
     level->AddPlayer(link, "start");
+    level->Init();
 }
 
 void LevelScreen::Tick(double delta) {
@@ -31,13 +30,14 @@ void LevelScreen::Tick(double delta) {
             std::vector<Entity*> players(level->players());
 
             Level* old_level = level;
-            level = new Level(map.c_str());
+            level = new Level(map.c_str(), hud);
 
             for(Entity* player : players)
                 level->AddPlayer(player, place);
 
-            level->ChangeEffect(new Fade(Fade::IN, 0.5, [old_level]{
+            level->ChangeEffect(new Fade(Fade::IN, 0.5, [this, old_level]{
                 delete old_level;
+                level->Init();
             }));
         }));
     }
@@ -45,7 +45,6 @@ void LevelScreen::Tick(double delta) {
 
 void LevelScreen::Render() const {
     level->Render();
-    hud->Render();
 }
 
 LevelScreen::~LevelScreen() {

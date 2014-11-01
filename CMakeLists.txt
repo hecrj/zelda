@@ -41,6 +41,7 @@ set(SOURCE_FILES
     src/graphic/effect/overlay.cpp
     src/graphic/effect/timer.cpp
     src/graphic/effect/menu.cpp
+    src/graphic/effect/dialog.cpp
 
     # Entities
     src/entity.cpp
@@ -91,7 +92,7 @@ set(SOURCE_FILES
     src/map/level_events.cpp
 
     ## Level events
-    src/map/level/beginning.cpp
+    src/map/events/intro.cpp
 
     # Mathematical data structures
     src/math/dir.cpp

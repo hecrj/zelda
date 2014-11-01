@@ -140,8 +140,6 @@ namespace TitleScreenPrivate {
         }
 
         void Init() {
-            std::cout << "Initializing title screen" << std::endl;
-
             CalculateCoords();
             Menu* menu = new Menu(width / 2.0f, 60.0f + height / 2.0f, 10);
 
@@ -149,7 +147,7 @@ namespace TitleScreenPrivate {
                 Music::ClearQueue();
                 Music::FadeOut(2);
                 ChangeEffect(new Fade(Fade::OUT, 2, []{
-                    Game::INSTANCE.LoadLevel("bigger");
+                    Game::INSTANCE.LoadLevel("intro");
                 }));
             });
 
@@ -160,13 +158,10 @@ namespace TitleScreenPrivate {
             ChangeEffect(
                     // Wait a second for the music to start
                     new Timer(1, []{
-                        std::cout << "Timer finished" << std::endl;
                     },
                     new FadeTransparent(DrawBackground, 4.2f, [this]{
-                        std::cout << "Draw background finished" << std::endl;
                         drawers_.push_back(DrawBackground);
                     }, new FadeTransparent(DrawLogo, 1.9, [this]{
-                        std::cout << "Draw logo finished" << std::endl;
                         drawers_.push_back(DrawLogo);
                     }, menu)
             )));

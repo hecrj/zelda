@@ -2,7 +2,7 @@
 
 #include "../level_events.hpp"
 
-class Beginning : LevelEvents {
+class Intro : public LevelEvents {
 public:
-    Beginning();
+    Intro();
 };

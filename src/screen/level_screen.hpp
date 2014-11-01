@@ -16,4 +16,5 @@ public:
 private:
     Level* level;
     Hud* hud;
+    bool show_hud_;
 };

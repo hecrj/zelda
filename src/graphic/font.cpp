@@ -8,12 +8,14 @@ SpriteSheet* Font::FONT;
 std::vector<Sprite*> Font::UPPERCASE;
 std::vector<Sprite*> Font::LOWERCASE;
 std::vector<Sprite*> Font::DIGITS;
+std::vector<Sprite*> Font::SPECIAL;
 
 void Font::Load() {
-    FONT = new SpriteSheet("font.png", 260, 81, WIDTH, HEIGHT);
+    FONT = new SpriteSheet("font.png", 260, 108, WIDTH, HEIGHT);
     UPPERCASE = FONT->GetSprites(0, 26);
     LOWERCASE = FONT->GetSprites(1, 26);
     DIGITS = FONT->GetSprites(2, 10);
+    SPECIAL = FONT->GetSprites(3, 3);
 }
 
 void Font::Render(float x, float y, const char* text) {
@@ -33,6 +35,8 @@ void Font::Render(float x, float y, const char* text) {
             LOWERCASE[c - 'a']->DrawGeom(pos);
         } else if('0' <= c and c <= '9') {
             DIGITS[c - '0']->DrawGeom(pos);
+        } else if(',' <= c and c <= '.') {
+            SPECIAL[c - ',']->DrawGeom(pos);
         } else if(c != ' ') {
             std::stringstream ss;
             ss << c;

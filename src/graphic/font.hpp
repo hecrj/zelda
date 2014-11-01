@@ -10,6 +10,7 @@ public:
     static std::vector<Sprite*> UPPERCASE;
     static std::vector<Sprite*> LOWERCASE;
     static std::vector<Sprite*> DIGITS;
+    static std::vector<Sprite*> SPECIAL;
 
     static void Load();
     static void Render(float x, float y, const char* c);
