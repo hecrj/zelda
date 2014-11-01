@@ -2,11 +2,18 @@
 #include "../../graphic/effect/dialog.hpp"
 
 namespace IntroPrivate {
+    Dialog::Message* dialog(const std::string& line1, const std::string& line2) {
+        return new Dialog::Message(line1, line2, 20);
+    }
+
     std::vector<Dialog::Message*> messages = {
-            new Dialog::Message(
+            dialog(
                     "A long, long time ago...",
-                    "Hyrule was saved by a hero...",
-                    20
+                    "Hyrule was saved by a hero..."
+            ),
+            dialog(
+                    "But now...",
+                    "An evil power has returned..."
             )
     };
 
