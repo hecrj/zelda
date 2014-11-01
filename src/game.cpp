@@ -18,6 +18,8 @@
 #include "audio/sound.hpp"
 #include "entity/object/plant.hpp"
 #include "entity/door.hpp"
+#include "screen/level_screen.hpp"
+#include "screen/title_screen.hpp"
 
 const int Game::SCALE = 2;
 int Game::WINDOW_WIDTH = 1024;
@@ -28,6 +30,7 @@ bool Game::DIRTY = true;
 Rectangle Game::RECTANGLE = Rectangle(0, 0, Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT);
 GLuint Game::FRAMEBUFFER_AUX = 0;
 GLuint Game::RENDERBUFFER_AUX = 0;
+Game Game::INSTANCE;
 
 GLuint Game::FramebufferAux() {
     if(FRAMEBUFFER_AUX and DIRTY) {
@@ -58,8 +61,18 @@ GLuint Game::FramebufferAux() {
     return FRAMEBUFFER_AUX;
 }
 
+void Game::Error(const char* error, const std::string& wat) {
+    std::stringstream ss;
+    ss << error << ' ' << wat;
+
+    std::cerr << ss.str() << std::endl;
+    std::exit(1);
+}
+
 Game::Game()
 {
+    screen = 0;
+    old_screen = 0;
     t = 0.0;
     dt = 0.016;
     current_time = CurrentTime();
@@ -72,8 +85,11 @@ Game::Game()
 
 Game::~Game()
 {
-    if(level != NULL)
-        delete level;
+    if(screen)
+        delete screen;
+
+    if(old_screen)
+        delete old_screen;
 }
 
 void Game::Init()
@@ -94,6 +110,7 @@ void Game::Init()
     srand((unsigned) time(NULL));
 
     // Load game resources
+    TitleScreen::Load();
     Hud::Load();
     Link::Load();
     Guard::Load();
@@ -102,15 +119,7 @@ void Game::Init()
     Plant::Load();
     Door::Load();
 
-    // Load demo map
-    level = new Level("dungeon");
-
-    Link* link = new Link();
-    hud = new Hud(link);
-
-    link->set_AI(new Player(link, keys));
-
-    level->AddPlayer(link, "start");
+    ChangeScreen(new TitleScreen(keys));
 }
 
 void Game::Tick()
@@ -152,30 +161,7 @@ void Game::Update(double delta)
     Music::Update(delta);
     Sound::Update(delta);
 
-    if(not level->transition_requested()) {
-        level->Tick(delta);
-    } else {
-        Music::ClearQueue();
-        Music::FadeOut(0.5);
-
-        std::string map;
-        std::string place;
-        level->consume_transition(map, place);
-
-        level->ChangeEffect(new Fade(Fade::OUT, 0.5, [this, map, place]{
-            std::vector<Entity*> players(level->players());
-
-            Level* old_level = level;
-            level = new Level(map.c_str());
-
-            for(Entity* player : players)
-                level->AddPlayer(player, place);
-
-            level->ChangeEffect(new Fade(Fade::IN, 0.5, [old_level]{
-                delete old_level;
-            }));
-        }));
-    }
+    screen->Tick(delta);
 }
 
 void Game::Render() const
@@ -183,8 +169,7 @@ void Game::Render() const
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
 
-	level->Render();
-    hud->Render();
+    screen->Render();
 
     glutSwapBuffers();
 }
@@ -215,10 +200,27 @@ void Game::Reshape(int width, int height) {
     DIRTY = true;
 }
 
-void Game::Error(const char* error, const std::string& wat) {
-    std::stringstream ss;
-    ss << error << ' ' << wat;
+void Game::ChangeScreen(Screen* screen) {
+    if(old_screen)
+        delete old_screen;
 
-    std::cerr << ss.str() << std::endl;
-    exit(1);
+    old_screen = this->screen;
+    this->screen = screen;
+    this->screen->Init();
+}
+
+void Game::LoadTitleScreen() {
+    ChangeScreen(new TitleScreen(keys));
+}
+
+void Game::LoadLevel(const char* name) {
+    ChangeScreen(new LevelScreen(keys, name));
+}
+
+void Game::Over() {
+    // TODO: Game over screen
+}
+
+void Game::Exit() {
+    std::exit(0);
 }

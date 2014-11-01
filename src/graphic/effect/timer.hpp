@@ -6,6 +6,7 @@ class Timer : public CallbackEffect {
 public:
     typedef CallbackEffect super;
     Timer(float duration, const std::function<void()>& callback);
+    Timer(float duration, const std::function<void()>& callback, Effect* next);
 
     bool IsFinished() const;
 

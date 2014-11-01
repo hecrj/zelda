@@ -34,7 +34,6 @@ void Music::Update(double delta) {
         }
     } else if(not music_queue_.empty()) {
         const MusicItem& item = music_queue_.front();
-        music_queue_.pop();
 
         std::stringstream filename;
         filename << "res/music/" << item.first << ".ogg";
@@ -48,6 +47,8 @@ void Music::Update(double delta) {
         music_.setLoop(item.second);
         music_.play();
         fade_enabled_ = false;
+
+        music_queue_.pop();
     }
 }
 

@@ -11,6 +11,11 @@ set(SOURCE_FILES
     src/main.cpp
     src/utils.cpp
 
+    # Game screens
+    src/screen.cpp
+    src/screen/title_screen.cpp
+    src/screen/level_screen.cpp
+
     # Audio
     src/audio/music.cpp
     src/audio/sound.cpp

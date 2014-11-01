@@ -6,6 +6,11 @@ Timer::Timer(float duration, const std::function<void()>& callback) :
         duration_(duration)
 {}
 
+Timer::Timer(float duration, const std::function<void()>& callback, Effect* next) :
+        super(callback, next),
+        duration_(duration)
+{}
+
 bool Timer::IsFinished() const {
     return elapsed_time_ >= duration_;
 }

@@ -1,19 +1,21 @@
 #pragma once
 
-#include <SFML/System/Clock.hpp>
 #include "map/level.hpp"
 #include "hud.hpp"
+#include "screen.hpp"
 
 class Game
 {
 public:
+    const static int SCALE;
     static int WINDOW_WIDTH;
     static int WINDOW_HEIGHT;
     static int WIDTH;
     static int HEIGHT;
-    const static int SCALE;
     static bool DIRTY;
     static Rectangle RECTANGLE;
+    static Game INSTANCE;
+
     static GLuint FramebufferAux();
     static void Error(const char* error, const std::string& wat);
 	Game();
@@ -22,6 +24,11 @@ public:
 	void Init();
 	void Tick();
 	void Finalize();
+
+    void LoadTitleScreen();
+    void LoadLevel(const char* name);
+    void Over();
+    void Exit();
 
 	void ReadKeyboard(unsigned char key, int x, int y, bool press);
 	void ReadMouse(int button, int state, int x, int y);
@@ -33,14 +40,15 @@ private:
     static GLuint FRAMEBUFFER_AUX;
     static GLuint RENDERBUFFER_AUX;
 
-    sf::Clock clock;
 	bool keys[256];
-	Level* level;
-    Hud* hud;
+    Screen* screen;
+    Screen* old_screen;
 
     // Timing variables
     double t;
     double dt;
     double current_time;
     double accumulator;
+
+    void ChangeScreen(Screen* screen);
 };

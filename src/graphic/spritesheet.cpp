@@ -1,32 +1,10 @@
-#include <SOIL.h>
 #include <sstream>
 #include <iostream>
 #include "spritesheet.hpp"
+#include "../utils.hpp"
 
 SpriteSheet::SpriteSheet(const char* path, int width, int height, int sprite_width, int sprite_height) {
-    std::stringstream resource_path;
-    resource_path << "res/" << path;
-
-    std::cout << "Loading spritesheet: " << resource_path.str() << std::endl;
-
-    texture_ = SOIL_load_OGL_texture(resource_path.str().c_str(),
-            SOIL_LOAD_RGBA,
-            SOIL_CREATE_NEW_ID,
-            SOIL_FLAG_MULTIPLY_ALPHA);
-
-    if(0 == texture_) {
-        std::stringstream error;
-        error << "SOIL loading error: " << SOIL_last_result() << std::cout;
-        std::cerr << error.str() << std::endl;
-        throw error.str();
-    }
-
-    // This avoids blurry sprites (we like retro style)
-    glBindTexture(GL_TEXTURE_2D, texture_);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glBindTexture(GL_TEXTURE_2D, 0);
-
+    texture_ = LoadTexture(path);
     width_ = width;
     height_ = height;
     sprite_width_ = sprite_width;

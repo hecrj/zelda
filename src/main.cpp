@@ -5,46 +5,44 @@
 //Delete console
 #pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 
-Game game;
-
 void AppRender()
 {
-    game.Render();
+    Game::INSTANCE.Render();
 }
 
 void AppReshape(int width, int height)
 {
-    game.Reshape(width, height);
+    Game::INSTANCE.Reshape(width, height);
 }
 
 void AppKeyboard(unsigned char key, int x, int y)
 {
-	game.ReadKeyboard(key,x,y,true);
+    Game::INSTANCE.ReadKeyboard(key,x,y,true);
 }
 
 void AppKeyboardUp(unsigned char key, int x, int y)
 {
-	game.ReadKeyboard(key,x,y,false);
+    Game::INSTANCE.ReadKeyboard(key,x,y,false);
 }
 
 void AppSpecialKeys(int key, int x, int y)
 {
-	game.ReadKeyboard(key,x,y,true);
+    Game::INSTANCE.ReadKeyboard(key,x,y,true);
 }
 
 void AppSpecialKeysUp(int key, int x, int y)
 {
-	game.ReadKeyboard(key,x,y,false);
+    Game::INSTANCE.ReadKeyboard(key,x,y,false);
 }
 
 void AppMouse(int button, int state, int x, int y)
 {
-	game.ReadMouse(button,state,x,y);
+    Game::INSTANCE.ReadMouse(button,state,x,y);
 }
 
 void AppIdle()
 {
-    game.Tick();
+    Game::INSTANCE.Tick();
 }
 
 int main(int argc, char** argv)
@@ -85,7 +83,7 @@ int main(int argc, char** argv)
 	glutMouseFunc(AppMouse);
 	glutIdleFunc(AppIdle);
 
-	game.Init();
+    Game::INSTANCE.Init();
 
 	glutMainLoop();
 }
