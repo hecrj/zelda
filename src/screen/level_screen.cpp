@@ -12,7 +12,10 @@ LevelScreen::LevelScreen(bool* keys, const char* name)
 
     level = new Level(name, hud);
     level->AddPlayer(link, "start");
-    level->Init();
+
+    level->ChangeEffect(new Fade(Fade::IN, 0.5, [this] {
+        level->Init();
+    }));
 }
 
 void LevelScreen::Tick(double delta) {

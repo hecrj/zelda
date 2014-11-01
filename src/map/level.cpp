@@ -18,6 +18,7 @@ std::map<std::string, LevelEvents*> Level::LEVEL_EVENTS;
 
 Level::Level(const char *map, Hud* hud) :
         super(map),
+        name_(map),
         hud_(hud),
         current_frame_(0),
         accum_(0),
@@ -78,7 +79,7 @@ Level::Level(const char *map, Hud* hud) :
     show_hud_ = map_->tilesets[0]->show_hud;
 
     if(LEVEL_EVENTS.find(std::string(map)) != LEVEL_EVENTS.end())
-        events_ = LEVEL_EVENTS[std::string(map)];
+        events_ = LEVEL_EVENTS[name_];
     else
         events_ = 0;
 }

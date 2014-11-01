@@ -16,6 +16,7 @@
 #include "screen/level_screen.hpp"
 #include "screen/title_screen.hpp"
 #include "graphic/font.hpp"
+#include "screen/over_screen.hpp"
 
 const unsigned char Game::ACTION_KEY = 'z';
 const int Game::SCALE = 2;
@@ -123,7 +124,7 @@ void Game::Init()
     Plant::Load();
     Door::Load();
 
-    ChangeScreen(new TitleScreen());
+    LoadTitleScreen();
 }
 
 void Game::Tick()
@@ -221,8 +222,8 @@ void Game::LoadLevel(const char* name) {
     ChangeScreen(new LevelScreen(keys, name));
 }
 
-void Game::Over() {
-    // TODO: Game over screen
+void Game::Over(const std::string& from_level_name) {
+    ChangeScreen(new OverScreen(from_level_name));
 }
 
 void Game::Exit() {

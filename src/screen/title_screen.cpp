@@ -235,7 +235,6 @@ void TitleScreen::Render() const {
 }
 
 void TitleScreen::Init() {
-    Music::ClearQueue();
     Music::Enqueue("crystal_intro", Music::NO_LOOP);
     Music::Enqueue("crystal", Music::LOOP);
 

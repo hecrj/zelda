@@ -36,7 +36,7 @@ public:
 
     void LoadTitleScreen();
     void LoadLevel(const char* name);
-    void Over();
+    void Over(const std::string& from_level_name);
     void Exit();
 
 	void ReadKeyboard(unsigned char key, int x, int y, bool press);

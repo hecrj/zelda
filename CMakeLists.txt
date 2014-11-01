@@ -15,6 +15,7 @@ set(SOURCE_FILES
     src/screen.cpp
     src/screen/title_screen.cpp
     src/screen/level_screen.cpp
+    src/screen/over_screen.cpp
 
     # Audio
     src/audio/music.cpp

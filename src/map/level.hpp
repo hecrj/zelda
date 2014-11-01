@@ -41,6 +41,8 @@ public:
     void Draw() const;
 
 private:
+    std::string name_;
+
     // Hud
     Hud* hud_;
     bool show_hud_;
