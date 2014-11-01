@@ -145,10 +145,12 @@ namespace TitleScreenPrivate {
             CalculateCoords();
             Menu* menu = new Menu(width / 2.0f, 60.0f + height / 2.0f, 10);
 
-            menu->AddOption("New Game", []{
+            menu->AddOption("New Game", [this]{
                 Music::ClearQueue();
-                Music::FadeOut(1);
-                Game::INSTANCE.LoadLevel("bigger");
+                Music::FadeOut(2);
+                ChangeEffect(new Fade(Fade::OUT, 2, []{
+                    Game::INSTANCE.LoadLevel("bigger");
+                }));
             });
 
             menu->AddOption("Exit", []{
@@ -163,7 +165,7 @@ namespace TitleScreenPrivate {
                     new FadeTransparent(DrawBackground, 4.2f, [this]{
                         std::cout << "Draw background finished" << std::endl;
                         drawers_.push_back(DrawBackground);
-                    }, new FadeTransparent(DrawLogo, 2, [this]{
+                    }, new FadeTransparent(DrawLogo, 1.9, [this]{
                         std::cout << "Draw logo finished" << std::endl;
                         drawers_.push_back(DrawLogo);
                     }, menu)
