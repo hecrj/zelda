@@ -39,3 +39,7 @@ std::vector<Sprite*> SpriteSheet::GetSprites(int row, int sprite_count) const {
 void SpriteSheet::set_hit_spritesheet(char const* path) {
     hit_spritesheet_ = new SpriteSheet(path, width_, height_, sprite_width_, sprite_height_);
 }
+
+GLuint SpriteSheet::texture() const {
+    return texture_;
+}

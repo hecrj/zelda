@@ -23,6 +23,7 @@ set(SOURCE_FILES
     # Graphical stuff
     src/graphic/animation.cpp
     src/graphic/drawable.cpp
+    src/graphic/font.cpp
     src/graphic/hitbox.cpp
     src/graphic/hitbox/animation_hitbox.cpp
     src/graphic/pixelmap.cpp
@@ -39,6 +40,7 @@ set(SOURCE_FILES
     src/graphic/effect/rotation_fade.cpp
     src/graphic/effect/overlay.cpp
     src/graphic/effect/timer.cpp
+    src/graphic/effect/menu.cpp
 
     # Entities
     src/entity.cpp

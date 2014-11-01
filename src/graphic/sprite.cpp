@@ -57,6 +57,13 @@ void Sprite::Render(const vec2f& position) const {
     glBindTexture(GL_TEXTURE_2D, texture_);
     glBegin(GL_QUADS);
 
+    DrawGeom(position);
+
+    glEnd();
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Sprite::DrawGeom(const vec2f& position) const {
     glTexCoord2f(tex_x_, tex_y_);
     glVertex2f(position.x, position.y);
 
@@ -68,9 +75,6 @@ void Sprite::Render(const vec2f& position) const {
 
     glTexCoord2f(tex_x_, tex_y_ + tex_height_);
     glVertex2f(position.x, position.y + height_);
-
-    glEnd();
-    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 float Sprite::width() const {
@@ -88,3 +92,4 @@ Pixelmap* Sprite::hit_map() const {
 Pixelmap* Sprite::damage_map() const {
     return damage_map_;
 }
+

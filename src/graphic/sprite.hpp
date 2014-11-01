@@ -16,6 +16,7 @@ public:
     Pixelmap* damage_map() const;
 
     void Render(const vec2f& position) const;
+    void DrawGeom(const vec2f& position) const;
 
 private:
     GLuint texture_;

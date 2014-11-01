@@ -10,7 +10,7 @@ public:
 
     static void Load();
 
-    TitleScreen(bool* keys);
+    TitleScreen();
     ~TitleScreen();
 
     void Init();

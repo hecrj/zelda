@@ -6,6 +6,7 @@
 #include "../graphic/effect/fade.hpp"
 #include "../graphic/effect/timer.hpp"
 #include "../debug.hpp"
+#include "../graphic/effect/menu.hpp"
 
 namespace TitleScreenPrivate {
     SpriteSheet* STARS;
@@ -110,7 +111,6 @@ namespace TitleScreenPrivate {
 
     class Title : public Drawable {
     private:
-        bool* keys_;
         float accum_;
         std::vector<Drawer> drawers_;
 
@@ -129,8 +129,7 @@ namespace TitleScreenPrivate {
         }
 
     public:
-        Title(bool* keys) :
-                keys_(keys)
+        Title()
         {}
 
         ~Title() {
@@ -141,19 +140,27 @@ namespace TitleScreenPrivate {
         void Init() {
             std::cout << "Initializing title screen" << std::endl;
 
-            // TODO: Debug this
-            // My effect abstraction comes really handy
+            CalculateCoords();
+            Menu* menu = new Menu(width / 2.0f, 60.0f + height / 2.0f, 10);
+
+            menu->AddOption("New Game", []{});
+
+            menu->AddOption("Exit", []{
+                Game::INSTANCE.Exit();
+            });
+
             ChangeEffect(
+                    // Wait a second for the music to start
                     new Timer(1, []{
                         std::cout << "Timer finished" << std::endl;
                     },
-                    new FadeTransparent(DrawBackground, 5, [this]{
+                    new FadeTransparent(DrawBackground, 4.2f, [this]{
                         std::cout << "Draw background finished" << std::endl;
                         drawers_.push_back(DrawBackground);
                     }, new FadeTransparent(DrawLogo, 5, [this]{
                         std::cout << "Draw logo finished" << std::endl;
                         drawers_.push_back(DrawLogo);
-                    }, 0)
+                    }, menu)
             )));
         }
 
@@ -186,7 +193,7 @@ namespace TitleScreenPrivate {
                 }
             }
 
-            if(keys_['z']) {
+            if(Game::INSTANCE.ConsumeKey('z')) {
                 Music::ClearQueue();
                 Music::FadeOut(1);
                 Game::INSTANCE.LoadLevel("bigger");
@@ -205,9 +212,9 @@ namespace TitleScreenPrivate {
     };
 };
 
-TitleScreen::TitleScreen(bool* keys)
+TitleScreen::TitleScreen()
 {
-    title_ = new TitleScreenPrivate::Title(keys);
+    title_ = new TitleScreenPrivate::Title();
 }
 
 TitleScreen::~TitleScreen() {

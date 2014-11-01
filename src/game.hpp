@@ -18,8 +18,12 @@ public:
 
     static GLuint FramebufferAux();
     static void Error(const char* error, const std::string& wat);
+
 	Game();
 	virtual ~Game();
+
+    bool ConsumeKey(const char key);
+    bool KeyStatus(const char key) const;
 
 	void Init();
 	void Tick();

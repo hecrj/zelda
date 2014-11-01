@@ -4,14 +4,9 @@
 #include <iostream>
 #include "game.hpp"
 #include "utils.hpp"
-#include "entity/mob/link.hpp"
-#include "entity/mob/ai/player.hpp"
-#include "entity/mob/ai/follower.hpp"
 #include "debug.hpp"
 #include "entity/mob/guard.hpp"
-#include "entity/mob/ai/chase.hpp"
 #include "entity/mob/stalfos.hpp"
-#include "hud.hpp"
 #include "entity/item/rupee.hpp"
 #include "graphic/effect/fade.hpp"
 #include "audio/music.hpp"
@@ -20,6 +15,7 @@
 #include "entity/door.hpp"
 #include "screen/level_screen.hpp"
 #include "screen/title_screen.hpp"
+#include "graphic/font.hpp"
 
 const int Game::SCALE = 2;
 int Game::WINDOW_WIDTH = 1024;
@@ -110,6 +106,7 @@ void Game::Init()
     srand((unsigned) time(NULL));
 
     // Load game resources
+    Font::Load();
     TitleScreen::Load();
     Hud::Load();
     Link::Load();
@@ -119,7 +116,7 @@ void Game::Init()
     Plant::Load();
     Door::Load();
 
-    ChangeScreen(new TitleScreen(keys));
+    ChangeScreen(new TitleScreen());
 }
 
 void Game::Tick()
@@ -210,7 +207,7 @@ void Game::ChangeScreen(Screen* screen) {
 }
 
 void Game::LoadTitleScreen() {
-    ChangeScreen(new TitleScreen(keys));
+    ChangeScreen(new TitleScreen());
 }
 
 void Game::LoadLevel(const char* name) {
@@ -223,4 +220,14 @@ void Game::Over() {
 
 void Game::Exit() {
     std::exit(0);
+}
+
+bool Game::ConsumeKey(const char key) {
+    bool value = keys[key];
+    keys[key] = false;
+    return value;
+}
+
+bool Game::KeyStatus(const char key) const {
+    return keys[key];
 }
