@@ -3,12 +3,14 @@
 
 Timer::Timer(float duration, const std::function<void()>& callback) :
         super(callback),
-        duration_(duration)
+        duration_(duration),
+        elapsed_time_(0)
 {}
 
 Timer::Timer(float duration, const std::function<void()>& callback, Effect* next) :
         super(callback, next),
-        duration_(duration)
+        duration_(duration),
+        elapsed_time_(0)
 {}
 
 bool Timer::IsFinished() const {

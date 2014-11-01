@@ -5,9 +5,13 @@
 #include <vector>
 #include <functional>
 #include <string>
+#include <SFML/Audio/SoundBuffer.hpp>
 
 class Menu : public Effect {
 public:
+    static sf::SoundBuffer* MOVE_CURSOR_SOUND;
+    static sf::SoundBuffer* SELECT_SOUND;
+
     Menu(float x, float y, float separation);
 
     bool IsFinished() const;
@@ -21,6 +25,7 @@ private:
     float x_;
     float y_;
     float separation_;
+    int selected_;
 
     struct MenuOption {
         std::string text;

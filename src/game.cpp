@@ -17,6 +17,7 @@
 #include "screen/title_screen.hpp"
 #include "graphic/font.hpp"
 
+const unsigned char Game::ACTION_KEY = 'z';
 const int Game::SCALE = 2;
 int Game::WINDOW_WIDTH = 1024;
 int Game::WINDOW_HEIGHT = 768;

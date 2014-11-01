@@ -7,7 +7,8 @@
 class Game
 {
 public:
-    const static int SCALE;
+    static const unsigned char ACTION_KEY;
+    static const int SCALE;
     static int WINDOW_WIDTH;
     static int WINDOW_HEIGHT;
     static int WIDTH;
