@@ -17,6 +17,7 @@
 #include "screen/title_screen.hpp"
 #include "graphic/font.hpp"
 #include "screen/over_screen.hpp"
+#include "entity/mob/moldorm.hpp"
 
 const unsigned char Game::ACTION_KEY = 'z';
 const int Game::SCALE = 2;
@@ -120,11 +121,12 @@ void Game::Init()
     Link::Load();
     Guard::Load();
     Stalfos::Load();
+    Moldorm::Load();
     Rupee::Load();
     Plant::Load();
     Door::Load();
 
-    LoadTitleScreen();
+    LoadLevel("dungeon");
 }
 
 void Game::Tick()

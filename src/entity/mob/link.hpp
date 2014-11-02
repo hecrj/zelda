@@ -24,6 +24,8 @@ public:
 
     void UpdateRupees(int rupees);
 
+    bool CollidesWith(Rectangle const * rectangle) const;
+
 private:
     int rupees_;
 };

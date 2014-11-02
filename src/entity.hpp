@@ -17,7 +17,6 @@ public:
     int health() const;
     EntityType type() const;
     bool IsAlive() const;
-    float Distance(Entity* entity) const;
     bool IsEntity() const;
     bool IsFinallyDead() const;
     virtual bool moving() const;

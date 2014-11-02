@@ -26,6 +26,7 @@ public:
     Entity* SeekPlayer() const;
     Path* FindPath(Entity* to);
     bool FollowPath(Path* path, double delta);
+    float speed() const;
 
     sf::SoundBuffer* attack_sound() const;
 
@@ -34,6 +35,7 @@ public:
     void AddAction(const std::string& name, Action* action);
     void ChangeAction(Action *action);
     void Move(const Dir& direction, double delta);
+    bool Move(const vec2f& direction, int intensity, double delta);
     void MoveTowards(Entity* entity, double delta);
     void Slide(const vec2f direction, int intensity, double delta);
     void MeleeAttack(Hitbox* hitbox);
@@ -47,15 +49,14 @@ protected:
     Action* current_action_;
     float speed_;
     sf::SoundBuffer* attack_sound_;
+    Dir facing_;
 
 private:
     AI* ai_;
     std::map<std::string, Action*> actions_;
-    Dir facing_;
     int facing_candidate_;
     bool moving_;
 
-    void _Move(const vec2f& direction, int intensity, double delta);
     void _MoveVector(vec2f dir, double delta);
-    void _UpdatePosition(const vec2f& new_position);
+    bool _UpdatePosition(const vec2f& new_position);
 };

@@ -62,12 +62,16 @@ void Mob::Move(const Dir& direction, double delta) {
         facing_candidate_ = direction.index();
     }
 
-    _Move(direction.vector(), 1, delta);
+    Move(direction.vector(), 1, delta);
+}
+
+bool Mob::Move(const vec2f& direction, int intensity, double delta) {
+    return _UpdatePosition(position_ + direction * intensity * delta * speed_);
 }
 
 void Mob::Slide(const vec2f direction, int intensity, double delta) {
-    _Move(vec2f(direction.x, 0), intensity, delta);
-    _Move(vec2f(0, direction.y), intensity, delta);
+    Move(vec2f(direction.x, 0), intensity, delta);
+    Move(vec2f(0, direction.y), intensity, delta);
 }
 
 void Mob::Update(double delta) {
@@ -206,7 +210,7 @@ Path* Mob::FindPath(Entity* to) {
 
 void Mob::_MoveVector(vec2f dir, double delta) {
     if(dir.x == 0 || dir.y == 0) {
-        _Move(Dir::fromVector(dir).vector(), 1, delta);
+        Move(Dir::fromVector(dir).vector(), 1, delta);
     } else {
         float x = dir.x;
         float y = dir.y;
@@ -219,7 +223,7 @@ void Mob::_MoveVector(vec2f dir, double delta) {
 
             _UpdatePosition(position_ + dir);
         } else {
-            _Move(Dir::fromVector(dir).vector(), 1, delta);
+            Move(Dir::fromVector(dir).vector(), 1, delta);
         }
 
         dir.x = x;
@@ -231,18 +235,14 @@ void Mob::_MoveVector(vec2f dir, double delta) {
 
             _UpdatePosition(position_ + dir);
         } else {
-            _Move(Dir::fromVector(dir).vector(), 1, delta);
+            Move(Dir::fromVector(dir).vector(), 1, delta);
         }
     }
 }
 
-void Mob::_Move(const vec2f& direction, int intensity, double delta) {
-    _UpdatePosition(position_ + direction * intensity * delta * speed_);
-}
-
-void Mob::_UpdatePosition(const vec2f& new_position) {
+bool Mob::_UpdatePosition(const vec2f& new_position) {
     if(!level_->IsInbounds(new_position, width_, height_)) {
-        return;
+        return false;
     }
 
     vec2f old_position = position_;
@@ -255,12 +255,13 @@ void Mob::_UpdatePosition(const vec2f& new_position) {
         if(collidable->CanCollideWith(this) && CollidesWith(collidable)) {
             if(collidable->HandleCollisionWith(this)) {
                 position_ = old_position;
-                return;
+                return false;
             }
         }
     }
 
     moving_ = moving_ or position_.dist(old_position) > 0.5;
+    return true;
 }
 
 void Mob::set_facing(const Dir& dir) {
@@ -269,4 +270,8 @@ void Mob::set_facing(const Dir& dir) {
 
 sf::SoundBuffer* Mob::attack_sound() const {
     return attack_sound_;
+}
+
+float Mob::speed() const {
+    return speed_;
 }

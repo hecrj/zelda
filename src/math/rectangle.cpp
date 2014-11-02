@@ -60,7 +60,7 @@ bool Rectangle::CanCollideWith(Rectangle* rectangle) const {
     return rectangle != this;
 }
 
-bool Rectangle::CollidesWith(Rectangle* rectangle) const {
+bool Rectangle::CollidesWith(Rectangle const * rectangle) const {
     const vec2f& rposition = rectangle->position();
 
     return !(
@@ -107,4 +107,8 @@ void Rectangle::Draw() const {
 
 void Rectangle::Update(double delta) {
     // Do nothing
+}
+
+float Rectangle::Distance(Rectangle* rectangle) const {
+    return center().dist(rectangle->center());
 }

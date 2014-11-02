@@ -1,3 +1,4 @@
+#include <iostream>
 #include "animation.hpp"
 
 Animation::Animation(SpriteSet* spriteset) :

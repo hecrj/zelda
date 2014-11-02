@@ -52,6 +52,7 @@ set(SOURCE_FILES
     src/entity/mob/link.cpp
     src/entity/mob/guard.cpp
     src/entity/mob/stalfos.cpp
+    src/entity/mob/moldorm.cpp
 
     ### Mob actions
     src/entity/mob/action.cpp
@@ -65,6 +66,7 @@ set(SOURCE_FILES
     src/entity/mob/ai/follower.cpp
     src/entity/mob/ai/player.cpp
     src/entity/mob/ai/wander.cpp
+    src/entity/mob/ai/rotation_chase.cpp
 
     ## Objects
     src/entity/object.cpp

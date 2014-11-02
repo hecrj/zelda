@@ -10,7 +10,8 @@ Dialog::Message::Message(const std::string& line1, const std::string& line2, flo
     this->length = (int)(line1.size() + line2.size());
 }
 
-Dialog::Dialog(std::vector<Message*> const messages) :
+Dialog::Dialog(std::vector<Message*> const messages, const CallbackEffect::Callback& callback) :
+        super(callback),
         messages_(messages),
         elapsed_time_(0),
         current_message_(0)

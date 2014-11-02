@@ -2,6 +2,7 @@
 #include "../entity/mob/ai/player.hpp"
 #include "../audio/music.hpp"
 #include "../graphic/effect/fade.hpp"
+#include "../entity/mob/moldorm.hpp"
 
 LevelScreen::LevelScreen(bool* keys, const char* name)
 {
@@ -12,6 +13,9 @@ LevelScreen::LevelScreen(bool* keys, const char* name)
 
     level = new Level(name, hud);
     level->AddPlayer(link, "start");
+
+    Moldorm* moldorm = new Moldorm(160, 160);
+    level->AddEntity(moldorm);
 
     level->ChangeEffect(new Fade(Fade::IN, 0.5, [this] {
         level->Init();

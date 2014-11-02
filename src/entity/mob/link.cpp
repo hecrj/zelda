@@ -60,3 +60,11 @@ void Link::UpdateRupees(int rupees) {
 int Link::rupees() const {
     return rupees_;
 }
+
+bool Link::CollidesWith(Rectangle const * rectangle) const {
+    return super::CollidesWith(rectangle) and (
+            not rectangle->IsEntity() or
+            ((Entity*)rectangle)->type() != BOSS or
+            rectangle->CollidesWith(this)
+    );
+}

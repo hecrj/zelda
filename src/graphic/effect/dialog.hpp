@@ -1,12 +1,13 @@
 #pragma once
 
-#include "../effect.hpp"
 #include "../../math/vec2.hpp"
+#include "../callback_effect.hpp"
 #include <vector>
 #include <string>
 
-class Dialog : public Effect {
+class Dialog : public CallbackEffect {
 public:
+    typedef CallbackEffect super;
     struct Message {
         std::string line1;
         std::string line2;
@@ -16,7 +17,7 @@ public:
         Message(const std::string& line1, const std::string& line2, float speed);
     };
 
-    Dialog(const std::vector<Message*> messages);
+    Dialog(const std::vector<Message*> messages, const CallbackEffect::Callback& callback);
 
     bool IsFinished() const;
 

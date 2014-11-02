@@ -1,3 +1,3 @@
 enum EntityType {
-    UNKNOWN, PLAYER, ENEMY, PLANT
+    UNKNOWN, PLAYER, ENEMY, PLANT, BOSS
 };
