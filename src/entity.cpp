@@ -72,10 +72,6 @@ void Entity::Die() {
     }
 }
 
-void Entity::SetDieEffect(Effect* effect){
-    die_effect_ = effect;
-}
-
 void Entity::set_level(Level* level) {
     level_ = level;
 }

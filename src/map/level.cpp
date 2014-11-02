@@ -13,7 +13,7 @@
 #include "../entity/object/pole.hpp"
 #include "../entity/mob/stalfos.hpp"
 #include "../entity/mob/guard.hpp"
-#include "../entity/mob/linkfollower.hpp"
+#include "../entity/mob/link_follower.hpp"
 
 
 const int Level::FOLLOW_MARGIN = 120;
@@ -304,32 +304,8 @@ void Level::AddPlayer(Entity* player, std::string location) {
     AddEntity(player);
 }
 
-void Level::AddPlayer(Entity* player) {
-
-    if(!main_player_) {
-        main_player_ = player;
-        CalculateScrolling();
-    }
-
-    players_.push_back(player);
-    AddEntity(player);
-}
-
 const std::vector<Entity*>& Level::players() const {
     return players_;
-}
-
-const std::vector<Mob*> Level::Mobs() {
-    std::vector<Mob*> return_mobs;
-    std::vector<Entity*>::iterator it = alive_entities_.begin();
-
-    while(it != alive_entities_.end()) {
-        Entity* entity = *it;
-        if (entity->IsMob())
-            return_mobs.push_back((Mob*)entity);
-        ++it;
-    }
-    return return_mobs;
 }
 
 void Level::CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {

@@ -5,7 +5,7 @@
 #include "game.hpp"
 #include "utils.hpp"
 #include "debug.hpp"
-#include "entity/mob/linkfollower.hpp"
+#include "entity/mob/link_follower.hpp"
 #include "entity/mob/guard.hpp"
 #include "entity/mob/stalfos.hpp"
 #include "entity/item/rupee.hpp"
