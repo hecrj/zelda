@@ -79,6 +79,7 @@ set(SOURCE_FILES
     ## Items
     src/entity/item.cpp
     src/entity/item/rupee.cpp
+    src/entity/item/key.cpp
 
     ## Events
     src/entity/event.cpp

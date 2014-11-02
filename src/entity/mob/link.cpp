@@ -63,6 +63,14 @@ int Link::rupees() const {
     return rupees_;
 }
 
+int Link::small_keys() const {
+    return small_keys_;
+}
+
+int Link::boss_keys() const {
+    return boss_keys_;
+}
+
 bool Link::CollidesWith(Rectangle const * rectangle) const {
     return super::CollidesWith(rectangle) and (
             not rectangle->IsEntity() or
@@ -84,4 +92,12 @@ bool Link::HandleCollisionWith(Mob* mob) {
         default:
             break;
     }
+}
+
+void Link::UpdateSmallKeys(int keys) {
+    small_keys_ += keys;
+}
+
+void Link::UpdateBossKeys(int keys) {
+    boss_keys_ += keys;
 }

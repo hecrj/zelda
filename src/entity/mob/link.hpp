@@ -21,12 +21,18 @@ public:
     Link();
 
     int rupees() const;
+    int small_keys() const;
+    int boss_keys() const;
 
     void UpdateRupees(int rupees);
+    void UpdateSmallKeys(int keys);
+    void UpdateBossKeys(int keys);
 
     bool CollidesWith(Rectangle const * rectangle) const;
     bool HandleCollisionWith(Mob* mob);
 
 private:
     int rupees_;
+    int small_keys_;
+    int boss_keys_;
 };
