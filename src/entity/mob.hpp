@@ -13,6 +13,10 @@ class Path;
 class Mob : public Entity {
 public:
     typedef Entity super;
+
+    static sf::SoundBuffer* HIT_SOUND;
+    static void Load();
+
     Mob(float x, float y, float width, float height, Action* idle_action_);
     ~Mob();
 

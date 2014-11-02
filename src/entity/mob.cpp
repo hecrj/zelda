@@ -4,6 +4,13 @@
 #include "../map/level.hpp"
 #include "../map/path.hpp"
 #include "../debug.hpp"
+#include "../audio/sound.hpp"
+
+sf::SoundBuffer* Mob::HIT_SOUND;
+
+void Mob::Load() {
+    HIT_SOUND = Sound::Buffer("hit.wav");
+}
 
 Mob::Mob(float x, float y, float width, float height, Action* idle_action) :
         super(x, y, width, height),
@@ -14,7 +21,9 @@ Mob::Mob(float x, float y, float width, float height, Action* idle_action) :
         current_action_(idle_action),
         speed_(60),
         attack_sound_(0)
-{}
+{
+    hurt_sound_ = HIT_SOUND;
+}
 
 Mob::~Mob() {
     delete ai_;

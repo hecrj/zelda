@@ -120,6 +120,7 @@ void Game::Init()
     TitleScreen::Load();
     Level::Load();
     Hud::Load();
+    Mob::Load();
     Link::Load();
     LinkFollower::Load();
     Guard::Load();
