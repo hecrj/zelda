@@ -16,6 +16,7 @@
 #include "../entity/mob/link_follower.hpp"
 #include "../entity/door/boss_door.hpp"
 #include "../entity/mob/moldorm.hpp"
+#include "events/dungeon_boss.hpp"
 
 
 const int Level::FOLLOW_MARGIN = 120;
@@ -476,6 +477,7 @@ void Level::CalculateScrolling() {
 
 void Level::Load() {
     LEVEL_EVENTS["intro"] = new Intro();
+    LEVEL_EVENTS["dungeon_boss"] = new DungeonBoss();
 }
 
 Entity* Level::main_player() const {

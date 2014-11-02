@@ -415,6 +415,13 @@
     <property name="orientation" value="UP"/>
    </properties>
   </object>
+  <object name="dungeon_entrance" type="map_transition" x="265.5" y="30" width="13" height="22.5">
+   <properties>
+    <property name="map" value="dungeon"/>
+    <property name="orientation" value="DOWN"/>
+    <property name="place" value="start"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="Plants">
   <object type="plant" gid="777" x="192" y="1344"/>

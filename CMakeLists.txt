@@ -16,6 +16,7 @@ set(SOURCE_FILES
     src/screen/title_screen.cpp
     src/screen/level_screen.cpp
     src/screen/over_screen.cpp
+    src/screen/win_screen.cpp
 
     # Audio
     src/audio/music.cpp
@@ -101,6 +102,7 @@ set(SOURCE_FILES
 
     ## Level events
     src/map/events/intro.cpp
+    src/map/events/dungeon_boss.cpp
 
     # Mathematical data structures
     src/math/dir.cpp

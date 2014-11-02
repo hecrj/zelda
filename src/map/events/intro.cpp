@@ -14,12 +14,28 @@ namespace IntroPrivate {
             dialog(
                     "But now...",
                     "An evil power has returned..."
+            ),
+            dialog(
+                    "Its name was...",
+                    "Markorath, The Worm of the Abyss..."
+            ),
+            dialog(
+                    "Unless someone stopped it,",
+                    "he would reduce the world to ashes..."
+            ),
+            dialog(
+                    "A child of the woods went",
+                    "to confront him..."
+            ),
+            dialog(
+                    "This is his story...",
+                    ""
             )
     };
 
     void start(Level* level) {
         level->ChangeEffect(new Dialog(messages, [level]{
-            level->Transition("bigger", "start");
+            level->Transition("overworld", "start");
         }));
     }
 };

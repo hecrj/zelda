@@ -20,6 +20,7 @@
 #include "screen/over_screen.hpp"
 #include "entity/mob/moldorm.hpp"
 #include "entity/item/key.hpp"
+#include "screen/win_screen.hpp"
 
 const unsigned char Game::ACTION_KEY = 'z';
 const int Game::SCALE = 2;
@@ -131,7 +132,7 @@ void Game::Init()
     Plant::Load();
     Door::Load();
 
-    LoadLevel("overworld");
+    LoadTitleScreen();
 }
 
 void Game::Tick()
@@ -231,6 +232,10 @@ void Game::LoadLevel(const char* name) {
 
 void Game::Over(const std::string& from_level_name) {
     ChangeScreen(new OverScreen(from_level_name));
+}
+
+void Game::Win() {
+    ChangeScreen(new WinScreen());
 }
 
 void Game::Exit() {

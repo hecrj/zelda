@@ -82,7 +82,7 @@ int Link::boss_keys() const {
 bool Link::CollidesWith(Rectangle const * rectangle) const {
     return super::CollidesWith(rectangle) and (
             (not rectangle->IsEntity()) or
-            ((Entity*)rectangle)->type() != ENEMY or
+            (((Entity*)rectangle)->type() != ENEMY and ((Entity*)rectangle)->type() != BOSS) or
             is_vulnerable_ and (
                 ((Entity*)rectangle)->type() != BOSS or
                 rectangle->CollidesWith(this)

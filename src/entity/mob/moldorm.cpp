@@ -5,8 +5,9 @@
 #define _USE_MATH_DEFINES
 #include "math.h"
 #include "../../debug.hpp"
-#include "../../audio/sound.hpp"
-#include "../item/rupee.hpp"
+#include "../../game.hpp"
+#include "../../audio/music.hpp"
+#include "../../graphic/effect/fade.hpp"
 
 SpriteSheet* Moldorm::SPRITESHEET;
 SpriteSet* Moldorm::HEAD;
@@ -25,7 +26,7 @@ void Moldorm::Load() {
 }
 
 Moldorm::Moldorm(float x, float y, Level* level) :
-        super(x, y, 32, 32, new ::Move(this, {HEAD})),
+        super(x, y, 22, 22, new ::Move(this, {HEAD})),
         hitbox_(new MoldormHitbox(this))
 {
     set_AI(new RotationChase(this));
@@ -71,7 +72,7 @@ void Moldorm::Update(double delta) {
     }
 
     if(health_ < 12) {
-        speed_ = 160;
+        speed_ = 200;
     } else if(health_ < 16) {
         speed_ = 120;
     }
@@ -82,7 +83,7 @@ void Moldorm::Draw() const {
         node->Render();
 
     glPushMatrix();
-    glTranslatef(position_.x + 16, position_.y + 15, 0);
+    glTranslatef(position_.x + 11, position_.y + 10, 0);
     glRotatef(rotation, 0, 0, 1.0f);
     CurrentSprite()->Render(vec2f(-16, -15));
     glPopMatrix();
@@ -185,7 +186,12 @@ Moldorm::~Moldorm() {
 void Moldorm::Dead() {
     level_->RemoveCollidable(hitbox_);
 
-    // TODO: Transition to win screen
+    Music::ClearQueue();
+    Music::FadeOut(2);
+
+    level_->ChangeEffect(new Fade(Fade::OUT, 2, []{
+        Game::INSTANCE.Win();
+    }));
 }
 
 void Moldorm::Hit() {
