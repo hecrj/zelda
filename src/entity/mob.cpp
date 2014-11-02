@@ -203,10 +203,14 @@ Entity* Mob::SeekPlayer() const {
     // TODO: Check distance and range of vision
     Entity* return_entity = level_->players()[0];
     float distance_entity = this->Distance(return_entity);
-    for (Entity* current_entity: level_->players()){
-        if (this->Distance(current_entity) < distance_entity){
-            distance_entity = this->Distance(return_entity);
-            return_entity = current_entity;
+
+    std::vector<Mob*> current_mobs = level_->Mobs();
+    for (Mob* current_mob: current_mobs){
+        if (current_mob->type()==PLAYER && current_mob!=this){
+            if (this->Distance(current_mob) < distance_entity){
+                distance_entity = this->Distance(return_entity);
+                return_entity = current_mob;
+            }
         }
     }
     return return_entity;

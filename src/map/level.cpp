@@ -34,6 +34,7 @@ Level::Level(const char *map, Hud* hud) :
             std::vector<Path::Node*>(map_->width_pixels / Path::RESOLUTION, 0));
     dynamic_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
 
+    std::cout << "Checkpoint 1" << std::endl;
     for(auto& g : map_->object_groups) {
         TMX::ObjectGroup& object_group = g.second;
 
@@ -47,6 +48,7 @@ Level::Level(const char *map, Hud* hud) :
             } else {
                 Entity* map_object = 0;
 
+                std::cout << "Checkpoint 2" << std::endl;
                 if(object.type == "plant") {
                     map_object = new Plant(tileset_->sprite(object.gid), object.x, object.y - 16);
                 } else if(object.type == "key_door") {
@@ -78,6 +80,7 @@ Level::Level(const char *map, Hud* hud) :
                 AddCollidable(transition);
             }
         }
+        std::cout << "Checkpoint 3" << std::endl;
     }
 
     if(not map_->tilesets[0]->music.empty()) {
@@ -313,6 +316,19 @@ void Level::AddPlayer(Entity* player) {
 
 const std::vector<Entity*>& Level::players() const {
     return players_;
+}
+
+const std::vector<Mob*> Level::Mobs() {
+    std::vector<Mob*> return_mobs;
+    std::vector<Entity*>::iterator it = alive_entities_.begin();
+
+    while(it != alive_entities_.end()) {
+        Entity* entity = *it;
+        if (entity->IsMob())
+            return_mobs.push_back((Mob*)entity);
+        ++it;
+    }
+    return return_mobs;
 }
 
 void Level::CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {
