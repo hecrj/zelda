@@ -2,6 +2,7 @@
 
 #include "action/move.hpp"
 #include "../../graphic/hitbox/animation_hitbox.hpp"
+#include "ai/chase.hpp"
 
 SpriteSheet* Guard::MOVE_SPRITE_SHEET;
 std::vector<SpriteSet*> Guard::MOVE_ANIMATIONS;
@@ -17,13 +18,15 @@ void Guard::Load() {
     };
 }
 
-Guard::Guard() :
+Guard::Guard(float x, float y) :
         super(
-                0.0f, 0.0f, 18.0f, 14.0f,
+                x, y, 18.0f, 14.0f,
                 new ::Move(this, MOVE_ANIMATIONS)
         )
 {
     speed_ = 50;
+    type_ = ENEMY;
+    set_AI(new Chase(this));
 }
 
 void Guard::Update(double delta) {

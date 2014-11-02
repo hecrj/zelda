@@ -12,7 +12,7 @@ public:
 
     static void Load();
 
-    Guard();
+    Guard(float x, float y);
 
     void Update(double delta);
 };

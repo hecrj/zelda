@@ -11,6 +11,8 @@
 #include "../entity/door/key_door.hpp"
 #include "../entity/object/pole_switch.hpp"
 #include "../entity/object/pole.hpp"
+#include "../entity/mob/stalfos.hpp"
+#include "../entity/mob/guard.hpp"
 
 const int Level::FOLLOW_MARGIN = 120;
 const int Level::MAX_NODES_PER_TICK = 600;
@@ -54,6 +56,10 @@ Level::Level(const char *map, Hud* hud) :
                     map_object = new Pole(object.x, object.y - 16,
                             object.type == "blue_pole" ? Pole::Type::BLUE : Pole::Type::YELLOW,
                             tileset_->sprite(object.gid), tileset_->sprite(object.gid+1));
+                } else if(object.type == "stalfos") {
+                    map_object = new Stalfos(object.x, object.y - 16);
+                } else if(object.type == "guard") {
+                    map_object = new Guard(object.x, object.y - 16);
                 }
 
                 if(map_object)

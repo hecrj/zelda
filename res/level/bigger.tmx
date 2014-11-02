@@ -385,4 +385,8 @@
    </properties>
   </object>
  </objectgroup>
+ <objectgroup name="Enemies">
+  <object name="stalfos1" type="stalfos" x="282" y="225" width="21" height="35"/>
+  <object name="guard1" type="guard" x="350.667" y="281.333" width="20" height="40"/>
+ </objectgroup>
 </map>

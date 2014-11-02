@@ -1,6 +1,7 @@
 #include "stalfos.hpp"
 
 #include "action/move.hpp"
+#include "ai/chase_evade.hpp"
 
 SpriteSheet* Stalfos::MOVE_SPRITE_SHEET;
 std::vector<SpriteSet*> Stalfos::MOVE_ANIMATIONS;
@@ -15,11 +16,13 @@ void Stalfos::Load() {
     };
 }
 
-Stalfos::Stalfos() :
+Stalfos::Stalfos(float x, float y) :
         super(
-                0.0f, 0.0f, 20.0f, 14.0f,
+                x, y, 20.0f, 14.0f,
                 new ::Move(this, MOVE_ANIMATIONS)
         )
 {
     speed_ = 50;
+    type_ = ENEMY;
+    set_AI(new ChaseEvade(this));
 }

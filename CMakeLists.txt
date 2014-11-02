@@ -63,6 +63,7 @@ set(SOURCE_FILES
     ### Mob AIs
     src/entity/mob/ai.cpp
     src/entity/mob/ai/chase.cpp
+    src/entity/mob/ai/chase_evade.cpp
     src/entity/mob/ai/follower.cpp
     src/entity/mob/ai/player.cpp
     src/entity/mob/ai/wander.cpp
