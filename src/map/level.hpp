@@ -33,6 +33,7 @@ public:
     void AddLocation(Location* location);
     void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
+    void AddPlayer(Entity* player) ;
     void AddPlayer(Entity* player, std::string location);
     void Transition(const std::string& map, const std::string& place);
 

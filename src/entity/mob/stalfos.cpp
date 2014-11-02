@@ -2,6 +2,7 @@
 
 #include "action/move.hpp"
 #include "ai/chase_evade.hpp"
+#include "../../graphic/effect/rotation_fade.hpp"
 
 SpriteSheet* Stalfos::MOVE_SPRITE_SHEET;
 std::vector<SpriteSet*> Stalfos::MOVE_ANIMATIONS;
@@ -25,4 +26,8 @@ Stalfos::Stalfos(float x, float y) :
     speed_ = 50;
     type_ = ENEMY;
     set_AI(new ChaseEvade(this));
+
+    RotationFade* die_effect = new RotationFade();
+    die_effect->set_drawable(this);
+    this->SetDieEffect(die_effect);
 }

@@ -5,6 +5,7 @@
 #include "game.hpp"
 #include "utils.hpp"
 #include "debug.hpp"
+#include "entity/mob/linkfollower.hpp"
 #include "entity/mob/guard.hpp"
 #include "entity/mob/stalfos.hpp"
 #include "entity/item/rupee.hpp"
@@ -119,6 +120,7 @@ void Game::Init()
     Level::Load();
     Hud::Load();
     Link::Load();
+    LinkFollower::Load();
     Guard::Load();
     Stalfos::Load();
     Moldorm::Load();

@@ -24,6 +24,7 @@ public:
     Sprite* CurrentSprite(vec2f& position) const;
     Sprite* CurrentSprite() const;
     Entity* SeekPlayer() const;
+    Entity* SeekEnemy() const ;
     Path* FindPath(Entity* to);
     bool FollowPath(Path* path, double delta);
     float speed() const;

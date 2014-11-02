@@ -13,6 +13,8 @@
 #include "../entity/object/pole.hpp"
 #include "../entity/mob/stalfos.hpp"
 #include "../entity/mob/guard.hpp"
+#include "../entity/mob/linkfollower.hpp"
+
 
 const int Level::FOLLOW_MARGIN = 120;
 const int Level::MAX_NODES_PER_TICK = 600;
@@ -60,6 +62,9 @@ Level::Level(const char *map, Hud* hud) :
                     map_object = new Stalfos(object.x, object.y - 16);
                 } else if(object.type == "guard") {
                     map_object = new Guard(object.x, object.y - 16);
+                }
+                else if(object.type == "follower") {
+                    map_object = new LinkFollower(object.x, object.y - 16);
                 }
 
                 if(map_object)
@@ -275,6 +280,7 @@ void Level::AddEntity(Entity* entity) {
 }
 
 void Level::AddPlayer(Entity* player, std::string location) {
+    std::cout << "ola k ase" << std::endl;
     std::map<std::string, Location*>::iterator it = locations_.find(location);
 
     if(it == locations_.end()) {
@@ -284,6 +290,17 @@ void Level::AddPlayer(Entity* player, std::string location) {
 
     Location* location_object = it->second;
     location_object->Place(player);
+
+    if(!main_player_) {
+        main_player_ = player;
+        CalculateScrolling();
+    }
+
+    players_.push_back(player);
+    AddEntity(player);
+}
+
+void Level::AddPlayer(Entity* player) {
 
     if(!main_player_) {
         main_player_ = player;

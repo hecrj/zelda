@@ -123,7 +123,10 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
 
                 // Eventually, we could add here more collision types, like shield, etc.
                 if(c == Collision::DAMAGE) {
-                    ((Entity*) candidate)->Damage(this, 1);
+                    if (this->type()==ENEMY && ((Entity*) candidate)->type()==PLAYER)
+                        ((Entity*) candidate)->Damage(this, 1);
+                    else if (this->type()==PLAYER && ((Entity*) candidate)->type()!=PLAYER)
+                        ((Entity*) candidate)->Damage(this, 1);
                 }
             }
         }
@@ -201,7 +204,42 @@ void Mob::MoveTowards(Entity* entity, double delta) {
 
 Entity* Mob::SeekPlayer() const {
     // TODO: Check distance and range of vision
-    return level_->players()[0];
+    Entity* return_entity = level_->players()[0];
+    float distance_entity = this->Distance(return_entity);
+    for (Entity* current_entity: level_->players()){
+        if (this->Distance(current_entity) < distance_entity){
+            distance_entity = this->Distance(return_entity);
+            return_entity = current_entity;
+        }
+    }
+    return return_entity;
+}
+
+Entity* Mob::SeekEnemy() const {
+    // TODO: Check distance and range of vision
+    Rectangle rectangle(position_.x - 25, position_ .y - 25, 50, 50);
+
+    std::vector<Rectangle*> candidates;
+    level_->DynamicCollidablesFor(&rectangle, candidates);
+
+    Entity* selected = 0;
+    float dist = 130;
+
+    for(Rectangle* candidate : candidates) {
+        if(candidate->IsEntity()) {
+            Entity* entity = (Entity*) candidate;
+
+            if(entity->type() == ENEMY) {
+                float entity_dist = entity->Distance(this);
+
+                if(entity_dist < dist) {
+                    selected = entity;
+                    dist = entity_dist;
+                }
+            }
+        }
+    }
+    return selected;
 }
 
 Path* Mob::FindPath(Entity* to) {

@@ -22,6 +22,8 @@ public:
     virtual bool moving() const;
     virtual bool IsMob() const;
     bool IsVulnerable() const;
+    void SetDieEffect(Effect* effect);
+
 
     Sprite* CurrentSprite() const;
     Sprite* CurrentSprite(vec2f& position) const;

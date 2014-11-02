@@ -1,18 +1,21 @@
-#include "link.hpp"
+#include "linkfollower.hpp"
 #include "action/move.hpp"
 #include "action/attack.hpp"
 #include "../../audio/sound.hpp"
+#include "ai/follower.hpp"
+#include "../../graphic/effect/rotation_fade.hpp"
+#include "../../graphic/hitbox/animation_hitbox.hpp"
 
-SpriteSheet* Link::MOVE_SPRITE_SHEET;
-std::vector<SpriteSet*> Link::MOVE_ANIMATIONS;
-SpriteSheet* Link::ATTACK_SPRITE_SHEET;
-std::vector<SpriteSet*> Link::ATTACK_ANIMATIONS;
-sf::SoundBuffer* Link::ATTACK_SOUND;
-sf::SoundBuffer* Link::HURT_SOUND;
+SpriteSheet* LinkFollower::MOVE_SPRITE_SHEET;
+std::vector<SpriteSet*> LinkFollower::MOVE_ANIMATIONS;
+SpriteSheet* LinkFollower::ATTACK_SPRITE_SHEET;
+std::vector<SpriteSet*> LinkFollower::ATTACK_ANIMATIONS;
+sf::SoundBuffer* LinkFollower::ATTACK_SOUND;
+sf::SoundBuffer* LinkFollower::HURT_SOUND;
 
-void Link::Load() {
-    MOVE_SPRITE_SHEET = new SpriteSheet("charset/link/move_shield.png", 147, 108, 21, 27);
-    ATTACK_SPRITE_SHEET = new SpriteSheet("charset/link/attack_sword.png", 324, 144, 36, 36);
+void LinkFollower::Load() {
+    MOVE_SPRITE_SHEET = new SpriteSheet("charset/follower/move_shield.png", 147, 108, 21, 27);
+    ATTACK_SPRITE_SHEET = new SpriteSheet("charset/follower/attack_sword.png", 324, 144, 36, 36);
 
     MOVE_ANIMATIONS = {
             new SpriteSet(MOVE_SPRITE_SHEET->GetSprites(0, 7), 3, vec2f(0.0f, -12.0f), {20, 30, 40, 30, 40, 30, 20}),
@@ -38,32 +41,25 @@ void Link::Load() {
     HURT_SOUND = Sound::Buffer("link/hurt.wav");
 }
 
-Link::Link() :
+LinkFollower::LinkFollower(float x, float y) :
         super(
-                0.0f, 0.0f, 20.0f, 14.0f,
+                x, y, 18.0f, 14.0f,
                 new ::Move(this, MOVE_ANIMATIONS)
-        ),
-        rupees_(0)
+        )
 {
+    speed_ = 50;
     type_ = PLAYER;
+    set_AI(new Follower(this));
+    RotationFade* die_effect = new RotationFade();
+    die_effect->set_drawable(this);
+    this->SetDieEffect(die_effect);
+
     attack_sound_ = ATTACK_SOUND;
     hurt_sound_ = HURT_SOUND;
-
     AddAction("attack", new Attack(this, ATTACK_ANIMATIONS));
 }
 
-void Link::UpdateRupees(int rupees) {
-    rupees_ += rupees;
-
-    if(rupees_ > 99)
-        rupees_ = 99;
-}
-
-int Link::rupees() const {
-    return rupees_;
-}
-
-bool Link::CollidesWith(Rectangle const * rectangle) const {
+bool LinkFollower::CollidesWith(Rectangle const * rectangle) const {
     return super::CollidesWith(rectangle) and (
             not rectangle->IsEntity() or
             ((Entity*)rectangle)->type() != BOSS or
@@ -71,7 +67,7 @@ bool Link::CollidesWith(Rectangle const * rectangle) const {
     );
 }
 
-bool Link::HandleCollisionWith(Mob* mob) {
+bool LinkFollower::HandleCollisionWith(Mob* mob) {
     switch(mob->type()) {
         case ENEMY:
             Damage(mob, 2);

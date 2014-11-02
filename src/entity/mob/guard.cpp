@@ -3,6 +3,7 @@
 #include "action/move.hpp"
 #include "../../graphic/hitbox/animation_hitbox.hpp"
 #include "ai/chase.hpp"
+#include "../../graphic/effect/rotation_fade.hpp"
 
 SpriteSheet* Guard::MOVE_SPRITE_SHEET;
 std::vector<SpriteSet*> Guard::MOVE_ANIMATIONS;
@@ -27,6 +28,9 @@ Guard::Guard(float x, float y) :
     speed_ = 50;
     type_ = ENEMY;
     set_AI(new Chase(this));
+    RotationFade* die_effect = new RotationFade();
+    die_effect->set_drawable(this);
+    this->SetDieEffect(die_effect);
 }
 
 void Guard::Update(double delta) {

@@ -6,5 +6,17 @@
 class RotationFade : public Effect {
 public:
     typedef Effect super;
-    RotationFade(float duration);
+    static const float REDUCTION;
+    static const float ROTATION;
+    RotationFade() ;
+
+    bool IsFinished() const;
+
+    void Tick(double delta);
+    void Render() const;
+
+private:
+    float rotation_;
+    float size_;
+    float final_size_;
 };

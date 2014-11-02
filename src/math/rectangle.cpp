@@ -109,6 +109,6 @@ void Rectangle::Update(double delta) {
     // Do nothing
 }
 
-float Rectangle::Distance(Rectangle* rectangle) const {
+float Rectangle::Distance(const Rectangle* rectangle) const {
     return center().dist(rectangle->center());
 }

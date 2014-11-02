@@ -19,7 +19,7 @@ public:
     vec2f bottom_right(const vec2f &pos) const;
     float width() const;
     float height() const;
-    float Distance(Rectangle* rectangle) const;
+    float Distance(const Rectangle* rectangle) const;
 
     virtual bool CanCollideWith(Rectangle* rectangle) const;
     virtual bool CollidesWith(Rectangle const * rectangle) const;
