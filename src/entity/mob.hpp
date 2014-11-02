@@ -35,7 +35,7 @@ public:
     void set_facing(const Dir& dir);
     void AddAction(const std::string& name, Action* action);
     void ChangeAction(Action *action);
-    void Move(const Dir& direction, double delta);
+    bool Move(const Dir& direction, double delta);
     bool Move(const vec2f& direction, int intensity, double delta);
     void MoveTowards(Entity* entity, double delta);
     void Slide(const vec2f direction, int intensity, double delta);

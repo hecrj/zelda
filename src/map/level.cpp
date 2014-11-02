@@ -63,11 +63,11 @@ Level::Level(const char *map, Hud* hud) :
                             object.type == "blue_pole" ? Pole::Type::BLUE : Pole::Type::YELLOW,
                             tileset_->sprite(object.gid), tileset_->sprite(object.gid+1));
                 } else if(object.type == "stalfos") {
-                    map_object = new Stalfos(object.name, object.x, object.y - 16,
+                    map_object = new Stalfos(object.name, object.x, object.y,
                         object.property.find("small_key") != object.property.end(),
                         object.property.find("boss_key") != object.property.end());
                 } else if(object.type == "guard") {
-                    map_object = new Guard(object.x, object.y - 16);
+                    map_object = new Guard(object.x, object.y);
                 }
                 else if(object.type == "follower") {
                     map_object = new LinkFollower(object.x, object.y - 16);

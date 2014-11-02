@@ -180,7 +180,7 @@
  <objectgroup name="Objects">
   <object name="start" type="map_transition" x="250.568" y="630.591" width="11" height="5">
    <properties>
-    <property name="map" value="bigger"/>
+    <property name="map" value="overworld"/>
     <property name="orientation" value="UP"/>
     <property name="place" value="house"/>
    </properties>

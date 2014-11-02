@@ -57,12 +57,12 @@ bool Mob::CanMove() const {
     return IsAlive() && !current_action_->IsBlocking();
 }
 
-void Mob::Move(const Dir& direction, double delta) {
+bool Mob::Move(const Dir& direction, double delta) {
     if(facing_.index() == direction.index() || facing_candidate_ == -1) {
         facing_candidate_ = direction.index();
     }
 
-    Move(direction.vector(), 1, delta);
+    return Move(direction.vector(), 1, delta);
 }
 
 bool Mob::Move(const vec2f& direction, int intensity, double delta) {
