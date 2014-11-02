@@ -202,11 +202,10 @@ void Mob::MoveTowards(Entity* entity, double delta) {
 Entity* Mob::SeekPlayer() const {
     Entity* return_entity = level_->players()[0];
     float distance_entity = this->Distance(return_entity);
-    for (Entity* current_entity: level_->players()){
-        if (this->Distance(current_entity) < distance_entity){
-            distance_entity = this->Distance(return_entity);
-            return_entity = current_entity;
-        }
+    Entity* current_entity = level_->followers()[0];
+    if (this->Distance(current_entity) < distance_entity && this!=current_entity){
+        distance_entity = this->Distance(return_entity);
+        return_entity = current_entity;
     }
     return return_entity;
 }

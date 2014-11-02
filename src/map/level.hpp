@@ -24,6 +24,7 @@ public:
 
     Path* FindPath(Mob* from, Entity* to);
     const std::vector<Entity*>& players() const;
+    const std::vector<Entity*>& followers() const ;
     Entity* main_player() const;
 
     bool transition_requested() const;
@@ -35,6 +36,7 @@ public:
     void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void AddPlayer(Entity* player, std::string location);
+    void AddFollower(Entity* follower) ;
     void Transition(const std::string& map, const std::string& place);
 
     void Init();
@@ -56,6 +58,7 @@ private:
     vec2f position_;
     Entity* main_player_;
     std::vector<Entity*> players_;
+    std::vector<Entity*> followers_;
     std::set<Entity*, Entity::SortByYCoordinateAsc> entities_;
     std::vector<Entity*> alive_entities_;
     std::vector<Entity*> zombies_;
