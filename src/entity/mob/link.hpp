@@ -15,6 +15,7 @@ public:
 
     static sf::SoundBuffer* ATTACK_SOUND;
     static sf::SoundBuffer* HURT_SOUND;
+    static sf::SoundBuffer* DIE_SOUND;
 
     static void Load();
 
@@ -39,6 +40,8 @@ public:
     bool HandleCollisionWith(Mob* mob);
 
     bool CanCollideWith(Rectangle *rectangle) const;
+
+    void Die();
 
 
 private:

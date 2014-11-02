@@ -3,6 +3,10 @@
 #include "action/attack.hpp"
 #include "../../audio/sound.hpp"
 #include "../../graphic/effect/blink.hpp"
+#include "../../map/level.hpp"
+#include "../../graphic/effect/fade.hpp"
+#include "../../audio/music.hpp"
+#include "../../game.hpp"
 
 SpriteSheet* Link::MOVE_SPRITE_SHEET;
 std::vector<SpriteSet*> Link::MOVE_ANIMATIONS;
@@ -10,6 +14,7 @@ SpriteSheet* Link::ATTACK_SPRITE_SHEET;
 std::vector<SpriteSet*> Link::ATTACK_ANIMATIONS;
 sf::SoundBuffer* Link::ATTACK_SOUND;
 sf::SoundBuffer* Link::HURT_SOUND;
+sf::SoundBuffer* Link::DIE_SOUND;
 
 void Link::Load() {
     MOVE_SPRITE_SHEET = new SpriteSheet("charset/link/move_shield.png", 147, 108, 21, 27);
@@ -37,6 +42,7 @@ void Link::Load() {
 
     ATTACK_SOUND = Sound::Buffer("link/sword1.wav");
     HURT_SOUND = Sound::Buffer("link/hurt.wav");
+    DIE_SOUND = Sound::Buffer("link/dies.wav");
 }
 
 Link::Link() :
@@ -49,6 +55,7 @@ Link::Link() :
     type_ = PLAYER;
     attack_sound_ = ATTACK_SOUND;
     hurt_sound_ = HURT_SOUND;
+    die_sound_ = DIE_SOUND;
 
     AddAction("attack", new Attack(this, ATTACK_ANIMATIONS));
 }
@@ -75,6 +82,7 @@ int Link::boss_keys() const {
 bool Link::CollidesWith(Rectangle const * rectangle) const {
     return super::CollidesWith(rectangle) and (
             (not rectangle->IsEntity()) or
+            ((Entity*)rectangle)->type() != ENEMY or
             is_vulnerable_ and (
                 ((Entity*)rectangle)->type() != BOSS or
                 rectangle->CollidesWith(this)
@@ -135,4 +143,14 @@ void Link::Damage(Entity* from, int amount) {
             is_vulnerable_ = true;
         }));
     }
+}
+
+void Link::Die() {
+    super::Die();
+
+    Music::ClearQueue();
+    Music::FadeOut(1);
+    level_->ChangeEffect(new Fade(Fade::OUT, 1, [this]{
+        Game::INSTANCE.Over(level_->name());
+    }));
 }

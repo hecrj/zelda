@@ -81,14 +81,8 @@ void Chase::Update(double delta) {
                 direction_ = (dying)?((diffX>0)?Dir::RIGHT:Dir::LEFT):((diffX>0)?Dir::LEFT:Dir::RIGHT);
             else if (!dying && diffXaux < mob_->width())
                 direction_ = (dying)?((diffX>0)?Dir::LEFT:Dir::RIGHT):((diffY>0)?Dir::UP:Dir::DOWN);
-            /*if (diffYaux < mob_->height())
-                direction_ = (diffX>0)?Dir::LEFT:Dir::RIGHT;
-            else if (diffXaux < mob_->width())
-                direction_ = (diffY>0)?Dir::UP:Dir::DOWN;*/
             --current_duration_;
-        }
-        else{
-            std::cout << "hola" << std::endl;
+        } else {
             if (diffYaux < mob_->height())
                 direction_ = (dying)?((diffX>0)?Dir::RIGHT:Dir::LEFT):((diffX>0)?Dir::LEFT:Dir::RIGHT);
             else if (diffXaux < mob_->width())
@@ -97,15 +91,6 @@ void Chase::Update(double delta) {
                 direction_ = (dying)?((diffY>0)?Dir::DOWN:Dir::UP):((diffY>0)?Dir::UP:Dir::DOWN);
             else
                 direction_ = (dying)?((diffX>0)?Dir::RIGHT:Dir::LEFT):((diffX>0)?Dir::LEFT:Dir::RIGHT);
-            /*if (diffYaux < mob_->height())
-                direction_ = (diffX>0)?Dir::LEFT:Dir::RIGHT;
-            else if (diffXaux < mob_->width())
-                direction_ = (diffY>0)?Dir::UP:Dir::DOWN;
-            else if (diffYaux > diffXaux/3.0f)
-                direction_ = (diffY>0)?Dir::UP:Dir::DOWN;
-            else
-                direction_ = (diffX>0)?Dir::LEFT:Dir::RIGHT;*/
-
             current_duration_ = period_duration_;
         }
 

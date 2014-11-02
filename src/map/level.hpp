@@ -22,6 +22,7 @@ public:
     Level(const char* map, Hud* hud);
     ~Level();
 
+    std::string name() const;
     Path* FindPath(Mob* from, Entity* to);
     const std::vector<Entity*>& players() const;
     Entity* main_player() const;

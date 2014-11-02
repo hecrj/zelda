@@ -485,3 +485,7 @@ Entity* Level::main_player() const {
 void Level::RemoveCollidable(Rectangle* rectangle) {
     dynamic_collidables_->Remove(rectangle);
 }
+
+std::string Level::name() const {
+    return name_;
+}
