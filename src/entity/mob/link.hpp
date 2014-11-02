@@ -33,6 +33,8 @@ public:
     void UpdateSmallKeys(int keys);
     void UpdateBossKeys(int keys);
 
+    void Damage(Entity* from, int amount);
+
     bool CollidesWith(Rectangle const * rectangle) const;
     bool HandleCollisionWith(Mob* mob);
 

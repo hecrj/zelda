@@ -133,7 +133,7 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
 void Mob::Damage(Entity* from, int damage) {
     super::Damage(from, damage);
 
-    if(!current_action_->IsTemporary()) {
+    if(is_vulnerable_ and !current_action_->IsTemporary()) {
         vec2f dir = center() - from->center();
         dir.normalize();
 
