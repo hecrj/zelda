@@ -4,6 +4,7 @@
 Blink::Blink(float duration, float interval, const CallbackEffect::Callback& callback) :
         super(duration, callback),
         interval_(interval),
+        current_(0),
         show_(false)
 {}
 

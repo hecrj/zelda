@@ -14,6 +14,7 @@ Collision AnimationHitbox::CollisionType(Rectangle* rectangle) const {
     if(!rectangle->IsHitbox())
         return DAMAGE;
 
+
     Hitbox* h = (Hitbox*) rectangle;
 
     vec2f sprite_position;

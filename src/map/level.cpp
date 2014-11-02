@@ -44,7 +44,7 @@ Level::Level(const char *map, Hud* hud) :
 
             if(object.type == "location") {
                 Location* location = new Location(object.x, object.y, object.width, object.height, object.name,
-                    object.property["orientation"]);
+                        object.property["orientation"]);
                 AddLocation(location);
             } else {
                 Entity* map_object = 0;
@@ -68,10 +68,6 @@ Level::Level(const char *map, Hud* hud) :
                         object.property.find("boss_key") != object.property.end());
                 } else if(object.type == "guard") {
                     map_object = new Guard(object.x, object.y);
-                }
-                else if(object.type == "follower") {
-                    map_object = new LinkFollower(object.x, object.y - 16);
-                    this->AddFollower(map_object);
                 } else if(object.type == "moldorm") {
                     map_object = new Moldorm(object.x, object.y, this);
                 }
@@ -308,16 +304,8 @@ void Level::AddPlayer(Entity* player, std::string location) {
     AddEntity(player);
 }
 
-void Level::AddFollower(Entity* follower) {
-    followers_.push_back(follower);
-}
-
 const std::vector<Entity*>& Level::players() const {
     return players_;
-}
-
-const std::vector<Entity*>& Level::followers() const {
-    return followers_;
 }
 
 void Level::CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {
@@ -492,4 +480,8 @@ void Level::Load() {
 
 Entity* Level::main_player() const {
     return main_player_;
+}
+
+void Level::RemoveCollidable(Rectangle* rectangle) {
+    dynamic_collidables_->Remove(rectangle);
 }

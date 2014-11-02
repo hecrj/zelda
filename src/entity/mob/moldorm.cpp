@@ -1,9 +1,12 @@
+#include <iostream>
 #include "moldorm.hpp"
 #include "action/move.hpp"
 #include "ai/rotation_chase.hpp"
 #define _USE_MATH_DEFINES
 #include "math.h"
 #include "../../debug.hpp"
+#include "../../audio/sound.hpp"
+#include "../item/rupee.hpp"
 
 SpriteSheet* Moldorm::SPRITESHEET;
 SpriteSet* Moldorm::HEAD;
@@ -30,6 +33,8 @@ Moldorm::Moldorm(float x, float y, Level* level) :
     is_vulnerable_ = false;
     facing_ = Dir::DOWN;
     rotation = 0;
+    speed_ = 100;
+    health_ = 20;
 
     MoldormNode* middle1 = new MoldormNode(x, y, 17, 15, vec2f(-8, -8), 18, MIDDLE3, this, this);
     MoldormNode* middle2 = new MoldormNode(x, y, 17, 15, vec2f(-8, -8), 13, MIDDLE2, this, middle1);
@@ -41,22 +46,34 @@ Moldorm::Moldorm(float x, float y, Level* level) :
     nodes_.push_back(middle2);
     nodes_.push_back(middle1);
 
+    tail_ = tail;
     level->AddCollidable(hitbox_);
 }
 
 void Moldorm::Update(double delta) {
     super::Update(delta);
     facing_ = Dir::DOWN;
+
     float angle = rotation * (float)M_PI / 180;
-    vec2f direction = vec2f((float)-sin(angle), (float)cos(angle));
+    float x = (float)-sin(angle);
+    float y = (float)cos(angle);
 
-    if(Move(direction, 1, delta)) {
+    if(Move(vec2f(x, 0), 1, delta)) {
+        if(not Move(vec2f(0, y), 1, delta)) {
+            rotation = 180 - rotation;
+        }
+
         hitbox_->set_position(position_.x - 49, position_.y - 50);
-
         for(MoldormNode* node : nodes_)
             node->Update(delta);
     } else {
-        rotation = (rotation + 180) % 360;
+        rotation = 360 - rotation;
+    }
+
+    if(health_ < 12) {
+        speed_ = 160;
+    } else if(health_ < 16) {
+        speed_ = 120;
     }
 }
 
@@ -120,10 +137,12 @@ void Moldorm::MoldormNode::Draw() const {
 Moldorm::MoldormHitbox::MoldormHitbox(Moldorm* moldorm) :
         super(moldorm->position().x - 49, moldorm->position().y - 50, 130, 130),
         moldorm_(moldorm)
-{}
+{
+    type_ = BOSS;
+}
 
 bool Moldorm::MoldormHitbox::CanCollideWith(Rectangle* rectangle) const {
-    return moldorm_ != rectangle and moldorm_->CollidesWith(rectangle);
+    return moldorm_ != rectangle and moldorm_->CanCollideWith(rectangle);
 }
 
 bool Moldorm::HandleCollisionWith(Mob* mob) {
@@ -133,4 +152,51 @@ bool Moldorm::HandleCollisionWith(Mob* mob) {
 
 bool Moldorm::MoldormHitbox::HandleCollisionWith(Mob* mob) {
     return moldorm_->HandleCollisionWith(mob);
+}
+
+void Moldorm::MoldormHitbox::Damage(Entity* from, int amount) {
+    moldorm_->Hit();
+}
+
+Sprite* Moldorm::MoldormHitbox::CurrentSprite(vec2f& position) const {
+    position = moldorm_->tail()->position() - position_;
+    return TAIL;
+}
+
+Moldorm::MoldormNode* Moldorm::tail() const {
+    return tail_;
+}
+
+Sprite* Moldorm::MoldormHitbox::CurrentSprite() const {
+    return TAIL;
+}
+
+bool Moldorm::MoldormHitbox::CollidesWith(Rectangle const* rectangle) const {
+    return moldorm_->CollidesWith(rectangle);
+}
+
+Moldorm::~Moldorm() {
+    delete hitbox_;
+
+    for(MoldormNode* node : nodes_)
+        delete node;
+}
+
+void Moldorm::Dead() {
+    level_->RemoveCollidable(hitbox_);
+
+    // TODO: Transition to win screen
+}
+
+void Moldorm::Hit() {
+    health_ -= 1;
+}
+
+void Moldorm::Rotate() {
+    rotation += 2;
+}
+
+vec2f Moldorm::direction() const {
+    float angle = rotation * (float)M_PI / 180;
+    return vec2f((float)-sin(angle), (float)cos(angle));
 }

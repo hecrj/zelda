@@ -18,7 +18,7 @@ public:
 
     static void Load();
 
-    LinkFollower(float x, float y);
+    LinkFollower();
 
 
     bool CollidesWith(Rectangle const * rectangle) const;

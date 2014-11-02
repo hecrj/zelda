@@ -120,10 +120,10 @@ void Link::AddBossKey(const std::string& name) {
 }
 
 bool Link::CanCollideWith(Rectangle *rectangle) const{
-    if (rectangle->IsEntity()){
-        return ((Entity*) rectangle)->type()!=PLAYER;
-    }
-    return true;
+    return super::CanCollideWith(rectangle) and (
+            not rectangle->IsEntity() or
+            ((Entity*) rectangle)->type() != FOLLOWER
+    );
 }
 
 void Link::Damage(Entity* from, int amount) {

@@ -4,6 +4,7 @@
 #include "../graphic/effect/fade.hpp"
 #include <iostream>
 #include "../entity/mob/moldorm.hpp"
+#include "../entity/mob/link_follower.hpp"
 
 LevelScreen::LevelScreen(bool* keys, const char* name)
 {
@@ -14,6 +15,7 @@ LevelScreen::LevelScreen(bool* keys, const char* name)
 
     level = new Level(name, hud);
     level->AddPlayer(link, "start");
+    level->AddPlayer(new LinkFollower(), "start");
 
     level->ChangeEffect(new Fade(Fade::IN, 0.5, [this] {
         level->Init();

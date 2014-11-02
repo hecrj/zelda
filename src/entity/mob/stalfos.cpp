@@ -52,10 +52,3 @@ void Stalfos::Dead() {
         super::Dead();
     }
 }
-
-bool Stalfos::CanCollideWith(Rectangle *rectangle) const{
-    if (rectangle->IsEntity()){
-        return ((Entity*) rectangle)->type()!=ENEMY;
-    }
-    return true;
-}

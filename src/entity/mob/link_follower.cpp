@@ -41,9 +41,9 @@ void LinkFollower::Load() {
     HURT_SOUND = Sound::Buffer("link/hurt.wav");
 }
 
-LinkFollower::LinkFollower(float x, float y) :
+LinkFollower::LinkFollower() :
         super(
-                x, y, 18.0f, 14.0f,
+                0, 0, 18.0f, 14.0f,
                 new ::Move(this, MOVE_ANIMATIONS)
         )
 {
@@ -77,12 +77,13 @@ bool LinkFollower::HandleCollisionWith(Mob* mob) {
         default:
             break;
     }
-}
 
-bool LinkFollower::CanCollideWith(Rectangle *rectangle) const{
-    if (rectangle->IsEntity()){
-        return ((Entity*) rectangle)->type()!=PLAYER;
-    }
     return true;
 }
 
+bool LinkFollower::CanCollideWith(Rectangle *rectangle) const{
+    return super::CanCollideWith(rectangle) and (
+            not rectangle->IsEntity() or
+                    ((Entity*) rectangle)->type() != PLAYER
+    );
+}
