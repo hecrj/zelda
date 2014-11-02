@@ -30,6 +30,7 @@ Level::Level(const char *map, Hud* hud) :
         main_player_(0),
         transition_requested_(false)
 {
+    std::cout << "Checkpoint 0" << std::endl;
     nodes_ = std::vector<std::vector<Path::Node*>>(map_->height_pixels / Path::RESOLUTION,
             std::vector<Path::Node*>(map_->width_pixels / Path::RESOLUTION, 0));
     dynamic_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));

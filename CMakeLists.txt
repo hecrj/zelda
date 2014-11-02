@@ -50,6 +50,7 @@ set(SOURCE_FILES
     ## Mobs
     src/entity/mob.cpp
     src/entity/mob/link.cpp
+    src/entity/mob/linkfollower.cpp
     src/entity/mob/guard.cpp
     src/entity/mob/stalfos.cpp
     src/entity/mob/moldorm.cpp

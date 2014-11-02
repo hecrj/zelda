@@ -18,7 +18,7 @@ namespace IntroPrivate {
     };
 
     void start(Level* level) {
-        level->Transition("bigger","start");
+        level->Transition("prova","start");
         /*level->ChangeEffect(new Dialog(messages, [level]{
             level->Transition("bigger", "start");
         }));*/

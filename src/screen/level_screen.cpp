@@ -40,6 +40,7 @@ void LevelScreen::Tick(double delta) {
 
 
             Level* old_level = level;
+            std::cout << "Checkpoint level-screen.1.1.2 " << map.c_str() << std::endl;
             level = new Level(map.c_str(), hud);
             std::cout << "Checkpoint level-screen.1.2" << std::endl;
 
