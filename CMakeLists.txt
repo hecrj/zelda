@@ -53,6 +53,7 @@ set(SOURCE_FILES
     src/entity/mob/guard.cpp
     src/entity/mob/stalfos.cpp
     src/entity/mob/moldorm.cpp
+    src/entity/mob/link_follower.cpp
 
     ### Mob actions
     src/entity/mob/action.cpp

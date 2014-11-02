@@ -25,9 +25,6 @@ Stalfos::Stalfos(float x, float y) :
 {
     speed_ = 50;
     type_ = ENEMY;
+    die_effect_ = new RotationFade();
     set_AI(new ChaseEvade(this));
-
-    RotationFade* die_effect = new RotationFade();
-    die_effect->set_drawable(this);
-    this->SetDieEffect(die_effect);
 }

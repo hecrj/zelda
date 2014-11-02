@@ -13,7 +13,7 @@
 #include "../entity/object/pole.hpp"
 #include "../entity/mob/stalfos.hpp"
 #include "../entity/mob/guard.hpp"
-#include "../entity/mob/linkfollower.hpp"
+#include "../entity/mob/link_follower.hpp"
 
 
 const int Level::FOLLOW_MARGIN = 120;

@@ -123,10 +123,7 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
 
                 // Eventually, we could add here more collision types, like shield, etc.
                 if(c == Collision::DAMAGE) {
-                    if (this->type()==ENEMY && ((Entity*) candidate)->type()==PLAYER)
-                        ((Entity*) candidate)->Damage(this, 1);
-                    else if (this->type()==PLAYER && ((Entity*) candidate)->type()!=PLAYER)
-                        ((Entity*) candidate)->Damage(this, 1);
+                    ((Entity*) candidate)->Damage(this, 1);
                 }
             }
         }

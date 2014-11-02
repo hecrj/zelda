@@ -1,4 +1,4 @@
-#include "linkfollower.hpp"
+#include "link_follower.hpp"
 #include "action/move.hpp"
 #include "action/attack.hpp"
 #include "../../audio/sound.hpp"
@@ -50,10 +50,7 @@ LinkFollower::LinkFollower(float x, float y) :
     speed_ = 50;
     type_ = PLAYER;
     set_AI(new Follower(this));
-    RotationFade* die_effect = new RotationFade();
-    die_effect->set_drawable(this);
-    this->SetDieEffect(die_effect);
-
+    die_effect_ = new RotationFade();
     attack_sound_ = ATTACK_SOUND;
     hurt_sound_ = HURT_SOUND;
     AddAction("attack", new Attack(this, ATTACK_ANIMATIONS));
