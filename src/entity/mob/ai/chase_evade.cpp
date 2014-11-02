@@ -84,5 +84,5 @@ void ChaseEvade::Update(double delta) {
 }
 
 void ChaseEvade::Debug() const {
-    AI::Debug();
+
 }

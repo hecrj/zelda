@@ -8,12 +8,9 @@
 
 TileMap::TileMap(const char* name)
 {
-    std::cout << "Prova1" << std::endl;
     std::stringstream path;
     path << "res/level/" << name << ".tmx";
-    std::cout << "Prova2" << std::endl;
     map_ = TMX::parse(path.str().c_str());
-    std::cout << "Prova3" << std::endl;
     static_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
     tileset_ = new Tileset(map_->tilesets[0]);
 

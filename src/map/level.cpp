@@ -30,13 +30,10 @@ Level::Level(const char *map, Hud* hud) :
         main_player_(0),
         transition_requested_(false)
 {
-    map_->Print();
-    std::cout << "Checkpoint 0" << std::endl;
     nodes_ = std::vector<std::vector<Path::Node*>>(map_->height_pixels / Path::RESOLUTION,
             std::vector<Path::Node*>(map_->width_pixels / Path::RESOLUTION, 0));
     dynamic_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
 
-    std::cout << "Checkpoint 1" << std::endl;
     for(auto& g : map_->object_groups) {
         TMX::ObjectGroup& object_group = g.second;
 
@@ -50,7 +47,6 @@ Level::Level(const char *map, Hud* hud) :
             } else {
                 Entity* map_object = 0;
 
-                std::cout << "Checkpoint 2" << std::endl;
                 if(object.type == "plant") {
                     map_object = new Plant(tileset_->sprite(object.gid), object.x, object.y - 16);
                 } else if(object.type == "key_door") {
@@ -82,7 +78,6 @@ Level::Level(const char *map, Hud* hud) :
                 AddCollidable(transition);
             }
         }
-        std::cout << "Checkpoint 3" << std::endl;
     }
 
     if(not map_->tilesets[0]->music.empty()) {
@@ -285,7 +280,6 @@ void Level::AddEntity(Entity* entity) {
 }
 
 void Level::AddPlayer(Entity* player, std::string location) {
-    std::cout << "ola k ase" << std::endl;
     std::map<std::string, Location*>::iterator it = locations_.find(location);
 
     if(it == locations_.end()) {
