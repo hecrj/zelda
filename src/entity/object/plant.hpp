@@ -10,6 +10,4 @@ public:
     static void Load();
 
     Plant(Sprite* sprite, float x, float y);
-
-    void Dead();
 };

@@ -2,6 +2,7 @@
 #include "map/level.hpp"
 #include "debug.hpp"
 #include "audio/sound.hpp"
+#include "entity/item/rupee.hpp"
 
 Entity::Entity(float x, float y, float width, float height) :
         super(x, y, width, height),
@@ -60,7 +61,11 @@ bool Entity::IsFinallyDead() const {
 }
 
 void Entity::Dead() {
-    // Do nothing
+    if(rand() % 100 < 80)
+        return;
+
+    const vec2f& pos = center();
+    level_->AddEntity(Rupee::Random(pos.x, pos.y));
 }
 
 void Entity::Die() {

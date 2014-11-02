@@ -19,6 +19,7 @@
 #include "graphic/font.hpp"
 #include "screen/over_screen.hpp"
 #include "entity/mob/moldorm.hpp"
+#include "entity/item/key.hpp"
 
 const unsigned char Game::ACTION_KEY = 'z';
 const int Game::SCALE = 2;
@@ -125,10 +126,11 @@ void Game::Init()
     Stalfos::Load();
     Moldorm::Load();
     Rupee::Load();
+    Key::Load();
     Plant::Load();
     Door::Load();
 
-    LoadTitleScreen();
+    LoadLevel("bigger");
 }
 
 void Game::Tick()

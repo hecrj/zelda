@@ -48,7 +48,7 @@ LinkFollower::LinkFollower(float x, float y) :
         )
 {
     speed_ = 50;
-    type_ = PLAYER;
+    type_ = FOLLOWER;
     set_AI(new Follower(this));
     die_effect_ = new RotationFade();
     attack_sound_ = ATTACK_SOUND;

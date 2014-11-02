@@ -12,5 +12,11 @@ public:
 
     static void Load();
 
-    Stalfos(float x, float y);
+    Stalfos(float x, float y, bool small_key, bool boss_key);
+
+    void Dead();
+
+private:
+    bool small_key_;
+    bool boss_key_;
 };

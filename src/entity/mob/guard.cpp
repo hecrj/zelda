@@ -27,6 +27,7 @@ Guard::Guard(float x, float y) :
 {
     speed_ = 50;
     type_ = ENEMY;
+    health_ = 5;
     set_AI(new Chase(this));
     die_effect_ = new RotationFade();
 }

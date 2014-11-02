@@ -10,4 +10,5 @@ public:
     bool CanCollideWith(Rectangle* rectangle) const;
 
     void Damage(Entity* from, int damage);
+    void Dead();
 };

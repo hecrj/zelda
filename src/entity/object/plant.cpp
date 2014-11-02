@@ -15,11 +15,3 @@ Plant::Plant(Sprite* sprite, float x, float y) :
     type_ = PLANT;
     die_sound_ = CUT_SOUND;
 }
-
-void Plant::Dead() {
-    if(rand() % 100 < 80)
-        return;
-
-    const vec2f& pos = center();
-    level_->AddEntity(Rupee::Random(pos.x, pos.y));
-}

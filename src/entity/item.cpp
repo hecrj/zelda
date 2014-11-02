@@ -17,3 +17,7 @@ void Item::Damage(Entity* from, int damage) {
     if(CanCollideWith(from))
         HandleCollisionWith((Mob*)from);
 }
+
+void Item::Dead() {
+    // Do nothing
+}
