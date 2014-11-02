@@ -14,6 +14,8 @@
 #include "../entity/mob/stalfos.hpp"
 #include "../entity/mob/guard.hpp"
 #include "../entity/mob/link_follower.hpp"
+#include "../entity/door/boss_door.hpp"
+#include "../entity/mob/moldorm.hpp"
 
 
 const int Level::FOLLOW_MARGIN = 120;
@@ -51,7 +53,9 @@ Level::Level(const char *map, Hud* hud) :
                     map_object = new Plant(tileset_->sprite(object.gid), object.x, object.y - 16);
                 } else if(object.type == "key_door") {
                     map_object = new KeyDoor(object.x, object.y - 16, object.gid, tileset_);
-                } else if(object.type == "pole_switch") {
+                } else if(object.type == "boss_door") {
+                    map_object = new BossDoor(object.x, object.y - 16, object.gid, tileset_);
+                } if(object.type == "pole_switch") {
                     map_object = new PoleSwitch(object.x, object.y - 16,
                             tileset_->sprite(object.gid), tileset_->sprite(object.gid + 1));
                 } else if(object.type == "blue_pole" or object.type == "yellow_pole") {
@@ -67,6 +71,8 @@ Level::Level(const char *map, Hud* hud) :
                 }
                 else if(object.type == "follower") {
                     map_object = new LinkFollower(object.x, object.y - 16);
+                } else if(object.type == "moldorm") {
+                    map_object = new Moldorm(object.x, object.y, this);
                 }
 
                 if(map_object)

@@ -33,12 +33,47 @@
    <property name="blocked" value="true"/>
   </properties>
  </tile>
+ <tile id="5">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="6">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="7">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="8">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="9">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
  <tile id="30">
   <properties>
    <property name="blocked" value="true"/>
   </properties>
  </tile>
  <tile id="34">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="35">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="39">
   <properties>
    <property name="blocked" value="true"/>
   </properties>
@@ -53,6 +88,16 @@
    <property name="blocked" value="true"/>
   </properties>
  </tile>
+ <tile id="65">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="69">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
  <tile id="90">
   <properties>
    <property name="blocked" value="true"/>
@@ -61,6 +106,26 @@
  <tile id="94">
   <properties>
    <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="95">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="99">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="106">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="107">
+  <properties>
+   <property name="above" value="true"/>
   </properties>
  </tile>
  <tile id="120">
@@ -84,6 +149,31 @@
   </properties>
  </tile>
  <tile id="124">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="125">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="126">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="127">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="128">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="129">
   <properties>
    <property name="blocked" value="true"/>
   </properties>
@@ -232,12 +322,62 @@
    <property name="above" value="true"/>
   </properties>
  </tile>
+ <tile id="350">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="351">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="380">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
+ <tile id="381">
+  <properties>
+   <property name="blocked" value="true"/>
+  </properties>
+ </tile>
  <tile id="400">
   <properties>
    <property name="above" value="true"/>
   </properties>
  </tile>
  <tile id="401">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="422">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="426">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="428">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="452">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="456">
+  <properties>
+   <property name="above" value="true"/>
+  </properties>
+ </tile>
+ <tile id="458">
   <properties>
    <property name="above" value="true"/>
   </properties>

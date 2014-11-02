@@ -88,6 +88,7 @@ set(SOURCE_FILES
     ## Doors
     src/entity/door.cpp
     src/entity/door/key_door.cpp
+    src/entity/door/boss_door.cpp
 
     # Map
     src/map/tile_map.cpp

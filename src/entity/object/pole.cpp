@@ -22,8 +22,5 @@ void Pole::Draw() const {
 }
 
 bool Pole::CanCollideWith(Rectangle* rectangle) const {
-    return not rectangle->IsEntity() or
-            ((Entity*)rectangle)->type() != PLAYER or
-            IN_TRANSITION or
-            type_ != OPEN;
+    return IN_TRANSITION or type_ != OPEN;
 }

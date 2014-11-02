@@ -130,7 +130,7 @@ void Game::Init()
     Plant::Load();
     Door::Load();
 
-    LoadLevel("bigger");
+    LoadLevel("dungeon");
 }
 
 void Game::Tick()
