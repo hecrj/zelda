@@ -25,6 +25,7 @@ public:
     void UpdateRupees(int rupees);
 
     bool CollidesWith(Rectangle const * rectangle) const;
+    bool HandleCollisionWith(Mob* mob);
 
 private:
     int rupees_;

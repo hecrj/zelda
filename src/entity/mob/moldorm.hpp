@@ -16,10 +16,11 @@ public:
     static Sprite* TAIL;
     static void Load();
 
-    Moldorm(float x, float y);
+    Moldorm(float x, float y, Level* level);
 
     bool CanCollideWith(Rectangle* rectangle) const;
     bool CollidesWith(Rectangle const * rectangle) const;
+    bool HandleCollisionWith(Mob* mob);
 
     void Update(double delta);
     void Draw() const;
@@ -42,7 +43,19 @@ private:
         float max_distance_;
     };
 
-    Rectangle hitbox_;
+    class MoldormHitbox : public Rectangle {
+    public:
+        typedef Rectangle super;
+        MoldormHitbox(Moldorm* moldorm);
+
+        bool CanCollideWith(Rectangle* rectangle) const;
+        bool HandleCollisionWith(Mob* mob);
+
+    private:
+        Moldorm* moldorm_;
+    };
+
+    Rectangle* hitbox_;
     std::vector<MoldormNode*> nodes_;
     int rotation;
 };

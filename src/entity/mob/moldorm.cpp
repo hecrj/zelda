@@ -21,24 +21,27 @@ void Moldorm::Load() {
     HEAD = new SpriteSet(SPRITESHEET->GetSprites(4, 1), 0, 30, vec2f(49, 50));
 }
 
-Moldorm::Moldorm(float x, float y) :
-        super(x, y, 130, 130, new ::Move(this, {HEAD})),
-        hitbox_(x + 49, y + 50, 32, 30)
+Moldorm::Moldorm(float x, float y, Level* level) :
+        super(x, y, 32, 32, new ::Move(this, {HEAD})),
+        hitbox_(new MoldormHitbox(this))
 {
     set_AI(new RotationChase(this));
     type_ = BOSS;
+    is_vulnerable_ = false;
     facing_ = Dir::DOWN;
     rotation = 0;
 
-    MoldormNode* middle1 = new MoldormNode(x + 49, y + 50, 17, 15, vec2f(-8, -8), 18, MIDDLE3, this, &hitbox_);
-    MoldormNode* middle2 = new MoldormNode(x + 49, y + 50, 17, 15, vec2f(-8, -8), 13, MIDDLE2, this, middle1);
-    MoldormNode* middle3 = new MoldormNode(x + 49, y + 50, 12, 12, vec2f(-10, -10), 12, MIDDLE1, this, middle2);
-    MoldormNode* tail = new MoldormNode(x + 49, y + 50, 16, 16, vec2f(-8, -8), 12, TAIL, this, middle3);
+    MoldormNode* middle1 = new MoldormNode(x, y, 17, 15, vec2f(-8, -8), 18, MIDDLE3, this, this);
+    MoldormNode* middle2 = new MoldormNode(x, y, 17, 15, vec2f(-8, -8), 13, MIDDLE2, this, middle1);
+    MoldormNode* middle3 = new MoldormNode(x, y, 12, 12, vec2f(-10, -10), 12, MIDDLE1, this, middle2);
+    MoldormNode* tail = new MoldormNode(x, y, 16, 16, vec2f(-8, -8), 12, TAIL, this, middle3);
 
     nodes_.push_back(tail);
     nodes_.push_back(middle3);
     nodes_.push_back(middle2);
     nodes_.push_back(middle1);
+
+    level->AddCollidable(hitbox_);
 }
 
 void Moldorm::Update(double delta) {
@@ -48,7 +51,7 @@ void Moldorm::Update(double delta) {
     vec2f direction = vec2f((float)-sin(angle), (float)cos(angle));
 
     if(Move(direction, 1, delta)) {
-        hitbox_.set_position(position_.x + 49, position_.y + 50);
+        hitbox_->set_position(position_.x - 49, position_.y - 50);
 
         for(MoldormNode* node : nodes_)
             node->Update(delta);
@@ -62,7 +65,6 @@ void Moldorm::Draw() const {
         node->Render();
 
     glPushMatrix();
-    glTranslatef(49, 50, 0);
     glTranslatef(position_.x + 16, position_.y + 15, 0);
     glRotatef(rotation, 0, 0, 1.0f);
     CurrentSprite()->Render(vec2f(-16, -15));
@@ -72,12 +74,12 @@ void Moldorm::Draw() const {
         for(MoldormNode* node : nodes_)
             node->DrawBox(0, 0, 1);
 
-        hitbox_.DrawBox(0, 0, 1);
+        hitbox_->DrawBox(0, 0, 1);
     }
 }
 
 bool Moldorm::CanCollideWith(Rectangle* rectangle) const {
-    return not rectangle->IsEntity() or ((Entity*)rectangle)->type() == PLAYER;
+    return rectangle != hitbox_ and (not rectangle->IsEntity() or ((Entity*)rectangle)->type() == PLAYER);
 }
 
 bool Moldorm::CollidesWith(Rectangle const * rectangle) const {
@@ -88,7 +90,7 @@ bool Moldorm::CollidesWith(Rectangle const * rectangle) const {
         }
     }
 
-    return hitbox_.CollidesWith(rectangle);
+    return super::CollidesWith(rectangle);
 }
 
 Moldorm::MoldormNode::MoldormNode(float x, float y, float width, float height, const vec2f& offset, float max_distance,
@@ -113,4 +115,22 @@ void Moldorm::MoldormNode::Update(double delta) {
 
 void Moldorm::MoldormNode::Draw() const {
     sprite_->Render(position_ + offset_);
+}
+
+Moldorm::MoldormHitbox::MoldormHitbox(Moldorm* moldorm) :
+        super(moldorm->position().x - 49, moldorm->position().y - 50, 130, 130),
+        moldorm_(moldorm)
+{}
+
+bool Moldorm::MoldormHitbox::CanCollideWith(Rectangle* rectangle) const {
+    return moldorm_ != rectangle and moldorm_->CollidesWith(rectangle);
+}
+
+bool Moldorm::HandleCollisionWith(Mob* mob) {
+    mob->Damage(this, 2);
+    return true;
+}
+
+bool Moldorm::MoldormHitbox::HandleCollisionWith(Mob* mob) {
+    return moldorm_->HandleCollisionWith(mob);
 }

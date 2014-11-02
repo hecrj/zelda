@@ -68,3 +68,18 @@ bool Link::CollidesWith(Rectangle const * rectangle) const {
             rectangle->CollidesWith(this)
     );
 }
+
+bool Link::HandleCollisionWith(Mob* mob) {
+    switch(mob->type()) {
+        case ENEMY:
+            Damage(mob, 2);
+            break;
+
+        case BOSS:
+            Damage(mob, 4);
+            break;
+
+        default:
+            break;
+    }
+}

@@ -126,7 +126,7 @@ void Game::Init()
     Plant::Load();
     Door::Load();
 
-    LoadLevel("dungeon");
+    LoadTitleScreen();
 }
 
 void Game::Tick()

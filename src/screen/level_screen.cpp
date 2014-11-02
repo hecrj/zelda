@@ -14,9 +14,6 @@ LevelScreen::LevelScreen(bool* keys, const char* name)
     level = new Level(name, hud);
     level->AddPlayer(link, "start");
 
-    Moldorm* moldorm = new Moldorm(160, 160);
-    level->AddEntity(moldorm);
-
     level->ChangeEffect(new Fade(Fade::IN, 0.5, [this] {
         level->Init();
     }));
