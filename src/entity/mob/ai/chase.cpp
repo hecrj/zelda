@@ -57,6 +57,7 @@ Dir Chase::Evade(Dir aux){
         return Dir::LEFT;
     else return Dir::RIGHT;
 }
+
 void Chase::Update(double delta) {
     Entity* destiny_entity = mob_->SeekPlayer();
     float diffX = mob_->position().x-destiny_entity->position().x;
@@ -64,7 +65,7 @@ void Chase::Update(double delta) {
     float diffXaux = (diffX>0)?diffX:-diffX;
     float diffYaux = (diffY>0)?diffY:-diffY;
 
-    if (mob_->health() < 1)
+    if (mob_->health() < 2)
         dying = true;
 
     if (!dying && (mob_->Distance(destiny_entity) > 150 || (!alert && !Detected(destiny_entity)) || (alert && Lost(destiny_entity)))){
