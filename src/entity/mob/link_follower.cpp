@@ -78,3 +78,11 @@ bool LinkFollower::HandleCollisionWith(Mob* mob) {
             break;
     }
 }
+
+bool LinkFollower::CanCollideWith(Rectangle *rectangle) const{
+    if (rectangle->IsEntity()){
+        return ((Entity*) rectangle)->type()!=PLAYER;
+    }
+    return true;
+}
+

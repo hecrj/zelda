@@ -24,5 +24,7 @@ public:
     bool CollidesWith(Rectangle const * rectangle) const;
     bool HandleCollisionWith(Mob* mob);
 
+    bool CanCollideWith(Rectangle *rectangle) const;
+
 private:
 };

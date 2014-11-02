@@ -16,6 +16,8 @@ public:
 
     void Dead();
 
+    bool CanCollideWith(Rectangle *rectangle) const;
+
 private:
     std::string name_;
     bool small_key_;

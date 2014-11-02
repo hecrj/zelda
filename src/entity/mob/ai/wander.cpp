@@ -8,7 +8,9 @@ Wander::Wander(Mob* mob) :
 {}
 
 void Wander::Update(double delta) {
-    mob_->Move(dir, delta);
+    if (!mob_->Move(dir, delta))
+        dir = Dir::random();
+
     accum += delta;
 
     if(accum > 0.5f) {

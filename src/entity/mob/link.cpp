@@ -115,3 +115,10 @@ void Link::AddBossKey(const std::string& name) {
     boss_keys_++;
     keys_[name] = true;
 }
+
+bool Link::CanCollideWith(Rectangle *rectangle) const{
+    if (rectangle->IsEntity()){
+        return ((Entity*) rectangle)->type()!=PLAYER;
+    }
+    return true;
+}

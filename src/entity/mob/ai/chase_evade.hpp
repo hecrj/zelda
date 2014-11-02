@@ -14,6 +14,9 @@ public:
     bool Detected(Entity* destiny_entity);
     bool Lost(Entity* destiny_entity);
 
+    Dir Contrary(Dir aux);
+
+    Dir Evade(Dir aux);
 
 private:
     Wander wander_;

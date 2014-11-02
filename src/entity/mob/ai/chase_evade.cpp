@@ -45,6 +45,26 @@ bool ChaseEvade::Lost(Entity* destiny_entity){
         return false;
 }
 
+Dir ChaseEvade::Contrary(Dir aux){
+    if (aux.vector().x==1)
+        return Dir::LEFT;
+    else if (aux.vector().x==-1)
+        return Dir::RIGHT;
+    else if (aux.vector().y==1)
+        return Dir::UP;
+    else return Dir::DOWN;
+}
+
+Dir ChaseEvade::Evade(Dir aux){
+    if (aux.vector().x==1)
+        return Dir::UP;
+    else if (aux.vector().x==-1)
+        return Dir::DOWN;
+    else if (aux.vector().y==1)
+        return Dir::LEFT;
+    else return Dir::RIGHT;
+}
+
 void ChaseEvade::Update(double delta) {
     Entity* destiny_entity = mob_->SeekPlayer();
     float diffX = mob_->position().x-destiny_entity->position().x;
@@ -79,7 +99,10 @@ void ChaseEvade::Update(double delta) {
             current_duration_ = period_duration_;
         }
 
-        mob_->Move(direction_,delta);
+        if (!mob_->Move(direction_,delta)){
+            //mob_->Move(Contrary(direction_),delta);
+            mob_->Move(Evade(direction_),delta);
+        }
     }
 }
 

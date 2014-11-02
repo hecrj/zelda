@@ -15,4 +15,6 @@ public:
     Guard(float x, float y);
 
     void Update(double delta);
+
+    bool CanCollideWith(Rectangle *rectangle) const;
 };

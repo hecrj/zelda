@@ -39,3 +39,10 @@ void Guard::Update(double delta) {
     MeleeAttack(hitbox);
     delete hitbox;
 }
+
+bool Guard::CanCollideWith(Rectangle *rectangle) const{
+    if (rectangle->IsEntity()){
+        return ((Entity*) rectangle)->type()!=ENEMY;
+    }
+    return true;
+}
