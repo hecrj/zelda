@@ -24,7 +24,6 @@ public:
 
     Path* FindPath(Mob* from, Entity* to);
     const std::vector<Entity*>& players() const;
-    const std::vector<Mob*> Mobs();
 
     bool transition_requested() const;
     void consume_transition(std::string& map, std::string& place);
@@ -34,7 +33,6 @@ public:
     void AddLocation(Location* location);
     void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
     void DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
-    void AddPlayer(Entity* player) ;
     void AddPlayer(Entity* player, std::string location);
     void Transition(const std::string& map, const std::string& place);
 
