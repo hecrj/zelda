@@ -40,8 +40,10 @@ int Entity::health() const {
 }
 
 void Entity::Damage(Entity* from, int damage) {
-    Sound::Play(hurt_sound_);
-    health_ -= damage;
+    if(is_vulnerable_) {
+        Sound::Play(hurt_sound_);
+        health_ -= damage;
+    }
 }
 
 bool Entity::IsMob() const {

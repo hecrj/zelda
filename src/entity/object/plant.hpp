@@ -10,4 +10,6 @@ public:
     static void Load();
 
     Plant(Sprite* sprite, float x, float y);
+
+    bool CanReceiveDamageFrom(Rectangle const * rectangle) const;
 };

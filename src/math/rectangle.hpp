@@ -23,6 +23,7 @@ public:
 
     virtual bool CanCollideWith(Rectangle* rectangle) const;
     virtual bool CollidesWith(Rectangle const * rectangle) const;
+    virtual bool CanReceiveDamageFrom(Rectangle const * rectangle) const;
     virtual bool HandleCollisionWith(Mob* mob);
     virtual Collision CollisionType(Rectangle* rectangle) const;
 

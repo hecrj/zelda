@@ -2,6 +2,7 @@
 #include "action/move.hpp"
 #include "action/attack.hpp"
 #include "../../audio/sound.hpp"
+#include "../../graphic/effect/blink.hpp"
 
 SpriteSheet* Link::MOVE_SPRITE_SHEET;
 std::vector<SpriteSet*> Link::MOVE_ANIMATIONS;
@@ -73,9 +74,11 @@ int Link::boss_keys() const {
 
 bool Link::CollidesWith(Rectangle const * rectangle) const {
     return super::CollidesWith(rectangle) and (
-            not rectangle->IsEntity() or
-            ((Entity*)rectangle)->type() != BOSS or
-            rectangle->CollidesWith(this)
+            (not rectangle->IsEntity()) or
+            is_vulnerable_ and (
+                ((Entity*)rectangle)->type() != BOSS or
+                rectangle->CollidesWith(this)
+            )
     );
 }
 
@@ -121,4 +124,15 @@ bool Link::CanCollideWith(Rectangle *rectangle) const{
         return ((Entity*) rectangle)->type()!=PLAYER;
     }
     return true;
+}
+
+void Link::Damage(Entity* from, int amount) {
+    super::Damage(from, amount);
+
+    if(is_vulnerable_) {
+        is_vulnerable_ = false;
+        ChangeEffect(new Blink(3, 0.1, [this] {
+            is_vulnerable_ = true;
+        }));
+    }
 }

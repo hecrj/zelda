@@ -43,6 +43,7 @@ set(SOURCE_FILES
     src/graphic/effect/timer.cpp
     src/graphic/effect/menu.cpp
     src/graphic/effect/dialog.cpp
+    src/graphic/effect/blink.cpp
 
     # Entities
     src/entity.cpp

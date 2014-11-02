@@ -112,3 +112,7 @@ void Rectangle::Update(double delta) {
 float Rectangle::Distance(const Rectangle* rectangle) const {
     return center().dist(rectangle->center());
 }
+
+bool Rectangle::CanReceiveDamageFrom(Rectangle const* rectangle) const {
+    return true;
+}
