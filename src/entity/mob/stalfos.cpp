@@ -19,11 +19,12 @@ void Stalfos::Load() {
     };
 }
 
-Stalfos::Stalfos(float x, float y, bool small_key, bool boss_key) :
+Stalfos::Stalfos(const std::string& name, float x, float y, bool small_key, bool boss_key) :
         super(
                 x, y, 14.0f, 14.0f,
                 new ::Move(this, MOVE_ANIMATIONS)
         ),
+        name_(name),
         small_key_(small_key),
         boss_key_(boss_key)
 {
@@ -37,10 +38,16 @@ Stalfos::Stalfos(float x, float y, bool small_key, bool boss_key) :
 void Stalfos::Dead() {
     vec2f pos = center();
 
+    Link* player = (Link*)level_->main_player();
+
     if(small_key_) {
-        level_->AddEntity(new Key(Key::SMALL, pos.x, pos.y));
+        if(not player->has_key(name_)) {
+            level_->AddEntity(new Key(Key::SMALL, name_, pos.x, pos.y));
+        }
     } else if(boss_key_) {
-        level_->AddEntity(new Key(Key::BOSS, pos.x, pos.y));
+        if(not player->has_key(name_)) {
+            level_->AddEntity(new Key(Key::BOSS, name_, pos.x, pos.y));
+        }
     } else {
         super::Dead();
     }

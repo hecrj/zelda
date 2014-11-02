@@ -24,6 +24,7 @@ public:
 
     Path* FindPath(Mob* from, Entity* to);
     const std::vector<Entity*>& players() const;
+    Entity* main_player() const;
 
     bool transition_requested() const;
     void consume_transition(std::string& map, std::string& place);

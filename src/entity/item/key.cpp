@@ -14,8 +14,9 @@ void Key::Load() {
     GET_SOUND = Sound::Buffer("rupee/get.wav");
 }
 
-Key::Key(Key::Type type, float x, float y) :
+Key::Key(Key::Type type, const std::string& name, float x, float y) :
         super(KEYS[type], x, y, vec2f(0, -10)),
+        name_(name),
         key_type_(type)
 {
     die_sound_ = GET_SOUND;
@@ -27,9 +28,9 @@ bool Key::HandleCollisionWith(Mob* mob) {
         return false;
 
     if(key_type_ == SMALL) {
-        ((Link*)mob)->UpdateSmallKeys(1);
+        ((Link*)mob)->AddSmallKey(name_);
     } else {
-        ((Link*)mob)->UpdateBossKeys(1);
+        ((Link*)mob)->AddBossKey(name_);
     }
 
     Kill();

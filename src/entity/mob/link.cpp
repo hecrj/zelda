@@ -101,3 +101,17 @@ void Link::UpdateSmallKeys(int keys) {
 void Link::UpdateBossKeys(int keys) {
     boss_keys_ += keys;
 }
+
+bool Link::has_key(const std::string& name) const {
+    return keys_.find(name) != keys_.end();
+}
+
+void Link::AddSmallKey(std::string const& name) {
+    small_keys_++;
+    keys_[name] = true;
+}
+
+void Link::AddBossKey(const std::string& name) {
+    boss_keys_++;
+    keys_[name] = true;
+}

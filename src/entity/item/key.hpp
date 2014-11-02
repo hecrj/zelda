@@ -16,10 +16,11 @@ public:
 
     static void Load();
 
-    Key(Key::Type type, float x, float y);
+    Key(Key::Type type, const std::string& name, float x, float y);
 
     bool HandleCollisionWith(Mob* mob);
 
 private:
+    std::string name_;
     Key::Type key_type_;
 };

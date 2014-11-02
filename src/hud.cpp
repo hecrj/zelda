@@ -1,6 +1,8 @@
 #include "hud.hpp"
 #include "entity/item/rupee.hpp"
 #include "game.hpp"
+#include "graphic/font.hpp"
+#include "entity/item/key.hpp"
 #include <GL/freeglut.h>
 
 SpriteSheet* Hud::HEARTS_SPRITESHEET;
@@ -34,11 +36,19 @@ void Hud::Render() const {
     }
 
     vec2f position(vec2f(5, 10 + HEARTS[0]->height()));
-    Rupee::RUPEES[Rupee::Type::GREEN]->Render(position);
+    Rupee::RUPEES[Rupee::GREEN]->Render(position);
 
-    glRasterPos2i((int)(position.x + Rupee::RUPEES[Rupee::Type::GREEN]->width() + 3), (int)position.y + 15);
+    Key::KEYS[Key::SMALL]->Render(position + vec2f(-4, Rupee::RUPEES[Rupee::Type::GREEN]->height() + 5));
+
+    if(player_->boss_keys() > 0)
+        Key::KEYS[Key::BOSS]->Render(position + vec2f(-4, Rupee::RUPEES[Rupee::Type::GREEN]->height() + 25));
+
+    glScalef(0.5, 0.5, 0);
     char buffer[4];
-    sprintf(buffer, "x%02d", player_->rupees());
-    glutBitmapString(GLUT_BITMAP_9_BY_15, (unsigned char*)buffer);
+    sprintf(buffer, "%02d", player_->rupees());
+    Font::Render(position.x + Rupee::RUPEES[Rupee::Type::GREEN]->width() + 20, position.y + 32, buffer);
+
+    sprintf(buffer, "%02d", player_->small_keys());
+    Font::Render(position.x + Rupee::RUPEES[Rupee::Type::GREEN]->width() + 20, position.y + 75, buffer);
     glPopMatrix();
 }

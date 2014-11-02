@@ -12,11 +12,12 @@ public:
 
     static void Load();
 
-    Stalfos(float x, float y, bool small_key, bool boss_key);
+    Stalfos(const std::string& name, float x, float y, bool small_key, bool boss_key);
 
     void Dead();
 
 private:
+    std::string name_;
     bool small_key_;
     bool boss_key_;
 };

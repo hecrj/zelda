@@ -23,8 +23,13 @@ public:
     int rupees() const;
     int small_keys() const;
     int boss_keys() const;
+    bool has_key(const std::string& name) const;
 
     void UpdateRupees(int rupees);
+
+    void AddSmallKey(const std::string& name);
+    void AddBossKey(const std::string& name);
+
     void UpdateSmallKeys(int keys);
     void UpdateBossKeys(int keys);
 
@@ -32,6 +37,7 @@ public:
     bool HandleCollisionWith(Mob* mob);
 
 private:
+    std::map<std::string, bool> keys_;
     int rupees_;
     int small_keys_;
     int boss_keys_;

@@ -9,7 +9,6 @@ void Follower::Update(double delta) {
     Entity* player = mob_->SeekPlayer();
     Entity* enemy_entity = mob_->SeekEnemy();
     if (mob_->Distance(player)<150 && enemy_entity){
-        std::cout << "Checkpoint 0 dist: " << mob_->Distance(enemy_entity) << std::endl;
         if (mob_->Distance(enemy_entity) < 300){
             if (mob_->Distance(enemy_entity) < 34){
                 float diffX = mob_->position().x-enemy_entity->position().x;
