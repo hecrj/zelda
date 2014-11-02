@@ -117,7 +117,7 @@ void Mob::MeleeAttack(Hitbox* hitbox) {
     level_->DynamicCollidablesFor(hitbox, candidates);
 
     for(Rectangle* candidate : candidates) {
-        if(candidate->CanCollideWith(this) && hitbox->CollidesWith(candidate)) {
+        if(candidate->CanCollideWith(this) and candidate->CanReceiveDamageFrom(this) and hitbox->CollidesWith(candidate)) {
             if(candidate->IsEntity() && ((Entity*) candidate)->IsVulnerable()) {
                 Collision c = hitbox->CollisionType(candidate);
 
@@ -307,4 +307,8 @@ sf::SoundBuffer* Mob::attack_sound() const {
 
 float Mob::speed() const {
     return speed_;
+}
+
+bool Mob::CanCollideWith(Rectangle* rectangle) const {
+    return not rectangle->IsEntity() or ((Entity*)rectangle)->type() != type_;
 }

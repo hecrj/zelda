@@ -27,6 +27,7 @@ public:
     Entity* SeekEnemy() const ;
     Path* FindPath(Entity* to);
     bool FollowPath(Path* path, double delta);
+    bool CanCollideWith(Rectangle* rectangle) const;
     float speed() const;
 
     sf::SoundBuffer* attack_sound() const;

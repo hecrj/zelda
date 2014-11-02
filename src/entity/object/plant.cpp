@@ -15,3 +15,7 @@ Plant::Plant(Sprite* sprite, float x, float y) :
     type_ = PLANT;
     die_sound_ = CUT_SOUND;
 }
+
+bool Plant::CanReceiveDamageFrom(Rectangle const* rectangle) const {
+    return rectangle->IsEntity() and ((Entity*) rectangle)->type() == PLAYER;
+}
