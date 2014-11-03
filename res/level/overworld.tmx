@@ -680,9 +680,6 @@
   <object type="guard" x="282" y="1406" width="16" height="32"/>
   <object type="guard" x="361" y="1195" width="16" height="32"/>
   <object type="guard" x="187" y="944" width="16" height="32"/>
-  <object type="guard" x="267" y="102" width="16" height="32"/>
-  <object type="guard" x="272" y="65" width="16" height="32"/>
-  <object type="guard" x="267" y="174" width="16" height="32"/>
   <object type="guard" x="424" y="161" width="16" height="32"/>
   <object type="guard" x="73" y="147" width="16" height="32"/>
   <object type="follower" x="295" y="3124" width="23" height="25"/>
