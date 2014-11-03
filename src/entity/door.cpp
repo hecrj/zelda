@@ -52,3 +52,7 @@ void Door::Open() {
         opened_ = true;
     }
 }
+
+void Door::Dead() {
+    // Do nothing
+}

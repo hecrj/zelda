@@ -15,6 +15,7 @@ public:
 
     void Draw() const;
     void Open();
+    void Dead();
 
 private:
     bool opened_;
