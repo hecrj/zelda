@@ -50,7 +50,9 @@ Link::Link() :
                 0.0f, 0.0f, 20.0f, 14.0f,
                 new ::Move(this, MOVE_ANIMATIONS)
         ),
-        rupees_(0)
+        rupees_(0),
+        small_keys_(0),
+        boss_keys_(0)
 {
     type_ = PLAYER;
     attack_sound_ = ATTACK_SOUND;
