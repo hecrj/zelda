@@ -115,6 +115,12 @@ add_executable(zelda ${SOURCE_FILES})
 add_subdirectory(lib/soil)
 add_subdirectory(lib/TMXParser)
 add_subdirectory(lib/sfml-audio)
+
+if(WIN32)
+SET(GLUT_INCLUDE_DIR lib/glut/include/)
+SET(GLUT_glut_LIBRARY lib/glut/lib/glut32.lib)
+endif()
+
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 
