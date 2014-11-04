@@ -31,11 +31,11 @@ public:
     void consume_transition(std::string& map, std::string& place);
 
     void AddEntity(Entity* entity);
-    void AddCollidable(Rectangle* rectangle);
-    void RemoveCollidable(Rectangle* rectangle);
+    void AddCollidable(RectangleShape* rectangle);
+    void RemoveCollidable(RectangleShape* rectangle);
     void AddLocation(Location* location);
-    void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
-    void DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
+    void CollidablesFor(RectangleShape* rectangle, std::vector<RectangleShape*>& collidables) const;
+    void DynamicCollidablesFor(RectangleShape* rectangle, std::vector<RectangleShape*>& collidables) const;
     void AddPlayer(Entity* player, std::string location);
     void Transition(const std::string& map, const std::string& place);
 

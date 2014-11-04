@@ -3,9 +3,9 @@
 #include "../graphic/animation.hpp"
 #include "../math/rectangle.hpp"
 
-class Hitbox : public Rectangle {
+class Hitbox : public RectangleShape {
 public:
-    typedef Rectangle super;
+    typedef RectangleShape super;
     Hitbox(float x, float y, float width, float height);
 
     bool IsHitbox() const;

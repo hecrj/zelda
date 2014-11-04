@@ -5,9 +5,9 @@
 #include "../entity.hpp"
 #include "../math/dir.hpp"
 
-class Location : public Rectangle {
+class Location : public RectangleShape {
 public:
-    typedef Rectangle super;
+    typedef RectangleShape super;
     Location(float x, float y, float width, float height, const std::string& name, const std::string& orientation);
 
     void Place(Entity* entity) const;

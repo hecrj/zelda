@@ -4,12 +4,12 @@
 #include "../math/rectangle.hpp"
 #include "../map/level.hpp"
 
-class Event : public Rectangle {
+class Event : public RectangleShape {
 public:
-    typedef Rectangle super;
+    typedef RectangleShape super;
     Event(Level* level, float x, float y, float width, float height);
 
-    bool CanCollideWith(Rectangle* rectangle) const;
+    bool CanCollideWith(RectangleShape* rectangle) const;
 
 protected:
     Level* level_;

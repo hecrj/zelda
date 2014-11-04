@@ -56,7 +56,7 @@ LinkFollower::LinkFollower() :
     AddAction("attack", new Attack(this, ATTACK_ANIMATIONS));
 }
 
-bool LinkFollower::CollidesWith(Rectangle const * rectangle) const {
+bool LinkFollower::CollidesWith(RectangleShape const * rectangle) const {
     return super::CollidesWith(rectangle) and (
             not rectangle->IsEntity() or
             ((Entity*)rectangle)->type() != BOSS or
@@ -81,7 +81,7 @@ bool LinkFollower::HandleCollisionWith(Mob* mob) {
     return true;
 }
 
-bool LinkFollower::CanCollideWith(Rectangle *rectangle) const{
+bool LinkFollower::CanCollideWith(RectangleShape*rectangle) const{
     return super::CanCollideWith(rectangle) and (
             not rectangle->IsEntity() or
                     ((Entity*) rectangle)->type() != PLAYER

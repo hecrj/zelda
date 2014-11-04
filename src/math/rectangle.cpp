@@ -3,64 +3,64 @@
 #include "rectangle.hpp"
 #include "../entity/mob.hpp"
 
-Rectangle::Rectangle(float x, float y, float width, float height) :
+RectangleShape::RectangleShape(float x, float y, float width, float height) :
         position_(vec2f(x, y)),
         width_(width),
         height_(height)
 {}
 
-vec2f Rectangle::position() const {
+vec2f RectangleShape::position() const {
     return position_;
 }
 
-vec2f Rectangle::top_center() const {
+vec2f RectangleShape::top_center() const {
     vec2f v = vec2f(width_ / 2.0f, 0);
     return position_ + v;
 }
 
-vec2f Rectangle::center() const {
+vec2f RectangleShape::center() const {
     vec2f v = vec2f(width_ / 2.0f, height_ / 2.0f);
     return position_ + v;
 }
 
-vec2f Rectangle::bottom_right() const {
+vec2f RectangleShape::bottom_right() const {
     return bottom_right(position_);
 }
 
-vec2f Rectangle::bottom_right(const vec2f &pos) const {
+vec2f RectangleShape::bottom_right(const vec2f &pos) const {
     return vec2f(width_, height_) + pos;
 }
 
-float Rectangle::width() const {
+float RectangleShape::width() const {
     return width_;
 }
 
-float Rectangle::height() const {
+float RectangleShape::height() const {
     return height_;
 }
 
-float Rectangle::x() {
+float RectangleShape::x() {
     return position_.x;
 }
 
-float Rectangle::y() {
+float RectangleShape::y() {
     return position_.y;
 }
 
-void Rectangle::set_position(float x, float y) {
+void RectangleShape::set_position(float x, float y) {
     position_.x = x;
     position_.y = y;
 }
 
-void Rectangle::set_position(const vec2f &position) {
+void RectangleShape::set_position(const vec2f &position) {
     set_position(position.x, position.y);
 }
 
-bool Rectangle::CanCollideWith(Rectangle* rectangle) const {
+bool RectangleShape::CanCollideWith(RectangleShape* rectangle) const {
     return rectangle != this;
 }
 
-bool Rectangle::CollidesWith(Rectangle const * rectangle) const {
+bool RectangleShape::CollidesWith(RectangleShape const * rectangle) const {
     const vec2f& rposition = rectangle->position();
 
     return !(
@@ -71,28 +71,28 @@ bool Rectangle::CollidesWith(Rectangle const * rectangle) const {
     );
 }
 
-void Rectangle::Print() const {
+void RectangleShape::Print() const {
     std::cout << "(" << position_.x << ", " << position_.y << ") -> (" <<
             position_.x + width_ << ", " << position_.y + height_ << ")" << std::endl;
 }
 
-void Rectangle::DrawBox(float r, float g, float b) const {
+void RectangleShape::DrawBox(float r, float g, float b) const {
     glColor4f(r, g, b, 1);
 
-    Rectangle::Draw();
+    RectangleShape::Draw();
 
     glColor4f(1, 1, 1, 1);
 }
 
-Collision Rectangle::CollisionType(Rectangle* rectangle) const {
+Collision RectangleShape::CollisionType(RectangleShape* rectangle) const {
     return Collision::BLOCK;
 }
 
-bool Rectangle::HandleCollisionWith(Mob* mob) {
+bool RectangleShape::HandleCollisionWith(Mob* mob) {
     return true;
 }
 
-void Rectangle::Draw() const {
+void RectangleShape::Draw() const {
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glBegin(GL_QUADS);
 
@@ -105,14 +105,14 @@ void Rectangle::Draw() const {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-void Rectangle::Update(double delta) {
+void RectangleShape::Update(double delta) {
     // Do nothing
 }
 
-float Rectangle::Distance(const Rectangle* rectangle) const {
+float RectangleShape::Distance(const RectangleShape* rectangle) const {
     return center().dist(rectangle->center());
 }
 
-bool Rectangle::CanReceiveDamageFrom(Rectangle const* rectangle) const {
+bool RectangleShape::CanReceiveDamageFrom(RectangleShape const* rectangle) const {
     return true;
 }

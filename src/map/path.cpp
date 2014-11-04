@@ -5,7 +5,7 @@ const int Path::RESOLUTION = 4;
 Path::Path(Mob* from, Entity* to) :
         from(from),
         to(to),
-        rectangle(new Rectangle(0, 0, from->width(), from->height())),
+        rectangle(new RectangleShape(0, 0, from->width(), from->height())),
         ready(false),
         calculating(false),
         found(false),
@@ -69,7 +69,7 @@ void Path::Node::UpdateGCost(unsigned int g_cost) {
 void Path::Render() const {
     if(ready) {
         for(const vec2i node : nodes) {
-            Rectangle r(node.x * RESOLUTION, node.y * RESOLUTION, RESOLUTION, RESOLUTION);
+            RectangleShape r(node.x * RESOLUTION, node.y * RESOLUTION, RESOLUTION, RESOLUTION);
             r.DrawBox(1, 1, 1);
         }
     }

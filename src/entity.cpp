@@ -84,10 +84,10 @@ void Entity::set_level(Level* level) {
 }
 
 void Entity::NotifyCollisions() {
-    std::vector<Rectangle*> collidables;
+    std::vector<RectangleShape*> collidables;
     level_->CollidablesFor(this, collidables);
 
-    for(Rectangle* collidable : collidables) {
+    for(RectangleShape* collidable : collidables) {
         if(collidable->IsEntity() && ((Entity*)collidable)->IsMob()) {
             Mob* mob = (Mob*)collidable;
 

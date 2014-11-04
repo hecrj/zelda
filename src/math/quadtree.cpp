@@ -4,7 +4,7 @@
 
 const int Quadtree::MAX_OBJECTS = 10;
 
-Quadtree::Quadtree(int level, Rectangle bounds) :
+Quadtree::Quadtree(int level, RectangleShape bounds) :
         level_(level),
         bounds_(bounds)
 {
@@ -37,14 +37,14 @@ void Quadtree::Split() {
     float sub_height = bounds_.height() / 2.0f;
     vec2f position = bounds_.position();
 
-    children_[0] = new Quadtree(level_+1, Rectangle(position.x + sub_width, position.y, sub_width, sub_height));
-    children_[1] = new Quadtree(level_+1, Rectangle(position.x, position.y, sub_width, sub_height));
-    children_[2] = new Quadtree(level_+1, Rectangle(position.x, position.y + sub_height, sub_width, sub_height));
-    children_[3] = new Quadtree(level_+1, Rectangle(position.x + sub_width, position.y + sub_height, sub_width,
+    children_[0] = new Quadtree(level_+1, RectangleShape(position.x + sub_width, position.y, sub_width, sub_height));
+    children_[1] = new Quadtree(level_+1, RectangleShape(position.x, position.y, sub_width, sub_height));
+    children_[2] = new Quadtree(level_+1, RectangleShape(position.x, position.y + sub_height, sub_width, sub_height));
+    children_[3] = new Quadtree(level_+1, RectangleShape(position.x + sub_width, position.y + sub_height, sub_width,
             sub_height));
 }
 
-int Quadtree::ChildFor(Rectangle* r) const {
+int Quadtree::ChildFor(RectangleShape* r) const {
     int index = -1;
     vec2f center = bounds_.center();
     vec2f rposition = r->position();
@@ -67,7 +67,7 @@ int Quadtree::ChildFor(Rectangle* r) const {
     return index;
 }
 
-void Quadtree::Insert(Rectangle *r) {
+void Quadtree::Insert(RectangleShape*r) {
     if(children_[0]) {
         int child = ChildFor(r);
 
@@ -84,7 +84,7 @@ void Quadtree::Insert(Rectangle *r) {
             Split();
         }
 
-        std::list<Rectangle*>::iterator it = objects_.begin();
+        std::list<RectangleShape*>::iterator it = objects_.begin();
         while(it != objects_.end()) {
             int child = ChildFor(*it);
 
@@ -98,7 +98,7 @@ void Quadtree::Insert(Rectangle *r) {
     }
 }
 
-void Quadtree::Remove(Rectangle *r) {
+void Quadtree::Remove(RectangleShape*r) {
 
     if(children_[0]) {
         int child = ChildFor(r);
@@ -121,12 +121,12 @@ void Quadtree::Remove(Rectangle *r) {
     }
 }
 
-void Quadtree::Update(Rectangle *r) {
+void Quadtree::Update(RectangleShape*r) {
     Remove(r);
     Insert(r);
 }
 
-void Quadtree::Retrieve(Rectangle *r, std::vector<Rectangle *> &objects) const {
+void Quadtree::Retrieve(RectangleShape*r, std::vector<RectangleShape*> &objects) const {
     if(children_[0]) {
         int child = ChildFor(r);
 

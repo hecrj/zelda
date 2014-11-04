@@ -34,7 +34,7 @@ int Game::WINDOW_HEIGHT = 768;
 int Game::WIDTH = Game::WINDOW_WIDTH / Game::SCALE;
 int Game::HEIGHT = Game::WINDOW_HEIGHT / Game::SCALE;
 bool Game::DIRTY = true;
-Rectangle Game::RECTANGLE = Rectangle(0, 0, Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT);
+RectangleShape Game::RECTANGLE = RectangleShape(0, 0, Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT);
 GLuint Game::FRAMEBUFFER_AUX = 0;
 GLuint Game::RENDERBUFFER_AUX = 0;
 Game Game::INSTANCE;
@@ -209,7 +209,7 @@ void Game::Reshape(int width, int height) {
     WINDOW_HEIGHT = height;
     WIDTH = WINDOW_WIDTH / SCALE;
     HEIGHT = WINDOW_HEIGHT / SCALE;
-    RECTANGLE = Rectangle(0, 0, WIDTH, HEIGHT);
+    RECTANGLE = RectangleShape(0, 0, WIDTH, HEIGHT);
     DIRTY = true;
 }
 

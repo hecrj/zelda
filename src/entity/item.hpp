@@ -7,7 +7,7 @@ public:
     typedef Object super;
     Item(Sprite* sprite, float x, float y, const vec2f& offset);
 
-    bool CanCollideWith(Rectangle* rectangle) const;
+    bool CanCollideWith(RectangleShape* rectangle) const;
 
     void Damage(Entity* from, int damage);
     void Dead();

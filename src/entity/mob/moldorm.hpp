@@ -5,11 +5,11 @@
 #pragma once
 
 class Moldorm : public Mob {
-    class MoldormNode : public Rectangle {
+    class MoldormNode : public RectangleShape {
     public:
-        typedef Rectangle super;
+        typedef RectangleShape super;
         MoldormNode(float x, float y, float width, float height, const vec2f& offset, float max_distance,
-                Sprite* sprite, Moldorm* head, Rectangle* parent);
+                Sprite* sprite, Moldorm* head, RectangleShape* parent);
 
         void Update(double delta);
         void Draw() const;
@@ -17,7 +17,7 @@ class Moldorm : public Mob {
     private:
         Sprite* sprite_;
         Moldorm* head_;
-        Rectangle* parent_;
+        RectangleShape* parent_;
         vec2f offset_;
         float max_distance_;
     };
@@ -27,9 +27,9 @@ class Moldorm : public Mob {
         typedef Entity super;
         MoldormHitbox(Moldorm* moldorm);
 
-        bool CanCollideWith(Rectangle* rectangle) const;
+        bool CanCollideWith(RectangleShape* rectangle) const;
         bool HandleCollisionWith(Mob* mob);
-        bool CollidesWith(Rectangle const * rectangle) const;
+        bool CollidesWith(RectangleShape const * rectangle) const;
 
         Sprite* CurrentSprite(vec2f& position) const;
         Sprite* CurrentSprite() const;
@@ -54,8 +54,8 @@ public:
     Moldorm(float x, float y, Level* level);
     ~Moldorm();
 
-    bool CanCollideWith(Rectangle* rectangle) const;
-    bool CollidesWith(Rectangle const * rectangle) const;
+    bool CanCollideWith(RectangleShape* rectangle) const;
+    bool CollidesWith(RectangleShape const * rectangle) const;
     bool HandleCollisionWith(Mob* mob);
     MoldormNode* tail() const;
     vec2f direction() const;
@@ -69,7 +69,7 @@ public:
     void Dead();
 
 private:
-    Rectangle* hitbox_;
+    RectangleShape* hitbox_;
     std::vector<MoldormNode*> nodes_;
     MoldormNode* tail_;
     int rotation;

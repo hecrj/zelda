@@ -122,10 +122,10 @@ void Mob::AddAction(const std::string& name, Action* action) {
 }
 
 void Mob::MeleeAttack(Hitbox* hitbox) {
-    std::vector<Rectangle*> candidates;
+    std::vector<RectangleShape*> candidates;
     level_->DynamicCollidablesFor(hitbox, candidates);
 
-    for(Rectangle* candidate : candidates) {
+    for(RectangleShape* candidate : candidates) {
         if(candidate->CanCollideWith(this) and candidate->CanReceiveDamageFrom(this) and hitbox->CollidesWith(candidate)) {
             if(candidate->IsEntity() && ((Entity*) candidate)->IsVulnerable()) {
                 Collision c = hitbox->CollisionType(candidate);
@@ -221,15 +221,15 @@ Entity* Mob::SeekPlayer() const {
 }
 
 Entity* Mob::SeekEnemy() const {
-    Rectangle rectangle(position_.x - 25, position_ .y - 25, 50, 50);
+    RectangleShape rectangle(position_.x - 25, position_ .y - 25, 50, 50);
 
-    std::vector<Rectangle*> candidates;
+    std::vector<RectangleShape*> candidates;
     level_->DynamicCollidablesFor(&rectangle, candidates);
 
     Entity* selected = 0;
     float dist = 130;
 
-    for(Rectangle* candidate : candidates) {
+    for(RectangleShape* candidate : candidates) {
         if(candidate->IsEntity()) {
             Entity* entity = (Entity*) candidate;
 
@@ -290,10 +290,10 @@ bool Mob::_UpdatePosition(const vec2f& new_position) {
     vec2f old_position = position_;
     position_ = new_position;
 
-    std::vector<Rectangle*> collidables;
+    std::vector<RectangleShape*> collidables;
     level_->CollidablesFor(this, collidables);
 
-    for(Rectangle* collidable : collidables) {
+    for(RectangleShape* collidable : collidables) {
         if(collidable->CanCollideWith(this) && CollidesWith(collidable)) {
             if(collidable->HandleCollisionWith(this)) {
                 position_ = old_position;
@@ -318,6 +318,6 @@ float Mob::speed() const {
     return speed_;
 }
 
-bool Mob::CanCollideWith(Rectangle* rectangle) const {
+bool Mob::CanCollideWith(RectangleShape* rectangle) const {
     return not rectangle->IsEntity() or ((Entity*)rectangle)->type() != type_;
 }

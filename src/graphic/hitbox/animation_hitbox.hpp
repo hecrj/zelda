@@ -10,7 +10,7 @@ public:
 
     Sprite* CurrentSprite(vec2f& sprite_position) const;
     Sprite* CurrentSprite() const;
-    Collision CollisionType(Rectangle* rectangle) const;
+    Collision CollisionType(RectangleShape* rectangle) const;
 
 private:
     Animation* animation_;

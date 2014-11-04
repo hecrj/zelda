@@ -13,7 +13,7 @@ public:
 
     Pole(float x, float y, Type type, Sprite* closed, Sprite* transition);
 
-    bool CanCollideWith(Rectangle* rectangle) const;
+    bool CanCollideWith(RectangleShape* rectangle) const;
 
     void Draw() const;
 

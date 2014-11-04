@@ -11,7 +11,7 @@ TileMap::TileMap(const char* name)
     std::stringstream path;
     path << "res/level/" << name << ".tmx";
     map_ = TMX::parse(path.str().c_str());
-    static_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
+    static_collidables_ = new Quadtree(0, RectangleShape(0, 0, map_->width_pixels, map_->height_pixels));
     tileset_ = new Tileset(map_->tilesets[0]);
 
     // Avoid adding the same rectangle twice
@@ -35,7 +35,7 @@ void TileMap::InitBlockedTiles(const std::vector<TMX::TileLayer*>& layers, std::
                 int tile_id = layer->tiles[i][j] - 1;
 
                 if(tileset->tiles[tile_id].Property("blocked") == "true") {
-                    Rectangle* blocked_tile = new Rectangle(j*map_->tile_width, i*map_->tile_height,
+                    RectangleShape* blocked_tile = new RectangleShape(j*map_->tile_width, i*map_->tile_height,
                             map_->tile_width, map_->tile_height);
 
                     blocked_tiles_.push_back(blocked_tile);
@@ -53,7 +53,7 @@ TileMap::~TileMap()
     delete static_collidables_;
     delete tileset_;
 
-    for(Rectangle* tile : blocked_tiles_)
+    for(RectangleShape* tile : blocked_tiles_)
         delete tile;
 
     for(GLuint texture : textures_below_)
@@ -62,11 +62,11 @@ TileMap::~TileMap()
     glDeleteTextures(1, &texture_above_);
 }
 
-void TileMap::CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {
+void TileMap::CollidablesFor(RectangleShape* rectangle, std::vector<RectangleShape*>& collidables) const {
     static_collidables_->Retrieve(rectangle, collidables);
 }
 
-bool TileMap::IsInbounds(Rectangle* rectangle) const {
+bool TileMap::IsInbounds(RectangleShape* rectangle) const {
     return IsInbounds(rectangle->position(), rectangle->width(), rectangle->height());
 }
 
@@ -89,7 +89,7 @@ void TileMap::RenderLayersAbove() const {
     RenderTexture(texture_above_);
 
     if(Debug::enabled) {
-        for(Rectangle* r : blocked_tiles_)
+        for(RectangleShape* r : blocked_tiles_)
             r->DrawBox(0, 1, 0);
 
         static_collidables_->Render(0, 0, 1);

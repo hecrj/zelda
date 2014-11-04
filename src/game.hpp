@@ -18,7 +18,7 @@ public:
     static int WIDTH;
     static int HEIGHT;
     static bool DIRTY;
-    static Rectangle RECTANGLE;
+    static RectangleShape RECTANGLE;
     static Game INSTANCE;
 
     static GLuint FramebufferAux();

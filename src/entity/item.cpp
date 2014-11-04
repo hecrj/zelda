@@ -8,7 +8,7 @@ Item::Item(Sprite* sprite, float x, float y, const vec2f& offset) :
 }
 
 
-bool Item::CanCollideWith(Rectangle* rectangle) const {
+bool Item::CanCollideWith(RectangleShape* rectangle) const {
     // Items are only collidable with the Player
     return not current_effect_ and rectangle->IsEntity() and ((Entity*) rectangle)->type() == PLAYER;
 }

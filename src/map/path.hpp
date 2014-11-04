@@ -29,7 +29,7 @@ public:
 
     Mob* from;
     Entity* to;
-    Rectangle* rectangle;
+    RectangleShape* rectangle;
     bool ready;
     bool calculating;
     bool found;

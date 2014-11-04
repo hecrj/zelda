@@ -10,7 +10,7 @@ AnimationHitbox::AnimationHitbox(const vec2f& position, Animation* animation) :
     position_ = position + animation_->position();
 }
 
-Collision AnimationHitbox::CollisionType(Rectangle* rectangle) const {
+Collision AnimationHitbox::CollisionType(RectangleShape* rectangle) const {
     if(!rectangle->IsHitbox())
         return DAMAGE;
 

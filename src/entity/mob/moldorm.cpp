@@ -96,11 +96,11 @@ void Moldorm::Draw() const {
     }
 }
 
-bool Moldorm::CanCollideWith(Rectangle* rectangle) const {
+bool Moldorm::CanCollideWith(RectangleShape* rectangle) const {
     return rectangle != hitbox_ and (not rectangle->IsEntity() or ((Entity*)rectangle)->type() == PLAYER);
 }
 
-bool Moldorm::CollidesWith(Rectangle const * rectangle) const {
+bool Moldorm::CollidesWith(RectangleShape const * rectangle) const {
     if(rectangle->IsEntity()) {
         for(MoldormNode* node : nodes_) {
             if(node->CollidesWith(rectangle))
@@ -112,7 +112,7 @@ bool Moldorm::CollidesWith(Rectangle const * rectangle) const {
 }
 
 Moldorm::MoldormNode::MoldormNode(float x, float y, float width, float height, const vec2f& offset, float max_distance,
-        Sprite* sprite, Moldorm* head, Rectangle* parent) :
+        Sprite* sprite, Moldorm* head, RectangleShape* parent) :
         super(x, y, width, height),
         offset_(offset),
         max_distance_(max_distance),
@@ -142,7 +142,7 @@ Moldorm::MoldormHitbox::MoldormHitbox(Moldorm* moldorm) :
     type_ = BOSS;
 }
 
-bool Moldorm::MoldormHitbox::CanCollideWith(Rectangle* rectangle) const {
+bool Moldorm::MoldormHitbox::CanCollideWith(RectangleShape* rectangle) const {
     return moldorm_ != rectangle and moldorm_->CanCollideWith(rectangle);
 }
 
@@ -172,7 +172,7 @@ Sprite* Moldorm::MoldormHitbox::CurrentSprite() const {
     return TAIL;
 }
 
-bool Moldorm::MoldormHitbox::CollidesWith(Rectangle const* rectangle) const {
+bool Moldorm::MoldormHitbox::CollidesWith(RectangleShape const* rectangle) const {
     return moldorm_->CollidesWith(rectangle);
 }
 

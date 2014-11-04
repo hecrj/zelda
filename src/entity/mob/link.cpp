@@ -81,7 +81,7 @@ int Link::boss_keys() const {
     return boss_keys_;
 }
 
-bool Link::CollidesWith(Rectangle const * rectangle) const {
+bool Link::CollidesWith(RectangleShape const * rectangle) const {
     return super::CollidesWith(rectangle) and (
             (not rectangle->IsEntity()) or
             (((Entity*)rectangle)->type() != ENEMY and ((Entity*)rectangle)->type() != BOSS) or
@@ -129,7 +129,7 @@ void Link::AddBossKey(const std::string& name) {
     keys_[name] = true;
 }
 
-bool Link::CanCollideWith(Rectangle *rectangle) const{
+bool Link::CanCollideWith(RectangleShape*rectangle) const{
     return super::CanCollideWith(rectangle) and (
             not rectangle->IsEntity() or
             ((Entity*) rectangle)->type() != FOLLOWER

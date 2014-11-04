@@ -12,10 +12,10 @@ public:
 	TileMap(const char* s);
 	virtual ~TileMap();
 
-    bool IsInbounds(Rectangle* rectangle) const;
+    bool IsInbounds(RectangleShape* rectangle) const;
     bool IsInbounds(const vec2f& position, float width, float height) const;
 
-    virtual void CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const;
+    virtual void CollidablesFor(RectangleShape* rectangle, std::vector<RectangleShape*>& collidables) const;
 
     void RenderLayersBelow(int frame) const;
     void RenderLayersAbove() const;
@@ -28,7 +28,7 @@ protected:
     GLuint texture_above_;
 
 private:
-    std::vector<Rectangle*> blocked_tiles_;
+    std::vector<RectangleShape*> blocked_tiles_;
 
     void InitBlockedTiles(const std::vector<TMX::TileLayer*>& layers, std::vector<std::vector<bool>>& blocked);
     void InitTextures();

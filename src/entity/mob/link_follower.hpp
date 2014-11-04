@@ -21,10 +21,10 @@ public:
     LinkFollower();
 
 
-    bool CollidesWith(Rectangle const * rectangle) const;
+    bool CollidesWith(RectangleShape const * rectangle) const;
     bool HandleCollisionWith(Mob* mob);
 
-    bool CanCollideWith(Rectangle *rectangle) const;
+    bool CanCollideWith(RectangleShape*rectangle) const;
 
 private:
 };

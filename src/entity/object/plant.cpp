@@ -16,6 +16,6 @@ Plant::Plant(Sprite* sprite, float x, float y) :
     die_sound_ = CUT_SOUND;
 }
 
-bool Plant::CanReceiveDamageFrom(Rectangle const* rectangle) const {
+bool Plant::CanReceiveDamageFrom(RectangleShape const* rectangle) const {
     return rectangle->IsEntity() and ((Entity*) rectangle)->type() == PLAYER;
 }

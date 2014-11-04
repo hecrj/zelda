@@ -11,5 +11,5 @@ public:
 
     Plant(Sprite* sprite, float x, float y);
 
-    bool CanReceiveDamageFrom(Rectangle const * rectangle) const;
+    bool CanReceiveDamageFrom(RectangleShape const * rectangle) const;
 };

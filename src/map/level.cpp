@@ -35,7 +35,7 @@ Level::Level(const char *map, Hud* hud) :
 {
     nodes_ = std::vector<std::vector<Path::Node*>>(map_->height_pixels / Path::RESOLUTION,
             std::vector<Path::Node*>(map_->width_pixels / Path::RESOLUTION, 0));
-    dynamic_collidables_ = new Quadtree(0, Rectangle(0, 0, map_->width_pixels, map_->height_pixels));
+    dynamic_collidables_ = new Quadtree(0, RectangleShape(0, 0, map_->width_pixels, map_->height_pixels));
 
     for(auto& g : map_->object_groups) {
         TMX::ObjectGroup& object_group = g.second;
@@ -236,7 +236,7 @@ void Level::Draw() const {
 
     // Render visible entities only
     Game::RECTANGLE.set_position(position_.x, position_.y);
-    Rectangle* view = &Game::RECTANGLE;
+    RectangleShape* view = &Game::RECTANGLE;
     for(Entity* entity : entities_) {
         if(entity->CollidesWith(view))
             entity->Render();
@@ -248,7 +248,7 @@ void Level::Draw() const {
         dynamic_collidables_->Render(1, 0, 0);
 
         // Show collidable candidates
-        std::vector<Rectangle*> candidates;
+        std::vector<RectangleShape*> candidates;
 
         for(Entity* entity : players_) {
             if(entity->IsMob()) {
@@ -257,7 +257,7 @@ void Level::Draw() const {
             }
         }
 
-        for(Rectangle* candidate : candidates)
+        for(RectangleShape* candidate : candidates)
             candidate->DrawBox(1, 0, 1);
     }
 
@@ -269,7 +269,7 @@ void Level::AddLocation(Location* location) {
     locations_[location->name()] = location;
 }
 
-void Level::AddCollidable(Rectangle* rectangle) {
+void Level::AddCollidable(RectangleShape* rectangle) {
     dynamic_collidables_->Insert(rectangle);
 }
 
@@ -309,12 +309,12 @@ const std::vector<Entity*>& Level::players() const {
     return players_;
 }
 
-void Level::CollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {
+void Level::CollidablesFor(RectangleShape* rectangle, std::vector<RectangleShape*>& collidables) const {
     super::CollidablesFor(rectangle, collidables);
     dynamic_collidables_->Retrieve(rectangle, collidables);
 }
 
-void Level::DynamicCollidablesFor(Rectangle* rectangle, std::vector<Rectangle*>& collidables) const {
+void Level::DynamicCollidablesFor(RectangleShape* rectangle, std::vector<RectangleShape*>& collidables) const {
     dynamic_collidables_->Retrieve(rectangle, collidables);
 }
 
@@ -344,7 +344,7 @@ void Level::CalculatePath() {
     }
 
     Path::Node* start = *path.pending.begin();
-    std::vector<Rectangle*> collision_candidates;
+    std::vector<RectangleShape*> collision_candidates;
     bool collision;
     int i = 0;
 
@@ -366,7 +366,7 @@ void Level::CalculatePath() {
         collision = false;
         CollidablesFor(path.rectangle, collision_candidates);
 
-        for(Rectangle* candidate : collision_candidates) {
+        for(RectangleShape* candidate : collision_candidates) {
             if(candidate == path.to) {
                 if(path.rectangle->CollidesWith(candidate)) {
                     // Path found
@@ -484,7 +484,7 @@ Entity* Level::main_player() const {
     return main_player_;
 }
 
-void Level::RemoveCollidable(Rectangle* rectangle) {
+void Level::RemoveCollidable(RectangleShape* rectangle) {
     dynamic_collidables_->Remove(rectangle);
 }
 

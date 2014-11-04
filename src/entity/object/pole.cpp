@@ -21,6 +21,6 @@ void Pole::Draw() const {
     }
 }
 
-bool Pole::CanCollideWith(Rectangle* rectangle) const {
+bool Pole::CanCollideWith(RectangleShape* rectangle) const {
     return IN_TRANSITION or type_ != OPEN;
 }

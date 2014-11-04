@@ -10,7 +10,7 @@ public:
 
     Sprite* CurrentSprite() const;
     Sprite* CurrentSprite(vec2f& position) const;
-    bool CanCollideWith(Rectangle* rectangle) const;
+    bool CanCollideWith(RectangleShape* rectangle) const;
 
     void Draw() const;
     void Damage(Entity* from, int amount);
