@@ -5,10 +5,6 @@
 #include <GL/glut.h>
 #include "game.hpp"
 
-
-//Delete console
-#pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
-
 void AppRender()
 {
     Game::INSTANCE.Render();

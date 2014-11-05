@@ -29,7 +29,7 @@ void Animation::Reset() {
 }
 
 void Animation::Update(double delta) {
-    accum_ += (int) delta * 1000;
+    accum_ += delta * 1000;
 
     if(accum_ > spriteset_->intervals[current_frame_]) {
         accum_ -= spriteset_->intervals[current_frame_];
