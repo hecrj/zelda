@@ -121,6 +121,12 @@ SET(GLEW_INCLUDE_DIR lib/glew/include/)
 SET(GLEW_LIBRARY lib/glew/lib/Release/Win32/glew32)
 SET(GLUT_INCLUDE_DIR lib/glut/include/)
 SET(GLUT_glut_LIBRARY lib/glut/lib/glut32)
+SET(RELEASE_DLLS
+	lib/glut/bin/glut32.dll
+	lib/glew/bin/glew32.dll
+	lib/sfml-audio/extlibs/bin/x86/libsndfile-1.dll
+	lib/sfml-audio/extlibs/bin/x86/openal32.dll
+)
 endif()
 
 find_package(OpenGL REQUIRED)
