@@ -33,7 +33,7 @@ Sprite::Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, 
 
     for(int i = 0; i < height; ++i) {
         for(int j = 0; j < width; ++j) {
-            hit_map_->map_[i][j] = pixels[height-i-1 * width + j*4 + 3] != 0;
+            hit_map_->map_[i][j] = pixels[(height-i-1) * width * 4 + j*4 + 3] != 0;
         }
     }
 

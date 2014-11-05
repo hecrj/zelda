@@ -34,6 +34,11 @@ void TileMap::InitBlockedTiles(const std::vector<TMX::TileLayer*>& layers, std::
 
                 int tile_id = layer->tiles[i][j] - 1;
 
+				if (tile_id < 0 || tileset->tiles.find(tile_id) == tileset->tiles.end())
+					continue;
+
+				std::cout << tileset->tiles[tile_id].animated << std::endl;
+
                 if(tileset->tiles[tile_id].Property("blocked") == "true") {
                     RectangleShape* blocked_tile = new RectangleShape(j*map_->tile_width, i*map_->tile_height,
                             map_->tile_width, map_->tile_height);

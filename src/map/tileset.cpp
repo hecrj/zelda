@@ -35,12 +35,14 @@ void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<i
     for(int i = 0; i < height; ++i) {
         for(int j = 0; j < width; ++j) {
             int tile_id = tiles[i][j] - 1;
-            const auto& tile = tileset.tiles.find(tile_id);
 
-            if(tile == tileset.tiles.end())
-                continue;
+			if (tile_id < 0)
+				continue;
 
-            tile_id += tile->second.animated ? (tile->second.first_frame + frame) % tileset.frames : 0;
+            std::map<int, TSX::Tile>::const_iterator& tile = tileset.tiles.find(tile_id);
+
+			if (tile != tileset.tiles.end())
+				tile_id += tile->second.animated ? (tile->second.first_frame + frame) % tileset.frames : 0;
 
             int col = tile_id % tileset.width;
             int row = tile_id / tileset.width;
