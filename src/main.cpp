@@ -1,3 +1,7 @@
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+#include <GL/glew.h>
 #include <GL/glut.h>
 #include "game.hpp"
 
@@ -66,6 +70,10 @@ int main(int argc, char** argv)
 	glutInitWindowPosition(pos_x, pos_y);
 	glutInitWindowSize(Game::WINDOW_WIDTH, Game::WINDOW_HEIGHT);
 	glutCreateWindow("Zelda");
+
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+		Game::Error("GLEW initialization failed", (const char*)glewGetErrorString(err));
 
 	/*glutGameModeString("800x600:32");
 	glutEnterGameMode();*/

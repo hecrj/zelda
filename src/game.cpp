@@ -50,19 +50,20 @@ GLuint Game::FramebufferAux() {
     }
 
     if(!FRAMEBUFFER_AUX) {
-        GLuint fbo, render_buf;
-        glGenFramebuffers(1, &fbo);
-        glGenRenderbuffers(1, &render_buf);
-        glBindRenderbuffer(GL_RENDERBUFFER, render_buf);
+		GLuint fbo[1];
+		GLuint render_buf[1];
+        glGenFramebuffers(1, fbo);
+        glGenRenderbuffers(1, render_buf);
+        glBindRenderbuffer(GL_RENDERBUFFER, render_buf[0]);
         glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8, WINDOW_WIDTH, WINDOW_HEIGHT);
-        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo);
-        glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, render_buf);
+        glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fbo[0]);
+        glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, render_buf[0]);
 
         glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
         glBindRenderbuffer(GL_RENDERBUFFER, 0);
 
-        RENDERBUFFER_AUX = render_buf;
-        FRAMEBUFFER_AUX = fbo;
+        RENDERBUFFER_AUX = render_buf[0];
+        FRAMEBUFFER_AUX = fbo[0];
     }
 
     return FRAMEBUFFER_AUX;
