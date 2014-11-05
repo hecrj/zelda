@@ -45,7 +45,7 @@ void Door::Draw() const {
 }
 
 void Door::Open() {
-    if(not opened_) {
+    if(!opened_) {
         Sound::Play(UNLOCK_SOUND);
         ChangeEffect(open_effect_);
         open_effect_ = 0;

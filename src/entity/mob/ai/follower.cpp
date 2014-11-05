@@ -29,13 +29,13 @@ void Follower::Update(double delta) {
                 mob_->Move(direct,delta);
                 mob_->ChangeAction(mob_->action("attack"));
             } else {
-                if (not path_)
+                if (!path_)
                     path_ = PathToEnemy();
 
                 if(path_ && path_->ready) {
                     mob_->FollowPath(path_, delta);
 
-                    if(not path_->Update(delta) && mob_->Distance(path_->to) > 34) {
+                    if(!path_->Update(delta) && mob_->Distance(path_->to) > 34) {
                         delete path_;
                         path_ = PathToEnemy();
                     }
@@ -43,7 +43,7 @@ void Follower::Update(double delta) {
             }
         }
     } else {
-        if(not path_){
+        if(!path_){
             path_ = PathToPlayer();
         }
 
@@ -51,7 +51,7 @@ void Follower::Update(double delta) {
             if (path_->ready) {
                 mob_->FollowPath(path_, delta);
 
-                if(not path_->Update(delta)) {
+                if(!path_->Update(delta)) {
                     if (mob_->Distance(path_->to) > 50) {
                         delete path_;
                         path_ = PathToPlayer();

@@ -6,5 +6,5 @@ Event::Event(Level* level, float x, float y, float width, float height) :
 {}
 
 bool Event::CanCollideWith(RectangleShape* rectangle) const {
-    return rectangle->IsEntity() and ((Entity*)rectangle)->type() == PLAYER;
+    return rectangle->IsEntity() && ((Entity*)rectangle)->type() == PLAYER;
 }

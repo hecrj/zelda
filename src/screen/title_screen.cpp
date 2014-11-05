@@ -1,3 +1,6 @@
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include <iostream>
 #include "title_screen.hpp"
 #include "../audio/music.hpp"
@@ -146,7 +149,7 @@ namespace TitleScreenPrivate {
             menu->AddOption("New Game", [this]{
                 Music::ClearQueue();
                 Music::FadeOut(2);
-                ChangeEffect(new Fade(Fade::OUT, 2, []{
+                ChangeEffect(new Fade(Fade::FADE_OUT, 2, []{
                     Game::INSTANCE.LoadLevel("intro");
                 }));
             });
@@ -175,7 +178,7 @@ namespace TitleScreenPrivate {
                 while(it != stars_.end()) {
                     Star& star = *it;
 
-                    if(not star.animation->IsFinished()) {
+                    if(! star.animation->IsFinished()) {
                         star.animation->Update(delta);
                         ++it;
                     } else {

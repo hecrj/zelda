@@ -1,9 +1,11 @@
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include "hud.hpp"
 #include "entity/item/rupee.hpp"
 #include "game.hpp"
 #include "graphic/font.hpp"
 #include "entity/item/key.hpp"
-#include <GL/freeglut.h>
 
 SpriteSheet* Hud::HEARTS_SPRITESHEET;
 std::vector<Sprite*> Hud::HEARTS;

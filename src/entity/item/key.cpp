@@ -24,7 +24,7 @@ Key::Key(Key::Type type, const std::string& name, float x, float y) :
 }
 
 bool Key::HandleCollisionWith(Mob* mob) {
-    if(not IsAlive())
+    if(!IsAlive())
         return false;
 
     if(key_type_ == SMALL) {

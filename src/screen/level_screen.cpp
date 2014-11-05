@@ -16,13 +16,13 @@ LevelScreen::LevelScreen(bool* keys, const char* name)
     level = new Level(name, hud);
     level->AddPlayer(link, "start");
 
-    level->ChangeEffect(new Fade(Fade::IN, 0.5, [this] {
+    level->ChangeEffect(new Fade(Fade::FADE_IN, 0.5, [this] {
         level->Init();
     }));
 }
 
 void LevelScreen::Tick(double delta) {
-    if(not level->transition_requested()) {
+    if(! level->transition_requested()) {
         level->Tick(delta);
     } else {
         Music::ClearQueue();
@@ -32,7 +32,7 @@ void LevelScreen::Tick(double delta) {
         std::string place;
         level->consume_transition(map, place);
 
-        level->ChangeEffect(new Fade(Fade::OUT, 0.5, [this, map, place]{
+        level->ChangeEffect(new Fade(Fade::FADE_OUT, 0.5, [this, map, place]{
             std::vector<Entity*> players(level->players());
 
             Level* old_level = level;
@@ -42,7 +42,7 @@ void LevelScreen::Tick(double delta) {
                 level->AddPlayer(player, place);
             }
 
-            level->ChangeEffect(new Fade(Fade::IN, 0.5, [this, old_level]{
+            level->ChangeEffect(new Fade(Fade::FADE_IN, 0.5, [this, old_level]{
                 delete old_level;
                 level->Init();
             }));

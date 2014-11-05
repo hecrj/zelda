@@ -1,3 +1,6 @@
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include <vector>
 #include <GL/gl.h>
 #include "../math/vec2.hpp"

@@ -1,3 +1,6 @@
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include "win_screen.hpp"
 #include "../audio/music.hpp"
 #include "../graphic/effect/fade.hpp"
@@ -24,7 +27,7 @@ namespace WinScreenPrivate {
                 ChangeEffect(new Timer(2, []{
                     Music::ClearQueue();
                     Music::FadeOut(2);
-                }, new Fade(Fade::OUT, 2, []{
+                }, new Fade(Fade::FADE_OUT, 2, []{
                     Game::INSTANCE.LoadTitleScreen();
                 })));
             } else {

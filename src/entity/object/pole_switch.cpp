@@ -38,5 +38,5 @@ void PoleSwitch::Damage(Entity* from, int amount) {
 }
 
 bool PoleSwitch::CanCollideWith(RectangleShape* rectangle) const {
-    return not rectangle->IsEntity() or ((Entity*)rectangle)->type() == PLAYER;
+    return !rectangle->IsEntity() || ((Entity*)rectangle)->type() == PLAYER;
 }

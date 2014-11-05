@@ -18,14 +18,14 @@ bool Drawable::IsEntity() const {
 }
 
 void Drawable::Render() const {
-    if(not current_effect_)
+    if(! current_effect_)
         Draw();
     else
         current_effect_->Render();
 }
 
 void Drawable::Tick(double delta) {
-    if(not current_effect_) {
+    if(! current_effect_) {
         Update(delta);
     } else {
         if(current_effect_->IsFinished()) {

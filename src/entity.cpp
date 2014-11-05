@@ -51,7 +51,7 @@ bool Entity::IsMob() const {
 }
 
 bool Entity::SortByYCoordinateAsc::operator()(Entity* e1, Entity* e2) const {
-    return e1->y() < e2->y() or (e1->y() == e2->y() and e1->x() < e2->x());
+    return e1->y() < e2->y() || (e1->y() == e2->y() && e1->x() < e2->x());
 }
 
 EntityType Entity::type() const {
@@ -59,7 +59,7 @@ EntityType Entity::type() const {
 }
 
 bool Entity::IsFinallyDead() const {
-    return not current_effect_ or current_effect_->IsFinished();
+    return !current_effect_ || current_effect_->IsFinished();
 }
 
 void Entity::Dead() {

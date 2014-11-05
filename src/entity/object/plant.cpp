@@ -17,5 +17,5 @@ Plant::Plant(Sprite* sprite, float x, float y) :
 }
 
 bool Plant::CanReceiveDamageFrom(RectangleShape const* rectangle) const {
-    return rectangle->IsEntity() and ((Entity*) rectangle)->type() == PLAYER;
+    return rectangle->IsEntity() && ((Entity*) rectangle)->type() == PLAYER;
 }

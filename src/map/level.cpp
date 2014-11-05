@@ -1,3 +1,4 @@
+#define NOMINMAX
 #include <iostream>
 #include "level.hpp"
 #include "level_events.hpp"
@@ -59,7 +60,7 @@ Level::Level(const char *map, Hud* hud) :
                 } if(object.type == "pole_switch") {
                     map_object = new PoleSwitch(object.x, object.y - 16,
                             tileset_->sprite(object.gid), tileset_->sprite(object.gid + 1));
-                } else if(object.type == "blue_pole" or object.type == "yellow_pole") {
+                } else if(object.type == "blue_pole" || object.type == "yellow_pole") {
                     map_object = new Pole(object.x, object.y - 16,
                             object.type == "blue_pole" ? Pole::Type::BLUE : Pole::Type::YELLOW,
                             tileset_->sprite(object.gid), tileset_->sprite(object.gid+1));
@@ -86,8 +87,8 @@ Level::Level(const char *map, Hud* hud) :
         }
     }
 
-    if(not map_->tilesets[0]->music.empty()) {
-        if(not map_->tilesets[0]->intro.empty())
+    if(! map_->tilesets[0]->music.empty()) {
+        if(! map_->tilesets[0]->intro.empty())
             Music::Enqueue(map_->tilesets[0]->intro, Music::NO_LOOP);
 
         Music::Enqueue(map_->tilesets[0]->music, Music::LOOP);
@@ -328,7 +329,7 @@ void Level::CalculatePath() {
     // A*
     Path& path = *pending_paths_.front();
 
-    if(not path.calculating) {
+    if(! path.calculating) {
         // Clear unused nodes from last search
         for(int i = 0; i < nodes_.size(); ++i) {
             for(int j = 0; j < nodes_[0].size(); ++j) {
@@ -348,7 +349,7 @@ void Level::CalculatePath() {
     bool collision;
     int i = 0;
 
-    while(not path.pending.empty()) {
+    while(! path.pending.empty()) {
         if(i > MAX_NODES_PER_TICK)
             return;
 
@@ -359,7 +360,7 @@ void Level::CalculatePath() {
 
         path.rectangle->set_position(current->x * Path::RESOLUTION, current->y * Path::RESOLUTION);
 
-        if(not IsInbounds(path.rectangle))
+        if(! IsInbounds(path.rectangle))
             continue;
 
         collision_candidates.clear();
@@ -383,25 +384,25 @@ void Level::CalculatePath() {
                     return;
                 }
             } else {
-                collision = collision or path.from->CanCollideWith(candidate) && path.rectangle->CollidesWith(candidate);
+                collision = collision || path.from->CanCollideWith(candidate) && path.rectangle->CollidesWith(candidate);
             }
         }
 
-        if(not collision or current == start) {
+        if(!collision || current == start) {
             for(const vec2i& dir : Dir::VECTORS) {
                 int x = current->x + dir.x;
                 int y = current->y + dir.y;
 
-                if(x < 0 or y < 0 or x >= nodes_[0].size() or y >= nodes_.size())
+                if(x < 0 || y < 0 || x >= nodes_[0].size() || y >= nodes_.size())
                     continue;
 
                 Path::Node* neighbor = nodes_[y][x];
 
-                if(not neighbor) {
+                if(!neighbor) {
                     neighbor = new Path::Node(vec2i(x, y), path.destination, current->g_cost, current);
                     nodes_[y][x] = neighbor;
                     path.pending.insert(neighbor);
-                } else if(not neighbor->closed and neighbor->g_cost > current->g_cost + 1) {
+                } else if(!neighbor->closed && neighbor->g_cost > current->g_cost + 1) {
                     path.pending.erase(neighbor);
                     neighbor->UpdateGCost(current->g_cost + 1);
                     path.pending.insert(neighbor);
@@ -460,18 +461,18 @@ void Level::CalculateScrolling() {
     float right_limit = right - FOLLOW_MARGIN;
     float bottom_limit = bottom - FOLLOW_MARGIN;
 
-    if(right < map_->width_pixels and player_position.x > right_limit)
+    if(right < map_->width_pixels && player_position.x > right_limit)
         position_.x = std::min((float)(map_->width_pixels - Game::WIDTH),
                 position_.x + player_position.x - right_limit);
 
-    else if(position_.x > 0 and player_position.x < left_limit)
+    else if(position_.x > 0 && player_position.x < left_limit)
         position_.x = std::max(0.0f, position_.x + player_position.x - left_limit);
 
-    if(bottom < map_->height_pixels and player_position.y > bottom_limit)
+    if(bottom < map_->height_pixels && player_position.y > bottom_limit)
         position_.y = std::min((float)(map_->height_pixels - Game::HEIGHT),
                 position_.y + player_position.y - bottom_limit);
 
-    else if(position_.y > 0 and player_position.y < top_limit)
+    else if(position_.y > 0 && player_position.y < top_limit)
         position_.y = std::max(0.0f, position_.y + player_position.y - top_limit);
 }
 

@@ -117,15 +117,19 @@ add_subdirectory(lib/TMXParser)
 add_subdirectory(lib/sfml-audio)
 
 if(WIN32)
+SET(GLEW_INCLUDE_DIR lib/glew/include/)
+SET(GLEW_LIBRARY lib/glew/lib/Release/Win32/glew32)
 SET(GLUT_INCLUDE_DIR lib/glut/include/)
-SET(GLUT_glut_LIBRARY lib/glut/lib/glut32.lib)
+SET(GLUT_glut_LIBRARY lib/glut/lib/glut32)
 endif()
 
 find_package(OpenGL REQUIRED)
+find_package(GLEW REQUIRED)
 find_package(GLUT REQUIRED)
 
 include_directories(
     ${OPENGL_INCLUDE_DIRS}
+	${GLEW_INCLUDE_DIRS}
     ${GLUT_INCLUDE_DIRS}
     ${SOIL_INCLUDE_DIRS}
     ${TMXPARSER_INCLUDE_DIRS}
@@ -143,6 +147,7 @@ endif()
 
 target_link_libraries(zelda
     ${OPENGL_LIBRARIES}
+	${GLEW_LIBRARIES}
     ${GLUT_LIBRARY}
     ${NVIDIA_LIB}
     SOIL

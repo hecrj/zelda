@@ -16,8 +16,8 @@ void RotationChase::Update(double delta) {
 
 
 
-        if(not(dir_player.x - 0.1 <= dir.x and dir.x <= dir_player.x + 0.1 and
-                dir_player.y - 0.1 <= dir.y and dir.y <= dir_player.y + 0.1))
+        if(!(dir_player.x - 0.1 <= dir.x && dir.x <= dir_player.x + 0.1 &&
+                dir_player.y - 0.1 <= dir.y && dir.y <= dir_player.y + 0.1))
             moldorm->Rotate();
     }
 }

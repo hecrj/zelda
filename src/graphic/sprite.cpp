@@ -1,5 +1,4 @@
-#define GL_GLEXT_PROTOTYPES 1
-#include <GL/gl.h>
+#include <GL/glew.h>
 #include <iostream>
 #include "sprite.hpp"
 #include "../game.hpp"
@@ -26,7 +25,7 @@ Sprite::Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, 
     glClear(GL_COLOR_BUFFER_BIT);
     Render(vec2f(0, 0));
 
-    GLubyte pixels[height][width][4];
+	GLubyte* pixels = (GLubyte*) malloc(height * width * 4);
 
     glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
     glReadBuffer(GL_COLOR_ATTACHMENT0);
@@ -34,9 +33,11 @@ Sprite::Sprite(GLuint texture, int width, int height, float tex_x, float tex_y, 
 
     for(int i = 0; i < height; ++i) {
         for(int j = 0; j < width; ++j) {
-            hit_map_->map_[i][j] = pixels[height-i-1][j][3] != 0;
+            hit_map_->map_[i][j] = pixels[height-i-1 * width + j*4 + 3] != 0;
         }
     }
+
+	free(pixels);
 
     glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);

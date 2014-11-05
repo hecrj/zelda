@@ -29,10 +29,10 @@ void Location::Place(Entity* entity) const {
         y = -entity->height() - height_ / 2.0f - 5;
     }
 
-    if(xdir == 1 or xdir == -1)
+    if(xdir == 1 || xdir == -1)
         y = -entity->height() / 2.0f;
 
-    if(ydir == 1 or ydir == -1)
+    if(ydir == 1 || ydir == -1)
         x = -entity->width() / 2.0f;
 
     entity->set_position(center() + vec2f(x, y));

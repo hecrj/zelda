@@ -1,3 +1,6 @@
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include "over_screen.hpp"
 #include "../audio/music.hpp"
 #include "../graphic/effect/fade.hpp"
@@ -26,14 +29,14 @@ namespace OverScreenPrivate {
             if(until_ > GAME_OVER.size()) {
                 until_ = (unsigned int) GAME_OVER.size();
 
-                if(not menu_shown_) {
+                if(! menu_shown_) {
                     Menu* menu = new Menu(Game::WIDTH / 2, 225, 20);
 
                     menu->AddOption("Continue", [this]{
                         Music::ClearQueue();
                         Music::FadeOut(1);
 
-                        ChangeEffect(new Fade(Fade::OUT, 1, [this] {
+                        ChangeEffect(new Fade(Fade::FADE_OUT, 1, [this] {
                             Game::INSTANCE.LoadLevel(level_name_.c_str());
                         }));
                     });
@@ -42,7 +45,7 @@ namespace OverScreenPrivate {
                         Music::ClearQueue();
                         Music::FadeOut(1);
 
-                        ChangeEffect(new Fade(Fade::OUT, 1, [] {
+                        ChangeEffect(new Fade(Fade::FADE_OUT, 1, [] {
                             Game::INSTANCE.LoadTitleScreen();
                         }));
                     });

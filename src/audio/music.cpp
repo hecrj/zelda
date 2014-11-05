@@ -32,7 +32,7 @@ void Music::Update(double delta) {
                 music_.setVolume(100.0f);
             }
         }
-    } else if(not music_queue_.empty()) {
+    } else if(! music_queue_.empty()) {
         const MusicItem& item = music_queue_.front();
 
         std::stringstream filename;

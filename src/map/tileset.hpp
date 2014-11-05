@@ -1,3 +1,6 @@
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include <tsx_tileset.hpp>
 #include <GL/gl.h>
 #include "../graphic/sprite.hpp"

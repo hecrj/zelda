@@ -1,5 +1,8 @@
 #pragma once
 
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include "math/vec2.hpp"
 #include "graphic/hitbox.hpp"
 #include "entity/entity_type.hpp"

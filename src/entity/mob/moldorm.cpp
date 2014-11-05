@@ -60,7 +60,7 @@ void Moldorm::Update(double delta) {
     float y = (float)cos(angle);
 
     if(Move(vec2f(x, 0), 1, delta)) {
-        if(not Move(vec2f(0, y), 1, delta)) {
+        if(!Move(vec2f(0, y), 1, delta)) {
             rotation = 180 - rotation;
         }
 
@@ -97,7 +97,7 @@ void Moldorm::Draw() const {
 }
 
 bool Moldorm::CanCollideWith(RectangleShape* rectangle) const {
-    return rectangle != hitbox_ and (not rectangle->IsEntity() or ((Entity*)rectangle)->type() == PLAYER);
+    return rectangle != hitbox_ && (!rectangle->IsEntity() || ((Entity*)rectangle)->type() == PLAYER);
 }
 
 bool Moldorm::CollidesWith(RectangleShape const * rectangle) const {
@@ -143,7 +143,7 @@ Moldorm::MoldormHitbox::MoldormHitbox(Moldorm* moldorm) :
 }
 
 bool Moldorm::MoldormHitbox::CanCollideWith(RectangleShape* rectangle) const {
-    return moldorm_ != rectangle and moldorm_->CanCollideWith(rectangle);
+    return moldorm_ != rectangle && moldorm_->CanCollideWith(rectangle);
 }
 
 bool Moldorm::HandleCollisionWith(Mob* mob) {
@@ -189,7 +189,7 @@ void Moldorm::Dead() {
     Music::ClearQueue();
     Music::FadeOut(2);
 
-    level_->ChangeEffect(new Fade(Fade::OUT, 2, []{
+    level_->ChangeEffect(new Fade(Fade::FADE_OUT, 2, []{
         Game::INSTANCE.Win();
     }));
 }

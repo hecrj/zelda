@@ -1,3 +1,6 @@
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include <sstream>
 #include "font.hpp"
 #include "../game.hpp"
@@ -29,13 +32,13 @@ void Font::Render(float x, float y, const char* text) {
     while(text[i] != '\0') {
         c = text[i];
 
-        if('A' <= c and c <= 'Z') {
+        if('A' <= c && c <= 'Z') {
             UPPERCASE[c - 'A']->DrawGeom(pos);
-        } else if('a' <= c and c <= 'z') {
+        } else if('a' <= c && c <= 'z') {
             LOWERCASE[c - 'a']->DrawGeom(pos);
-        } else if('0' <= c and c <= '9') {
+        } else if('0' <= c && c <= '9') {
             DIGITS[c - '0']->DrawGeom(pos);
-        } else if(',' <= c and c <= '.') {
+        } else if(',' <= c && c <= '.') {
             SPECIAL[c - ',']->DrawGeom(pos);
         } else if(c != ' ') {
             std::stringstream ss;

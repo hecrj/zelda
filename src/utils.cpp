@@ -1,3 +1,6 @@
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include <SFML/System.hpp>
 #include <SOIL.h>
 #include <sstream>

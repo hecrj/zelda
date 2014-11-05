@@ -6,8 +6,8 @@ class Fade : public CallbackEffect {
 public:
     typedef CallbackEffect super;
 
-    static const bool IN;
-    static const bool OUT;
+    static const bool FADE_IN;
+    static const bool FADE_OUT;
 
     Fade(bool fade_in, float duration, const std::function<void()>& callback);
 

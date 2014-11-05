@@ -82,11 +82,11 @@ int Link::boss_keys() const {
 }
 
 bool Link::CollidesWith(RectangleShape const * rectangle) const {
-    return super::CollidesWith(rectangle) and (
-            (not rectangle->IsEntity()) or
-            (((Entity*)rectangle)->type() != ENEMY and ((Entity*)rectangle)->type() != BOSS) or
-            is_vulnerable_ and (
-                ((Entity*)rectangle)->type() != BOSS or
+    return super::CollidesWith(rectangle) && (
+            (!rectangle->IsEntity()) ||
+            (((Entity*)rectangle)->type() != ENEMY && ((Entity*)rectangle)->type() != BOSS) ||
+			is_vulnerable_ && (
+                ((Entity*)rectangle)->type() != BOSS ||
                 rectangle->CollidesWith(this)
             )
     );
@@ -105,6 +105,8 @@ bool Link::HandleCollisionWith(Mob* mob) {
         default:
             break;
     }
+
+	return true;
 }
 
 void Link::UpdateSmallKeys(int keys) {
@@ -130,8 +132,8 @@ void Link::AddBossKey(const std::string& name) {
 }
 
 bool Link::CanCollideWith(RectangleShape*rectangle) const{
-    return super::CanCollideWith(rectangle) and (
-            not rectangle->IsEntity() or
+    return super::CanCollideWith(rectangle) && (
+            !rectangle->IsEntity() ||
             ((Entity*) rectangle)->type() != FOLLOWER
     );
 }
@@ -152,7 +154,7 @@ void Link::Die() {
 
     Music::ClearQueue();
     Music::FadeOut(1);
-    level_->ChangeEffect(new Fade(Fade::OUT, 1, [this]{
+    level_->ChangeEffect(new Fade(Fade::FADE_OUT, 1, [this]{
         Game::INSTANCE.Over(level_->name());
     }));
 }

@@ -1,7 +1,7 @@
-#define GL_GLEXT_PROTOTYPES 1
-
+#include <GL/glew.h>
 #include <sstream>
 #include <iostream>
+#include <SFML/System.hpp>
 #include "game.hpp"
 #include "utils.hpp"
 #include "debug.hpp"
@@ -40,7 +40,7 @@ GLuint Game::RENDERBUFFER_AUX = 0;
 Game Game::INSTANCE;
 
 GLuint Game::FramebufferAux() {
-    if(FRAMEBUFFER_AUX and DIRTY) {
+    if(FRAMEBUFFER_AUX && DIRTY) {
         glDeleteRenderbuffers(1, &RENDERBUFFER_AUX);
         glDeleteFramebuffers(1, &FRAMEBUFFER_AUX);
 
@@ -114,7 +114,7 @@ void Game::Init()
 	glMatrixMode(GL_MODELVIEW);
 
     // Set seed
-    srand((unsigned) time(NULL));
+    srand((unsigned int) sf::Clock::getCurrentTime());
 
     // Load game resources
     Font::Load();

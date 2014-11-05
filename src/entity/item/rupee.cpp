@@ -38,7 +38,7 @@ Rupee::Rupee(Rupee::Type type, float x, float y) :
 }
 
 bool Rupee::HandleCollisionWith(Mob* mob) {
-    if(not IsAlive())
+    if(!IsAlive())
         return false;
 
     int amount = rupee_type_ == Rupee::Type::GREEN ? 1 : rupee_type_ == Rupee::Type::BLUE ? 2 : 5;

@@ -41,11 +41,11 @@ void Stalfos::Dead() {
     Link* player = (Link*)level_->main_player();
 
     if(small_key_) {
-        if(not player->has_key(name_)) {
+        if(!player->has_key(name_)) {
             level_->AddEntity(new Key(Key::SMALL, name_, pos.x, pos.y));
         }
     } else if(boss_key_) {
-        if(not player->has_key(name_)) {
+        if(!player->has_key(name_)) {
             level_->AddEntity(new Key(Key::BOSS, name_, pos.x, pos.y));
         }
     } else {

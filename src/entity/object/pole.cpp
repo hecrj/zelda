@@ -13,7 +13,7 @@ Pole::Pole(float x, float y, Type type, Sprite* closed, Sprite* transition) :
 }
 
 void Pole::Draw() const {
-    if(not IN_TRANSITION) {
+    if(!IN_TRANSITION) {
         if(type_ != OPEN)
             closed_->Render(position_);
     } else {
@@ -22,5 +22,5 @@ void Pole::Draw() const {
 }
 
 bool Pole::CanCollideWith(RectangleShape* rectangle) const {
-    return IN_TRANSITION or type_ != OPEN;
+    return IN_TRANSITION || type_ != OPEN;
 }

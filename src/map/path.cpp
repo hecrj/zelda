@@ -51,14 +51,14 @@ Path::Node::Node(const vec2i& position, const vec2i& destination, unsigned int g
 }
 
 bool Path::Node::SortByCostAsc::operator()(Path::Node* n1, Path::Node* n2) const {
-    return n1->cost < n2->cost or n1->cost == n2->cost and (n1->h_cost < n2->h_cost or
-            n1->h_cost == n2->h_cost and (n1->x < n2->x or n1->x == n2->x and n1->y < n2->y));
+    return n1->cost < n2->cost || n1->cost == n2->cost && (n1->h_cost < n2->h_cost ||
+            n1->h_cost == n2->h_cost && (n1->x < n2->x || n1->x == n2->x && n1->y < n2->y));
 }
 
 unsigned int Path::Node::HeuristicCost(const vec2i& destination) const {
     // Using Manhattan distance with diagonal movement it is not admissible
     // But we get more natural paths this way, despite being longer
-    return (unsigned int)(abs(destination.x - x) + abs(destination.y - y));
+	return (unsigned int)(abs((int)(destination.x - x)) + abs((int)(destination.y - y)));
 }
 
 void Path::Node::UpdateGCost(unsigned int g_cost) {

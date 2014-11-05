@@ -1,3 +1,6 @@
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include <functional>
 #include <GL/gl.h>
 #include <iostream>
@@ -5,8 +8,8 @@
 #include "../drawable.hpp"
 #include "../../game.hpp"
 
-const bool Fade::IN = true;
-const bool Fade::OUT = false;
+const bool Fade::FADE_IN = true;
+const bool Fade::FADE_OUT = false;
 
 Fade::Fade(bool fade_in, float duration, const std::function<void()>& callback) :
         super(callback),

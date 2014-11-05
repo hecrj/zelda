@@ -57,9 +57,9 @@ LinkFollower::LinkFollower() :
 }
 
 bool LinkFollower::CollidesWith(RectangleShape const * rectangle) const {
-    return super::CollidesWith(rectangle) and (
-            not rectangle->IsEntity() or
-            ((Entity*)rectangle)->type() != BOSS or
+    return super::CollidesWith(rectangle) && (
+            !rectangle->IsEntity() ||
+            ((Entity*)rectangle)->type() != BOSS ||
             rectangle->CollidesWith(this)
     );
 }
@@ -82,8 +82,8 @@ bool LinkFollower::HandleCollisionWith(Mob* mob) {
 }
 
 bool LinkFollower::CanCollideWith(RectangleShape*rectangle) const{
-    return super::CanCollideWith(rectangle) and (
-            not rectangle->IsEntity() or
+    return super::CanCollideWith(rectangle) && (
+            !rectangle->IsEntity() ||
                     ((Entity*) rectangle)->type() != PLAYER
     );
 }

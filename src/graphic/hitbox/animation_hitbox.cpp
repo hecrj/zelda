@@ -1,3 +1,7 @@
+#define NOMINMAX
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include "animation_hitbox.hpp"
 #include "../../debug.hpp"
 #include <iostream>

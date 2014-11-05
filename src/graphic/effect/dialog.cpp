@@ -21,7 +21,7 @@ void Dialog::Tick(double delta) {
     elapsed_time_ += delta;
 
     Message* current = messages_[current_message_];
-    if(elapsed_time_ * current->speed >= current->length and Game::INSTANCE.ConsumeKey(Game::ACTION_KEY)) {
+    if(elapsed_time_ * current->speed >= current->length && Game::INSTANCE.ConsumeKey(Game::ACTION_KEY)) {
         current_message_++;
         elapsed_time_ = 0;
     }

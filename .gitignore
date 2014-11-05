@@ -1,3 +1,16 @@
 .idea/
-zelda
+Debug/
+Win32/
+zelda.dir/
+CMakeFiles/
 
+zelda
+zelda.exe
+CMakeCache.txt
+cmake_install.cmake
+*.vcxproj
+*.filters
+*.sln
+*.sdf
+*.suo
+*.filters

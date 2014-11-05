@@ -1,4 +1,4 @@
-#define GL_GLEXT_PROTOTYPES 1
+#include <GL/glew.h>
 #include <iostream>
 #include <sstream>
 #include <GL/glut.h>
@@ -71,8 +71,8 @@ bool TileMap::IsInbounds(RectangleShape* rectangle) const {
 }
 
 bool TileMap::IsInbounds(const vec2f& position, float width, float height) const {
-    return position.x >= 0.0f and position.x + width < (float)map_->width_pixels and
-            position.y >= 0.0f and position.y + height < (float)map_->height_pixels;
+    return position.x >= 0.0f && position.x + width < (float)map_->width_pixels &&
+            position.y >= 0.0f && position.y + height < (float)map_->height_pixels;
 }
 
 void TileMap::RenderLayers(const std::vector<TMX::TileLayer*>& layers, int frame) const
