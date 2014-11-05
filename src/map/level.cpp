@@ -243,7 +243,7 @@ void Level::Draw() const {
             entity->Render();
     }
 
-    super::RenderLayersAbove();
+    //super::RenderLayersAbove();
 
     if(Debug::enabled) {
         dynamic_collidables_->Render(1, 0, 0);

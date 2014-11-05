@@ -1,4 +1,5 @@
 #include <SOIL.h>
+#include <iostream>
 #include <sstream>
 #include "tileset.hpp"
 
@@ -40,6 +41,7 @@ void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<i
                 continue;
 
             tile_id += tile->second.animated ? (tile->second.first_frame + frame) % tileset.frames : 0;
+
             int col = tile_id % tileset.width;
             int row = tile_id / tileset.width;
 

@@ -179,5 +179,7 @@ GLuint TileMap::GenerateTexture(const std::vector<TMX::TileLayer*>& layers, int 
     glClear(GL_COLOR_BUFFER_BIT);
     RenderLayers(layers, frame);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
+
     return texture;
 }
