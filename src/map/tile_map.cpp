@@ -136,7 +136,6 @@ void TileMap::InitTextures() {
     RenderLayers(map_->tile_layers_above, 0);
 
     // Unbind and delete framebuffer
-    glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, 0, 0);
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glDeleteFramebuffers(1, &fb);

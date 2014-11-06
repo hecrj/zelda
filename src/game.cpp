@@ -132,7 +132,7 @@ void Game::Init()
     Plant::Load();
     Door::Load();
 
-	LoadLevel("overworld");
+    LoadTitleScreen();
 }
 
 void Game::Tick()

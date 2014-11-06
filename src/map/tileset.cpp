@@ -39,7 +39,7 @@ void Tileset::RenderTiles(int width, int height, const std::vector<std::vector<i
 			if (tile_id < 0)
 				continue;
 
-            std::map<int, TSX::Tile>::const_iterator& tile = tileset.tiles.find(tile_id);
+            std::map<int, TSX::Tile>::const_iterator tile = tileset.tiles.find(tile_id);
 
 			if (tile != tileset.tiles.end())
 				tile_id += tile->second.animated ? (tile->second.first_frame + frame) % tileset.frames : 0;
