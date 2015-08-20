@@ -32,10 +32,18 @@ make
 ```
 
 ## Playing zelda
-Just run the `zelda` executable you just compiled!
+Just run the `zelda` executable you compiled!
 
 ```shell
 ./zelda
 ```
+
+Here are the controls of the game:
+
+| Key(s) | Action            |
+|--------|-------------------|
+| Arrows | Move              |
+| `Z`    | Accept / Attack   |
+| `D`    | Toggle debug view |
 
 Have fun!
