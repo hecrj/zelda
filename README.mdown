@@ -44,6 +44,6 @@ Here are the controls of the game:
 |--------|-------------------|
 | Arrows | Move              |
 | `Z`    | Accept / Attack   |
-| `D`    | Toggle debug view |
+| `A`    | Toggle debug view |
 
 Have fun!
