@@ -12,19 +12,19 @@ namespace IntroPrivate {
                     "Hyrule was saved by a hero..."
             ),
             dialog(
-                    "But now...",
-                    "An evil power has returned..."
+                    "But eventually...",
+                    "An evil power returned..."
             ),
             dialog(
-                    "Its name was...",
-                    "Markorath, The Worm of the Abyss..."
+                    "Moldorm, The Worm of the Abyss,",
+                    "was back."
             ),
             dialog(
-                    "Unless someone stopped it,",
+                    "Unless someone stopped him,",
                     "he would reduce the world to ashes..."
             ),
             dialog(
-                    "A child of the woods went",
+                    "A child of the woods decided",
                     "to confront him..."
             ),
             dialog(
