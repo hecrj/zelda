@@ -1,3 +1,7 @@
+![Zelda](http://i.imgur.com/ijhcYtx.png)
+
+A Zelda clone in C++ that I developed in a month for my computer science bachelor's degree.
+
 Trying the game
 ==================
 
