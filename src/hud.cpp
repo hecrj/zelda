@@ -32,7 +32,10 @@ void Hud::Render() const {
             HEARTS[4]->Render(vec2f(5 + 16 * i, 5));
             health -= 4;
         } else {
-            HEARTS[health]->Render(vec2f(5 + 16 * i, 5));
+            if (health >= 0) {
+                HEARTS[health]->Render(vec2f(5 + 16 * i, 5));
+            }
+
             health = 0;
         }
     }
